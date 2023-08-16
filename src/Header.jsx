@@ -1,24 +1,15 @@
 import "./assets/main.js";
-import jQuery from "jquery";
 
-function Header() {
-  (function ($) {
-    var fullHeight = function () {
-      $(".js-fullheight").css("height", $(window).height());
-      $(window).resize(function () {
-        $(".js-fullheight").css("height", $(window).height());
-      });
-    };
-    fullHeight();
-
-    $("#sidebarCollapse").on("click", function () {
-      $("#sidebar").toggleClass("active");
-    });
-  })(jQuery);
+function Header({ handleSBCollapsing }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <button type="button" id="sidebarCollapse" className="btn btn-primary">
+        <button
+          type="button"
+          id="sidebarCollapse"
+          className="btn btn-primary"
+          onClick={handleSBCollapsing}
+        >
           <i className="fa fa-bars"></i>
           <span className="sr-only">Toggle Menu</span>
         </button>

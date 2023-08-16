@@ -1,25 +1,25 @@
 import React from "react";
 
-function Sidebar() {
+function Sidebar({ sBarCollapsed, handleSBItemChange }) {
   return (
-    <nav id="sidebar" className="active">
+    <nav id="sidebar" className={`${sBarCollapsed ? "active" : ""}`}>
       <h1>
         <a href="index.html" className="logo">
           M.
         </a>
       </h1>
       <ul className="list-unstyled components mb-5">
-        <li className="active">
+        <li className="active" onClick={() => handleSBItemChange("home")}>
           <a href="#">
             <span className="fa fa-home"></span> Home
           </a>
         </li>
-        <li>
+        <li onClick={() => handleSBItemChange("about")}>
           <a href="#">
-            <span className="fa fa-user"></span> About
+            <span className="fa fa-th-large"></span> About
           </a>
         </li>
-        <li>
+        <li onClick={() => handleSBItemChange("blog")}>
           <a href="#">
             <span className="fa fa-sticky-note"></span> Blog
           </a>
