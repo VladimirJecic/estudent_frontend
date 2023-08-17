@@ -1,6 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import "./assets/main.js";
+import { useState } from "react";
 
 function Header({ handleSBCollapsing }) {
+  const [hBarCollapsed, setHBarCollapsed] = useState(true);
+  const handleHBCollapsing = () => {
+    setHBarCollapsed(!hBarCollapsed);
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -21,11 +27,15 @@ function Header({ handleSBCollapsing }) {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          onClick={handleHBCollapsing}
         >
           <i className="fa fa-bars"></i>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div
+          className={`collapse navbar-collapse ${hBarCollapsed ? "" : "show"}`}
+          id="navbarSupportedContent"
+        >
           <ul className="nav navbar-nav ml-auto">
             <li className="nav-item active">
               <a className="nav-link" href="#">
