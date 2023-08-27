@@ -1,4 +1,4 @@
-npm install jquery popper.js
+npm install jquery popper.js bootstrap
 kasnije se importuju safari
 import 'jquery';
 import 'popper.js';

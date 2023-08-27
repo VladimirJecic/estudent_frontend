@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import "./assets/main.js";
+import "../assets/main.js";
 import { useState } from "react";
 
 function Header({ handleSBCollapsing }) {
