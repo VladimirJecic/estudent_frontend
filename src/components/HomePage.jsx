@@ -4,7 +4,7 @@ import { useState } from "react";
 // import "../assets/App.scss";
 // import "../assets/HomePage.css";
 
-const  HomePage = ()=>{
+const HomePage = () => {
   const [sBarCollapsed, setSBarCollapsed] = useState(true);
   const [sBarItem, setSBarItem] = useState("home");
   const handleSBCollapsing = () => {
@@ -25,6 +25,6 @@ const  HomePage = ()=>{
       />
     </div>
   );
-}
+};
 
 export default HomePage;

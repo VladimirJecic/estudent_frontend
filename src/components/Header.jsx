@@ -1,11 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "../assets/main.js";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Header({ handleSBCollapsing }) {
   const [hBarCollapsed, setHBarCollapsed] = useState(true);
+  const navigate = useNavigate();
   const handleHBCollapsing = () => {
     setHBarCollapsed(!hBarCollapsed);
+  };
+  const logout = () => {
+    //brise token i navlink na login
+    navigate("/login");
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,6 +25,9 @@ function Header({ handleSBCollapsing }) {
           <i className="fa fa-bars"></i>
           <span className="sr-only">Toggle Menu</span>
         </button>
+        <div className="headerDiv">
+          Studentski servisi - <i>Fakultet organizacionih nauka</i>
+        </div>
         <button
           className="btn btn-dark d-inline-block d-lg-none ml-auto"
           type="button"
@@ -31,30 +40,33 @@ function Header({ handleSBCollapsing }) {
         >
           <i className="fa fa-bars"></i>
         </button>
-
         <div
           className={`collapse navbar-collapse ${hBarCollapsed ? "" : "show"}`}
           id="navbarSupportedContent"
         >
           <ul className="nav navbar-nav ml-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="#">
-                Home
-              </a>
+            {/* <li
+              className="nav-item active"
+              onClick={() => handleSBItemChange("rokovi")}
+            >
+              <a className="nav-link">Aktuelni Rokovi</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                About
-              </a>
+            <li
+              className="nav-item"
+              onClick={() => handleSBItemChange("polozeni_ispiti")}
+            >
+              <a className="nav-link">Polozeni ispiti</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Portfolio
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Contact
+            <li
+              className="nav-item"
+              onClick={() => handleSBItemChange("prijava_ispita")}
+            >
+              <a className="nav-link">Prijava ispita</a>
+            </li> */}
+            <li className="nav-item" onClick={() => logout()}>
+              <a className="nav-link">
+                <span className="fa fa-user"></span> Vladimir Jecic (2017/0079)
+                Kraj rada <span className="fa fa-power-off"></span>
               </a>
             </li>
           </ul>

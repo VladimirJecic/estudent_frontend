@@ -1,10 +1,10 @@
 /* @import url('https://fonts.googleapis.com/css?family=Poppins'); */
-@import '~typeface-poppins';
+@import "~typeface-poppins";
 
 /* BASIC */
 
 div.loginRoot {
-  background-color: #56baed;
+  background-color: #3e64ff;
   font-family: "Poppins", sans-serif;
   display: flex;
   align-items: center;
@@ -12,10 +12,9 @@ div.loginRoot {
   height: 100vh;
 }
 
-
 div.loginRoot .navLinkStyle {
   color: #92badd;
-  display:inline-block;
+  display: inline-block;
   text-decoration: none;
   font-weight: 400;
 }
@@ -25,19 +24,17 @@ div.loginRoot h2 {
   font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
-  display:inline-block;
-  margin: 40px 8px 10px 8px; 
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
   color: #cccccc;
 }
-
-
 
 /* STRUCTURE */
 
 div.loginRoot .wrapper {
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   min-height: 100%;
@@ -53,8 +50,8 @@ div.loginRoot .formContent {
   max-width: 450px;
   position: relative;
   padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
@@ -67,8 +64,6 @@ div.loginRoot .formContent {
   border-radius: 0 0 10px 10px;
 } */
 
-
-
 /* TABS */
 
 div.loginRoot h2.inactive {
@@ -80,11 +75,11 @@ div.loginRoot h2.active {
   border-bottom: 2px solid #5fbae9;
 }
 
-
-
 /* FORM TYPOGRAPHY*/
 
-div.loginRoot input[type=button], div.loginRoot input[type=submit], div.loginRoot input[type=reset]  {
+div.loginRoot input[type="button"],
+div.loginRoot input[type="submit"],
+div.loginRoot input[type="reset"] {
   background-color: #56baed;
   border: none;
   color: white;
@@ -94,8 +89,8 @@ div.loginRoot input[type=button], div.loginRoot input[type=submit], div.loginRoo
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   margin: 5px 20px 40px 20px;
@@ -106,11 +101,15 @@ div.loginRoot input[type=button], div.loginRoot input[type=submit], div.loginRoo
   transition: all 0.3s ease-in-out;
 }
 
-div.loginRoot input[type=button]:hover,div.loginRoot input[type=submit]:hover,div.loginRoot input[type=reset]:hover  {
+div.loginRoot input[type="button"]:hover,
+div.loginRoot input[type="submit"]:hover,
+div.loginRoot input[type="reset"]:hover {
   background-color: #39ace7;
 }
 
-div.loginRootinput[type=button]:active,div.loginRoot input[type=submit]:active, div.loginRoot input[type=reset]:active  {
+div.loginRootinput[type="button"]:active,
+div.loginRoot input[type="submit"]:active,
+div.loginRoot input[type="reset"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -118,7 +117,7 @@ div.loginRootinput[type=button]:active,div.loginRoot input[type=submit]:active, 
   transform: scale(0.95);
 }
 
-div.loginRoot input[type=text] {
+div.loginRoot input[type="text"] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -139,16 +138,14 @@ div.loginRoot input[type=text] {
   border-radius: 5px 5px 5px 5px;
 }
 
-div.loginRoot input[type=text]:focus {
+div.loginRoot input[type="text"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-div.loginRoot input[type=text]:placeholder {
+div.loginRoot input[type="text"]:placeholder {
   color: #cccccc;
 }
-
-
 
 /* ANIMATIONS */
 
@@ -189,23 +186,44 @@ div.loginRoot .fadeInDown {
 }
 
 /* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 div.loginRoot .fadeIn {
-  opacity:0;
-  -webkit-animation:fadeIn ease-in 1;
-  -moz-animation:fadeIn ease-in 1;
-  animation:fadeIn ease-in 1;
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in 1;
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
 
-  -webkit-animation-fill-mode:forwards;
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
-  -webkit-animation-duration:1s;
-  -moz-animation-duration:1s;
-  animation-duration:1s;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
 }
 
 div.loginRoot .fadeIn.first {
@@ -248,20 +266,18 @@ div.loginRoot .underlineHover:hover {
   color: #0d0d0d;
 }
 
-div.loginRoot .underlineHover:hover:after{
+div.loginRoot .underlineHover:hover:after {
   width: 100%;
 }
-
-
 
 /* OTHERS */
 
 div.loginRoot *:focus {
-    outline: none;
-} 
+  outline: none;
+}
 
 div.loginRoot .icon {
-  width:60%;
+  width: 60%;
 }
 
 div.loginRoot * {
