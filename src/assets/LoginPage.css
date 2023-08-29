@@ -249,6 +249,11 @@ div.loginRoot .fadeIn.fourth {
   -moz-animation-delay: 1s;
   animation-delay: 1s;
 }
+div.loginRoot .fadeIn.fifth {
+  -webkit-animation-delay: 1.2s;
+  -moz-animation-delay: 1.2s;
+  animation-delay: 1.2s;
+}
 
 /* Simple CSS3 Fade-in Animation */
 div.loginRoot .underlineHover:after {
@@ -282,4 +287,11 @@ div.loginRoot .icon {
 
 div.loginRoot * {
   box-sizing: border-box;
+}
+
+.warning {
+  color: red;
+}
+.hidden {
+  display: none;
 }

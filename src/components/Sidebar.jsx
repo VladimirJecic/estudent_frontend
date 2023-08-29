@@ -14,7 +14,8 @@ function Sidebar({ sBarCollapsed, handleSBItemChange }) {
       <ul className="list-unstyled components mb-5">
         <li className="active" onClick={() => handleSBItemChange("rokovi")}>
           <a>
-            <span className="fa fa-home"></span> Aktuelni rokovi
+            <span className="far fa-calendar-check" aria-hidden="true"></span>{" "}
+            Aktuelni rokovi
           </a>
         </li>
         <li onClick={() => handleSBItemChange("polozeni_ispiti")}>
@@ -38,11 +39,7 @@ function Sidebar({ sBarCollapsed, handleSBItemChange }) {
         <p>
           Copyright &copy;
           <script>{`document.write(new Date().getFullYear());`}</script>
-          All rights reserved | This template is made with
-          <i className="icon-heart" aria-hidden="true"></i> by
-          <a href="" target="_blank">
-            Colorlib.com
-          </a>
+          All rights reserved | Colorlib.com
         </p>
       </div>
     </nav>

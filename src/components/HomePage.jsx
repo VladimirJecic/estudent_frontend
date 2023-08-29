@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const HomePage = () => {
   const [sBarCollapsed, setSBarCollapsed] = useState(true);
-  const [sBarItem, setSBarItem] = useState("home");
+  const [sBarItem, setSBarItem] = useState("rokovi");
   const handleSBCollapsing = () => {
     setSBarCollapsed(!sBarCollapsed);
   };

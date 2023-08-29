@@ -55,7 +55,7 @@ function MainContent({ handleSBCollapsing, sBarItem }) {
   }, [sBarItem]);
 
   return (
-    <div id="content" className="p-4 p-md-5">
+    <div id="content" className="p-4 p-md-5 content">
       <Header handleSBCollapsing={handleSBCollapsing} />
       {content}
     </div>
