@@ -7,6 +7,8 @@ function Header({ handleSBCollapsing }) {
   const [hBarCollapsed, setHBarCollapsed] = useState(true);
   const navigate = useNavigate();
   const handleHBCollapsing = () => {
+    //postaviti novu css klasu kojom ce se klikom na kollapse postaviti
+    //rounded-circle 7rem
     setHBarCollapsed(!hBarCollapsed);
   };
   const logout = () => {

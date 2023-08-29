@@ -8,21 +8,40 @@ import "../assets/LoginPage.css";
 import { useState, useEffect } from "react";
 
 const LoginPage = () => {
+  const localhost = "http://127.0.0.1";
+  const [warning, setWarning] = useState(false);
+  const [signMode, setSignMode] = useState("sign_in");
+  const [content, setContent] = useState("null");
+  const [userData, setUserData] = useState({ indexNum: "", password: "" });
   const navigate = useNavigate();
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    //if login fails setWarning(true);
-    //else set auth_token and navigate("/home");
+
+    try {
+      const response = await axios.post(
+        `${localhost}:8000/api/login`,
+        userData
+      );
+      if (response.data.success === true) {
+        console.log(response.data);
+        // Set the access token in session storage
+        window.sessionStorage.setItem("auth_token", response.data.data.token);
+        navigate("/home"); // Navigate to the home route
+      } else {
+        setWarning(true); // Set warning if login fails
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const handleRegister = (event) => {
     event.preventDefault();
     setWarning(true);
     //if login fails setWarning(true);
     //else set auth_token and navigate("/home");
   };
-  const [warning, setWarning] = useState(false);
-  const [signMode, setSignMode] = useState("sign_in");
-  const [content, setContent] = useState("null");
+
   useEffect(() => {
     switch (signMode) {
       case "sign_in":
@@ -31,14 +50,22 @@ const LoginPage = () => {
             <input
               type="text"
               className="fadeIn second"
-              name="login"
-              placeholder="login"
+              name="indexNum"
+              placeholder="index number, in format xxxx/20xx"
+              onChange={(e) => {
+                userData[e.target.name] = e.target.value;
+                setUserData(userData);
+              }}
             />
             <input
               type="text"
               className="fadeIn third"
-              name="text"
+              name="password"
               placeholder="password"
+              onChange={(e) => {
+                userData[e.target.name] = e.target.value;
+                setUserData(userData);
+              }}
             />
             <p className={`warning ${warning ? "" : "hidden"}`} role="alert">
               That was the wrong username or password. Please try again.
@@ -48,12 +75,19 @@ const LoginPage = () => {
         );
         break;
       case "sign_up":
+        //treba dodati da bude ispunjeno
+        // 'indexNum'=>'required'
+        //     'name'=>'required',
+        //     'role'=>'required',
+        //     'email'=>'required|email',
+        //     'password'=>'required',
+        //     'c_password'=>'required|same:password'
         setContent(
           <form onSubmit={handleRegister}>
             <input
               type="text"
               className="fadeIn first"
-              name="username"
+              name="indexNum"
               placeholder="username"
             />
             <input

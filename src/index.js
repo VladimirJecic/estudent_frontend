@@ -6,7 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "popper.js";
 import "bootstrap";
 import "./assets/main.js";
-import "./assets/style.css"
+import "./assets/style.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

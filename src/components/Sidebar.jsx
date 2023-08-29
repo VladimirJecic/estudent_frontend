@@ -7,8 +7,12 @@ function Sidebar({ sBarCollapsed, handleSBItemChange }) {
   return (
     <nav id="sidebar" className={`${sBarCollapsed ? "active" : ""}`}>
       <h1>
-        <a href="index.html" className="logo">
-          <Image src={logoFon} rounded fluid />
+        <a className="logo">
+          <Image
+            src={logoFon}
+            {...(sBarCollapsed ? { rounded: true } : { roundedCircle: true })}
+            fluid
+          />
         </a>
       </h1>
       <ul className="list-unstyled components mb-5">
