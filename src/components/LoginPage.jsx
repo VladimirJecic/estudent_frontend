@@ -1,10 +1,10 @@
 // import { useState } from "react";
 import axios from "axios";
 // import {Link} from "react-router-dom";
-import "../assets/LoginPage.css";
+
 import logo from "../assets/logo-small.jpg";
 import { useNavigate } from "react-router-dom";
-import "../assets/LoginPage.css";
+import "../assets/componentCSS/LoginPage.css";
 import { useState, useEffect } from "react";
 
 const LoginPage = () => {
@@ -104,7 +104,7 @@ const LoginPage = () => {
             />
             <br></br>
             <p className={`warning ${warning ? "" : "hidden"}`} role="alert">
-              Passwords do not match. Please try again.
+              Passwords do not match, Please try again.
             </p>
 
             <input type="submit" className="fadeIn fourth" value="Register" />

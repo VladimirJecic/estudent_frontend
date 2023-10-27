@@ -1,5 +1,70 @@
-npm install jquery popper.js bootstrap
-kasnije se importuju safari
-import 'jquery';
-import 'popper.js';
-import 'bootstrap';
+<script setup lang="tsx">
+import BoardField from "./BoardField.vue";
+import BoardMark from "./BoardMark.vue";
+import { GameField } from "../model/entity/GameField";
+import type { Ref, ComputedRef } from "vue";
+const props = defineProps({
+  vmBoard: Array<
+    Array<{ gameField: Ref<GameField>; imageSrc: ComputedRef<string> }>
+  >,
+});
+const emitFieldClicked = defineEmits(["fieldClicked"]);
+
+const numbers = ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+</script>
+
+<template>
+  <div class="boardBigger">
+    <BoardMark
+      class="col"
+      :lett="`${colIndex.toString()}`"
+      :key="`row--1-col-${colIndex}`"
+      v-for="colIndex in numbers.length"
+    ></BoardMark>
+    <!-- <MarkRow /> -->
+    <div
+      class="mainBoard"
+      v-for="(row,rowIndex) in props.vmBoard"
+      :key="`row-${rowIndex}`"
+    >
+      <BoardMark
+        class="col"
+        :lett="`${letters[rowIndex].toString()}`"
+        :key="`row--1-col-${rowIndex}`"
+      ></BoardMark>
+      <BoardField
+        v-for="(cell, colIndex) in row"
+        :key="{`row-${rowIndex}-col-${colIndex}`}"
+        :vmBoardCell="{cell}"
+        open-field="{handleFieldClicked}"
+      ></BoardField>
+      <!-- <MarkCol />
+      <MainBoard /> -->
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.boardBigger {
+  display: flex;
+}
+</style>
+
+
+Argument of type '{ vmBoard: ViewModelBoard; emitFieldClicked: (event: "fieldClicked", ...args: any[]) => void; }' is not assignable to parameter of type '[ViewModelBoard, { fieldClicked: (x: number, y: number) => void; }] & Record<string, unknown>'.
+  Type '{ vmBoard: ViewModelBoard; emitFieldClicked: 
+  
+  ' is not assignable to type '[ViewModelBoard, { fieldClicked: (x: number, y: number) => void; }]'.
+  
+    <p>{{ props.viewModel?.turnInfo }}</p>
+	5-8 9
+	7-9 7
+	
+	
+	
+	8 5
+	
+gitm commit -m "refactor: display size adjusted, background changed, quotation marks showing in template when using Ref<string> params fixed by first defining them inside script tag"
+
+
