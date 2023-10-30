@@ -1,11 +1,7 @@
-
-import EStudentApp from "./components/EStudentApp";
+import EStudentRoutes from "./components/EStudentRoutes";
 
 function App() {
-
-  return (
-    <EStudentApp/>
-  );
+  return <EStudentRoutes />;
 }
 
 export default App;

@@ -36,4 +36,4 @@ function AktuelniRokovi({ rokovi }) {
   );
 }
 
-export default MainContent;
+export default AktuelniRokovi;

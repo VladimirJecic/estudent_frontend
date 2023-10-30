@@ -2,7 +2,7 @@ import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-const EStudentApp = () => {
+const EStudentRoutes = () => {
   return (
     <BrowserRouter className="App">
       <Routes>
@@ -14,4 +14,4 @@ const EStudentApp = () => {
   );
 };
 
-export default EStudentApp;
+export default EStudentRoutes;
