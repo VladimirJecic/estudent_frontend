@@ -1,8 +1,10 @@
 import LoginPage from "./LoginPage";
 import HomePage from "./HomePage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import EStudentViewModel from "../viewModel/EStudentViewModel";
 
 const EStudentRoutes = () => {
+  let viewModel = new EStudentViewModel();
   return (
     <BrowserRouter className="App">
       <Routes>

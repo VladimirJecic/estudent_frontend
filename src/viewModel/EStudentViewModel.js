@@ -1,5 +1,5 @@
 import axios from "axios";
-class ViewModel {
+class EStudentViewModel {
   constructor() {
     this.localhost = "http://127.0.0.1";
     this.rokovi = [];
@@ -21,4 +21,4 @@ class ViewModel {
     }
   };
 }
-export default ViewModel;
+export default EStudentViewModel;
