@@ -1,19 +1,25 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 const { localhost } = require("../assets/config.js");
 
 const LoginViewModel = () => {
-  const navigate = useNavigate();
-  const [warning, setWarning] = useState(false);
-  const [signMode, setLoginMode] = useState("sign_in");
+  const [warningVisibility, setWarningVisibility] = useState(false);
+  const [loginMode, setLoginMode] = useState("sign_in");
   const [userData, setUserData] = useState({
     indexNum: "",
     password: "",
     token: "",
   });
 
-  const handleLogin = async (event) => {
+  const changeLoginMode = () => {
+    setWarningVisibility(false);
+    setLoginMode(loginMode === "sign_in" ? "sign_up" : "sign_in");
+  };
+  const changeUserData = (event) => {
+    userData[event.target.name] = event.target.value;
+    setUserData(userData);
+  };
+  const handleLogin = async (event, navigate) => {
     event.preventDefault();
 
     try {
@@ -27,25 +33,26 @@ const LoginViewModel = () => {
         window.sessionStorage.setItem("auth_token", response.data.data.token);
         navigate("/home"); // Navigate to the home route
       } else {
-        setWarning(true); // Set warning if login fails
+        setWarningVisibility(true); // Set warning if login fails
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const handleRegister = (event) => {
+  const handleRegister = (event, navigate) => {
     event.preventDefault();
-    setWarning(true);
+    setWarningVisibility(true);
     //if login fails setWarning(true);
     //else set auth_token and navigate("/home");
   };
-  const handleUserDataChanged = (event) => {
-    userData[event.target.name] = event.target.value;
-    setUserData(userData);
-  };
-  const changeLoginMode = () => {
-    setWarning(false);
-    setLoginMode("sign_in");
+  return {
+    warningVisibility,
+    loginMode,
+    userData,
+    changeLoginMode,
+    changeUserData,
+    handleLogin,
+    handleRegister,
   };
 };
 export default LoginViewModel;
