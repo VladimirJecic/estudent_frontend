@@ -1,36 +1,43 @@
 import axios from "axios";
 import { useState } from "react";
+import createUser from "../model/factory/UserFactory.js";
 const { localhost } = require("../assets/config.js");
 
 const LoginViewModel = () => {
   const [warningVisibility, setWarningVisibility] = useState(false);
   const [loginMode, setLoginMode] = useState("sign_in");
-  const [userData, setUserData] = useState({
-    indexNum: "",
-    password: "",
-    token: "",
-  });
+  const user = createUser();
 
   const changeLoginMode = () => {
     setWarningVisibility(false);
     setLoginMode(loginMode === "sign_in" ? "sign_up" : "sign_in");
   };
   const changeUserData = (event) => {
-    userData[event.target.name] = event.target.value;
-    setUserData(userData);
+    switch (event.target.name) {
+      case "indexNum":
+        user.setIndexNum(event.target.value);
+        break;
+      case "password":
+        user.setPassword(event.target.value);
+        break;
+      default:
+        console.error("Undefined value in changeUserData");
+    }
   };
   const handleLogin = async (event, navigate) => {
     event.preventDefault();
-
+    console.log(user.toJSON());
     try {
       const response = await axios.post(
         `${localhost}:8000/api/login`,
-        userData
+        user.toJSON()
       );
       if (response.data.success === true) {
         console.log(response.data);
         // Set the access token in session storage
-        window.sessionStorage.setItem("auth_token", response.data.data.token);
+        const token = response.data.data.token;
+        window.sessionStorage.setItem("auth_token", token);
+        user.setToken(token);
         navigate("/home"); // Navigate to the home route
       } else {
         setWarningVisibility(true); // Set warning if login fails
@@ -48,7 +55,7 @@ const LoginViewModel = () => {
   return {
     warningVisibility,
     loginMode,
-    userData,
+    user,
     changeLoginMode,
     changeUserData,
     handleLogin,
