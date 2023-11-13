@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import Image from "react-bootstrap/Image";
-import logoFon from "../assets/logo-fon.png";
+import logoFon from "../../assets/logo-fon.png";
 
 function Sidebar({ sBarCollapsed, handleSBItemChange }) {
   return (

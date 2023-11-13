@@ -1,24 +1,27 @@
-import axios from "axios";
-class EStudentViewModel {
-  constructor() {
-    this.localhost = "http://127.0.0.1";
-    this.rokovi = [];
-  }
-  getRokovi = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.post(
-        `${this.localhost}:8000/api/exam-periods-active`
-      );
-      if (response.data.success === true) {
-        console.log(response.data);
-      } else {
-        console.error(response.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
+const HomePageViewModel = () => {
+  const [sBarCollapsed, setSBarCollapsed] = useState(true);
+  const [sBarItem, setSBarItem] = useState("rokovi");
+  const handleSBCollapsing = () => {
+    setSBarCollapsed(!sBarCollapsed);
   };
-}
-export default EStudentViewModel;
+  const handleSBItemChange = (item) => {
+    setSBarItem(item);
+  };
+  const PrepareActiveContentNavigation = (navigate) => {
+    useEffect(() => {
+      let route = "/home/" + sBarItem;
+      navigate(route);
+    }, [sBarItem]);
+  };
+
+  return {
+    sBarCollapsed,
+    sBarItem,
+    handleSBCollapsing,
+    handleSBItemChange,
+    prepareActiveContentNavigation: PrepareActiveContentNavigation,
+  };
+};
+export default HomePageViewModel;

@@ -1,12 +1,13 @@
-import HomePage from "./HomePage";
+import HomePage from "./homePage/HomePage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-//import useHomePageViewModel from "../viewModel/HomePageViewModel";
+import useHomePageViewModel from "../viewModel/HomePageViewModel";
 import useLoginViewModel from "../viewModel/LoginViewModel";
-import SignIn from "./loginComponents/SignIn";
-import SignUp from "./loginComponents/SignUp";
+import SignIn from "./login/SignIn";
+import SignUp from "./login/SignUp";
 
 const EStudentRoutes = () => {
   const loginViewModel = useLoginViewModel();
+  const homePageViewModel = useHomePageViewModel();
   // const homePageViewModel = useHomePageViewModel();
   return (
     <BrowserRouter className="App">
@@ -32,7 +33,10 @@ const EStudentRoutes = () => {
             )
           }
         />
-        <Route path="/home" element={<HomePage />}></Route>
+        <Route
+          path="/home/*"
+          element={<HomePage homePageViewModel={homePageViewModel} />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
