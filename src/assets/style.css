@@ -10896,11 +10896,6 @@ a[data-toggle="collapse"] {
 .footer {
   padding: 0 30px;
 }
-@media (max-width: 991.98px) {
-  .footer {
-    display: none;
-  }
-}
 
 #content {
   width: 100%;
@@ -10919,4 +10914,19 @@ a[data-toggle="collapse"] {
 .btn.btn-primary:focus {
   background: #3e64ff !important;
   border-color: #3e64ff !important;
+}
+@media (max-width: 991.98px) {
+  .footer {
+    display: none;
+  }
+}
+div.wrapper.d-flex.align-items-stretch {
+  overflow-y: hidden;
+  height: 1000px;
+}
+
+@media (max-width: 610px) {
+  #content {
+    width: unset;
+  }
 }

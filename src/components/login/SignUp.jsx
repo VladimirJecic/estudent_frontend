@@ -26,7 +26,16 @@ const SignUp = ({
             type="text"
             className="fadeIn first"
             name="indexNum"
-            placeholder="username"
+            placeholder="index number"
+            onChange={(e) => {
+              changeUserData(e);
+            }}
+          />
+          <input
+            type="text"
+            className="fadeIn first"
+            name="name"
+            placeholder="full name"
             onChange={(e) => {
               changeUserData(e);
             }}
@@ -43,7 +52,7 @@ const SignUp = ({
           <input
             type="text"
             className="fadeIn third"
-            name="confirm_password"
+            name="confirmPassword"
             placeholder="confirm password"
           />
           <br></br>

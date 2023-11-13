@@ -1,6 +1,6 @@
 table {
+  width: 60vw;
   border-collapse: collapse;
-  width: 100%;
   text-align: center;
 }
 
@@ -12,5 +12,32 @@ th {
 }
 
 th {
-  vertical-align: top;
+  vertical-align: center;
+}
+td {
+  position: relative;
+}
+.tableButton {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #3e64ff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.tableButton:hover {
+  background-color: #304bb5;
+  color: aliceblue;
+}
+@media (max-width: 1146px) {
+  .tableButton {
+    height: 9vh;
+  }
+}
+@media (max-width: 930px) {
+  .tableButton {
+    height: 18vh;
+  }
 }

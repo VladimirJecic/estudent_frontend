@@ -1,19 +1,19 @@
-import HomePage from "./HomePage";
+import HomePage from "./homePage/HomePage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-//import useHomePageViewModel from "../viewModel/HomePageViewModel";
+
 import useLoginViewModel from "../viewModel/LoginViewModel";
-import SignIn from "./loginComponents/SignIn";
-import SignUp from "./loginComponents/SignUp";
+import SignIn from "./login/SignIn";
+import SignUp from "./login/SignUp";
 
 const EStudentRoutes = () => {
+  // console.log("EStudentRoutes re-rendered");
   const loginViewModel = useLoginViewModel();
-  // const homePageViewModel = useHomePageViewModel();
   return (
     <BrowserRouter className="App">
       <Routes>
         <Route path="/*" element={<Navigate to="/login" />} />
         <Route
-          path="/login"
+          path="login"
           element={
             loginViewModel.loginMode === "sign_in" ? (
               <SignIn
@@ -32,7 +32,7 @@ const EStudentRoutes = () => {
             )
           }
         />
-        <Route path="/home" element={<HomePage />}></Route>
+        <Route path="home/*" element={<HomePage />}></Route>
       </Routes>
     </BrowserRouter>
   );
