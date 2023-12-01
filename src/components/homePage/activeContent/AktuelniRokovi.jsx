@@ -1,20 +1,21 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "../../../assets/componentCSS/AktuelniRokovi.css";
 import aktuelniRokoviViewModel from "../../../viewModel/AktuelniRokoviViewModel.js";
 import { dateToString } from "../../../utils/DateUtility.js";
-const AktuelniRokovi = () => {
-  const viewModel = aktuelniRokoviViewModel();
-
+const AktuelniRokovi = ({ refAktuelniRokovi }) => {
+  const viewModel = aktuelniRokoviViewModel(refAktuelniRokovi);
   useEffect(() => {
-    viewModel.ucitajAktuelneRokove();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!refAktuelniRokovi.current) {
+      (async () => {
+        const r = await viewModel.ucitajAktuelneRokove();
+        refAktuelniRokovi.current = r;
+      })();
+    } else {
+      viewModel.setAktuelniRokovi(refAktuelniRokovi.current);
+    }
   }, []);
-  // function prikaziMojeIspite(){
-
-  // }
-  // function prikaziSveIspite(){
-
-  // }
+  function prikaziMojeIspite() {}
+  function prikaziSveIspite() {}
   return (
     <div>
       <p>Aktuelni Rokovi</p>
@@ -104,4 +105,4 @@ const AktuelniRokovi = () => {
   );
 };
 
-export default AktuelniRokovi;
+export default React.memo(AktuelniRokovi);

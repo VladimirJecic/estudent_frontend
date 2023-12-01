@@ -1,10 +1,9 @@
 import Sidebar from "./Sidebar";
 import ActiveContent from "./activeContent/ActiveContent";
-import useHomePageViewModel from "../../viewModel/HomePageViewModel";
+import HomePageViewModel from "../../viewModel/HomePageViewModel";
 
 const HomePage = () => {
-  const homePageViewModel = useHomePageViewModel();
-  // console.log("HomePage rendered");
+  const homePageViewModel = HomePageViewModel();
   return (
     <div className="wrapper d-flex align-items-stretch">
       <Sidebar

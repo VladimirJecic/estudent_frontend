@@ -6,7 +6,7 @@ import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
 
 const EStudentRoutes = () => {
-  // console.log("EStudentRoutes re-rendered");
+  console.log("EStudentRoutes re-rendered");
   const loginViewModel = useLoginViewModel();
   return (
     <BrowserRouter className="App">

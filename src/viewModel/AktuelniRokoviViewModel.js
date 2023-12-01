@@ -1,6 +1,6 @@
 import axios from "axios";
 import { localhost } from "../assets/config.js";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ExamPeriod from "../model/ExamPeriod.js";
 // import CourseExam from "../model/CourseExam.js";
 const AktuelniRokoviViewModel = () => {
@@ -25,18 +25,21 @@ const AktuelniRokoviViewModel = () => {
         });
         setAktuelniRokovi(newPeriods);
         console.log("rokovi postavljeni");
+        return newPeriods;
       } else {
         console.error(response.data);
       }
     } catch (error) {
       console.error(error);
     }
+    return undefined;
   }
   async function ucitajMojeIspite() {}
   async function ucitajSveIspite() {}
 
   return {
     aktuelniRokovi,
+    setAktuelniRokovi: (rokovi) => setAktuelniRokovi(rokovi),
     ucitajAktuelneRokove,
     ucitajMojeIspite,
     ucitajSveIspite,
