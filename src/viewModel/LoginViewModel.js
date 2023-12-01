@@ -18,10 +18,18 @@ const LoginViewModel = () => {
       case "name":
         newUser.name = event.target.value;
         break;
+      case "name":
+        newUser.name = event.target.value;
+        break;
       case "indexNum":
+        newUser.indexNum = event.target.value;
         newUser.indexNum = event.target.value;
         break;
       case "password":
+        newUser.password = event.target.value;
+        break;
+      case "confirmPassword":
+        newUser.confirmPassword = event.target.value;
         newUser.password = event.target.value;
         break;
       case "confirmPassword":
@@ -58,6 +66,27 @@ const LoginViewModel = () => {
   };
   const handleRegister = async (event, navigate) => {
     event.preventDefault();
+    try {
+      const response = await axios.post(`${localhost}:8000/api/login`, {
+        indexNum: user.indexNum,
+        name: user.name,
+        password: user.password,
+        c_password: user.confirmPassword,
+      });
+      if (response.data.success === true) {
+        console.log(response.data);
+        // Set the access token in session storage
+        const token = response.data.data.token;
+        window.sessionStorage.setItem("auth_token", token);
+        user.token = token;
+        setUser(user);
+        navigate("/home"); // Navigate to the home route
+      } else {
+        setWarningVisibility(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     try {
       const response = await axios.post(`${localhost}:8000/api/login`, {
         indexNum: user.indexNum,
