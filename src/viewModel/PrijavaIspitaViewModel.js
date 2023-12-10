@@ -1,2 +1,1 @@
-const PrijavaIspitaViewModel = () => {};
-export default PrijavaIspitaViewModel;
+export default class PrijavaIspitaViewModel {}

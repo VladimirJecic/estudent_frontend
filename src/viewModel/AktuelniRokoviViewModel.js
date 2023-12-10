@@ -1,13 +1,26 @@
 import axios from "axios";
 import { localhost } from "../assets/config.js";
-import { useRef, useState } from "react";
 import ExamPeriod from "../model/ExamPeriod.js";
 // import CourseExam from "../model/CourseExam.js";
-const AktuelniRokoviViewModel = () => {
-  const [aktuelniRokovi, setAktuelniRokovi] = useState([]);
-  // const [mojiIspiti, setMojiIspiti] = useState([]);
-  // const [sviIspiti, setSviIspiti] = useState([]);
-  async function ucitajAktuelneRokove() {
+export default class AktuelniRokoviViewModel {
+  aktuelniRokovi;
+  mojiIspiti;
+  sviIspiti;
+  updateView;
+  constructor() {
+    this.aktuelniRokovi = [];
+    this.mojiIspiti = [];
+    this.sviIspiti = [];
+    this.updateView = undefined;
+  }
+  copy = () => {
+    const copyOfThis = new AktuelniRokoviViewModel();
+    copyOfThis.aktuelniRokovi = this.aktuelniRokovi;
+    copyOfThis.updateView = this.updateView;
+    return copyOfThis;
+  };
+
+  ucitajAktuelneRokove = async () => {
     try {
       const token = sessionStorage.auth_token;
       const response = await axios.get(
@@ -23,9 +36,9 @@ const AktuelniRokoviViewModel = () => {
         const newPeriods = response.data.data.map((jsonExamPeriod) => {
           return new ExamPeriod().fromJSON(jsonExamPeriod);
         });
-        setAktuelniRokovi(newPeriods);
+        this.aktuelniRokovi = newPeriods;
+        this.updateView?.();
         console.log("rokovi postavljeni");
-        return newPeriods;
       } else {
         console.error(response.data);
       }
@@ -33,16 +46,7 @@ const AktuelniRokoviViewModel = () => {
       console.error(error);
     }
     return undefined;
-  }
-  async function ucitajMojeIspite() {}
-  async function ucitajSveIspite() {}
-
-  return {
-    aktuelniRokovi,
-    setAktuelniRokovi: (rokovi) => setAktuelniRokovi(rokovi),
-    ucitajAktuelneRokove,
-    ucitajMojeIspite,
-    ucitajSveIspite,
   };
-};
-export default AktuelniRokoviViewModel;
+  ucitajMojeIspite = async () => {};
+  ucitajSveIspite = async () => {};
+}

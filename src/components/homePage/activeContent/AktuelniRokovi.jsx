@@ -1,25 +1,21 @@
-import React, { useEffect } from "react";
 import "../../../assets/componentCSS/AktuelniRokovi.css";
-import aktuelniRokoviViewModel from "../../../viewModel/AktuelniRokoviViewModel.js";
+import AktuelniRokoviViewModel from "../../../viewModel/AktuelniRokoviViewModel.js";
 import { dateToString } from "../../../utils/DateUtility.js";
-const AktuelniRokovi = ({ refAktuelniRokovi }) => {
-  const viewModel = aktuelniRokoviViewModel(refAktuelniRokovi);
+import { useEffect, useState } from "react";
+const AktuelniRokovi = () => {
+  const [aktuelniRokoviVM, setAktuelniRokoviVM] = useState(
+    new AktuelniRokoviViewModel()
+  );
+  aktuelniRokoviVM.updateView = () => {
+    setAktuelniRokoviVM(aktuelniRokoviVM.copy());
+  };
   useEffect(() => {
-    if (!refAktuelniRokovi.current) {
-      (async () => {
-        const r = await viewModel.ucitajAktuelneRokove();
-        refAktuelniRokovi.current = r;
-      })();
-    } else {
-      viewModel.setAktuelniRokovi(refAktuelniRokovi.current);
-    }
+    aktuelniRokoviVM.ucitajAktuelneRokove();
   }, []);
-  function prikaziMojeIspite() {}
-  function prikaziSveIspite() {}
   return (
     <div>
       <p>Aktuelni Rokovi</p>
-      {viewModel.aktuelniRokovi.length === 0 ? (
+      {aktuelniRokoviVM.aktuelniRokovi.length === 0 ? (
         <p> Nema trenutno aktuelnih rokova</p>
       ) : (
         <div className="tableWrapper">
@@ -41,7 +37,7 @@ const AktuelniRokovi = ({ refAktuelniRokovi }) => {
               </tr>
             </thead>
             <tbody>
-              {viewModel.aktuelniRokovi.map((rok, key) => (
+              {aktuelniRokoviVM.aktuelniRokovi.map((rok, key) => (
                 <tr key={key}>
                   <td>{rok.name}</td>
                   <td>{dateToString(rok.dateRegistrationStart)}</td>
@@ -60,9 +56,7 @@ const AktuelniRokovi = ({ refAktuelniRokovi }) => {
           </table>
         </div>
       )}
-      {viewModel.aktuelniRokovi.length !== 0 ? (
-        <p></p>
-      ) : (
+      {aktuelniRokoviVM.aktuelniRokovi.length !== 0 ? null : (
         <div className="tableWrapper">
           <table>
             <thead>
@@ -82,7 +76,7 @@ const AktuelniRokovi = ({ refAktuelniRokovi }) => {
               </tr>
             </thead>
             <tbody>
-              {viewModel.aktuelniRokovi.map((rok, key) => (
+              {aktuelniRokoviVM.aktuelniRokovi.map((rok, key) => (
                 <tr key={key}>
                   <td>{rok.name}</td>
                   <td>{dateToString(rok.dateRegistrationStart)}</td>
@@ -105,4 +99,4 @@ const AktuelniRokovi = ({ refAktuelniRokovi }) => {
   );
 };
 
-export default React.memo(AktuelniRokovi);
+export default AktuelniRokovi;

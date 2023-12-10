@@ -1,121 +1,97 @@
 import axios from "axios";
-import { useState } from "react";
 import User from "../model/User.js";
 const { localhost } = require("../assets/config.js");
 
-const LoginViewModel = () => {
-  const [warningVisibility, setWarningVisibility] = useState(false);
-  const [loginMode, setLoginMode] = useState("sign_in");
-  const [user, setUser] = useState(new User());
+export default class LoginViewModel {
+  warningVisibility;
+  loginMode;
+  user;
+  updateView;
 
-  const changeLoginMode = () => {
-    setWarningVisibility(false);
-    setLoginMode(loginMode === "sign_in" ? "sign_up" : "sign_in");
+  constructor() {
+    this.warningVisibility = false;
+    this.loginMode = "sign_in";
+    this.user = new User();
+    this.updateView = undefined;
+  }
+  copy = () => {
+    const copyOfThis = new LoginViewModel();
+    copyOfThis.warningVisibility = this.warningVisibility;
+    copyOfThis.loginMode = this.loginMode;
+    copyOfThis.user = this.user;
+    copyOfThis.updateView = this.updateView;
+    return copyOfThis;
   };
-  const changeUserData = (event) => {
-    const newUser = { ...user };
+  changeLoginMode = () => {
+    this.warningVisibility = false;
+    this.loginMode = this.loginMode === "sign_in" ? "sign_up" : "sign_in";
+    this.updateView?.();
+  };
+  changeUserData = (event) => {
     switch (event.target.name) {
       case "name":
-        newUser.name = event.target.value;
-        break;
-      case "name":
-        newUser.name = event.target.value;
+        this.user.name = event.target.value;
         break;
       case "indexNum":
-        newUser.indexNum = event.target.value;
-        newUser.indexNum = event.target.value;
+        this.user.indexNum = event.target.value;
         break;
       case "password":
-        newUser.password = event.target.value;
+        this.user.password = event.target.value;
         break;
       case "confirmPassword":
-        newUser.confirmPassword = event.target.value;
-        newUser.password = event.target.value;
-        break;
-      case "confirmPassword":
-        newUser.confirmPassword = event.target.value;
+        this.user.confirmPassword = event.target.value;
         break;
       default:
         console.error("Undefined value in changeUserData");
         return;
     }
-    setUser(newUser);
+    this.updateView?.();
   };
-  const handleLogin = async (event, navigate) => {
+  handleLogin = async (event, navigate) => {
     event.preventDefault();
     try {
       const response = await axios.post(`${localhost}:8000/api/login`, {
-        indexNum: user.indexNum,
-        password: user.password,
-        token: user.token,
+        indexNum: this.user.indexNum,
+        password: this.user.password,
+        token: this.user.token,
       });
       if (response.data.success === true) {
         console.log(response.data);
         // Set the access token in session storage
         const token = response.data.data.token;
         window.sessionStorage.setItem("auth_token", token);
-        user.token = token;
-        setUser(user);
+        this.user.token = token;
+        this.updateView?.();
         navigate("/home/rokovi"); // Navigate to the home route
       } else {
-        setWarningVisibility(true); // Set warning if login fails
+        this.warningVisibility = true; // Set warning if login fails
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const handleRegister = async (event, navigate) => {
+  handleRegister = async (event, navigate) => {
     event.preventDefault();
     try {
       const response = await axios.post(`${localhost}:8000/api/login`, {
-        indexNum: user.indexNum,
-        name: user.name,
-        password: user.password,
-        c_password: user.confirmPassword,
+        indexNum: this.user.indexNum,
+        name: this.user.name,
+        password: this.user.password,
+        c_password: this.user.confirmPassword,
       });
       if (response.data.success === true) {
         console.log(response.data);
         // Set the access token in session storage
         const token = response.data.data.token;
         window.sessionStorage.setItem("auth_token", token);
-        user.token = token;
-        setUser(user);
-        navigate("/home"); // Navigate to the home route
+        this.user.token = token;
+        this.updateView?.();
+        navigate("/home/rokovi"); // Navigate to the home route
       } else {
-        setWarningVisibility(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      const response = await axios.post(`${localhost}:8000/api/login`, {
-        indexNum: user.indexNum,
-        name: user.name,
-        password: user.password,
-        c_password: user.confirmPassword,
-      });
-      if (response.data.success === true) {
-        console.log(response.data);
-        // Set the access token in session storage
-        const token = response.data.data.token;
-        window.sessionStorage.setItem("auth_token", token);
-        user.token = token;
-        setUser(user);
-        navigate("/home"); // Navigate to the home route
-      } else {
-        setWarningVisibility(true);
+        this.warningVisibility = true;
       }
     } catch (error) {
       console.log(error);
     }
   };
-  return {
-    warningVisibility,
-    loginMode,
-    changeLoginMode,
-    changeUserData,
-    handleLogin,
-    handleRegister,
-  };
-};
-export default LoginViewModel;
+}

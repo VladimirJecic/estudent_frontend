@@ -1,9 +1,8 @@
-import usePolozeniIspitiViewModel from "../../../viewModel/PolozeniIspitiViewModel.js";
+import PolozeniIspitiViewModel from "../../../viewModel/PolozeniIspitiViewModel.js";
 const PolozeniIspiti = () => {
-  const polozeniIspitiViewModel = usePolozeniIspitiViewModel();
+  // const polozeniIspitiVM = new PolozeniIspitiViewModel();
   return (
     <div>
-      {polozeniIspitiViewModel}
       <h2 className="mb-4">Polozeni ispiti</h2>
       <p>
         tabela sadrzi kolone r.br,naziv predmeta,ocena,espb,rok,datum

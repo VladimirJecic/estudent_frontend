@@ -1,9 +1,8 @@
-import usePrijavaIspitaViewModel from "../../../viewModel/PrijavaIspitaViewModel.js";
+import PrijavaIspitaViewModel from "../../../viewModel/PrijavaIspitaViewModel.js";
 const PrijavaIspita = () => {
-  const prijavaIspitaViewModel = usePrijavaIspitaViewModel();
+  // const prijavaIspitaVM = new PrijavaIspitaViewModel();
   return (
     <div>
-      {prijavaIspitaViewModel}
       <h2 className="mb-4">Ispiti koje mogu da prijavim</h2>
       <p>
         sadrzi 2 sekcija prva sekcija sadrzi tabelu sa nepolozenim ispitima i to

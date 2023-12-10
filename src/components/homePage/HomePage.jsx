@@ -1,9 +1,16 @@
+import { useState } from "react";
 import Sidebar from "./Sidebar";
 import ActiveContent from "./activeContent/ActiveContent";
 import HomePageViewModel from "../../viewModel/HomePageViewModel";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const homePageViewModel = HomePageViewModel();
+  const [homePageViewModel, setHomePageViewModel] = useState(
+    new HomePageViewModel(useNavigate())
+  );
+  homePageViewModel.updateView = () => {
+    setHomePageViewModel(homePageViewModel.copy);
+  };
   return (
     <div className="wrapper d-flex align-items-stretch">
       <Sidebar
@@ -12,7 +19,6 @@ const HomePage = () => {
       />
       <ActiveContent
         handleSBCollapsing={homePageViewModel.handleSBCollapsing}
-        sBarItem={homePageViewModel.sBarItem}
       />
     </div>
   );

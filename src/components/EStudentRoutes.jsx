@@ -1,13 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import HomePage from "./homePage/HomePage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import useLoginViewModel from "../viewModel/LoginViewModel";
+// import useLoginViewModel from "../viewModel/LoginViewModel";
 import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
+import LoginViewModel from "../viewModel/LoginViewModel";
+import { useState } from "react";
 
 const EStudentRoutes = () => {
-  console.log("EStudentRoutes re-rendered");
-  const loginViewModel = useLoginViewModel();
+  const [loginViewModel, setLoginViewModel] = useState(new LoginViewModel());
+  loginViewModel.updateView = () => {
+    setLoginViewModel(loginViewModel.copy());
+  };
   return (
     <BrowserRouter className="App">
       <Routes>

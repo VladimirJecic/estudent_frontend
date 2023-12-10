@@ -1,2 +1,1 @@
-const PolozeniIspitiViewModel = () => {};
-export default PolozeniIspitiViewModel;
+export default class PolozeniIspitiViewModel {}
