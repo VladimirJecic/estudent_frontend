@@ -2,19 +2,18 @@ export default class HomePageViewModel {
   sBarCollapse;
   sBarItem;
   updateView;
-  navigate;
+  #navigate;
   constructor(navigate) {
     this.sBarCollapsed = true;
     this.sBarItem = "rokovi";
     this.updateView = undefined;
-    this.navigate = navigate;
+    this.#navigate = navigate;
   }
-  copy = () => {
-    const copyOfThis = new HomePageViewModel(this.navigate);
-    copyOfThis.sBarCollapse = this.sBarCollapse;
-    copyOfThis.sBarItem = this.sBarItem;
-    copyOfThis.updateView = this.sBarItem;
-    return copyOfThis;
+  project = () => {
+    return {
+      sBarCollapsed: this.sBarCollapsed,
+      sBarItem: this.sBarItem,
+    };
   };
   handleSBCollapsing = () => {
     this.sBarCollapsed = !this.sBarCollapsed;
@@ -23,6 +22,6 @@ export default class HomePageViewModel {
   handleSBItemChange = (item) => {
     this.sBarItem = item;
     this.updateView?.();
-    this.navigate?.("/home/" + this.sBarItem);
+    this.#navigate?.("/home/" + this.sBarItem);
   };
 }

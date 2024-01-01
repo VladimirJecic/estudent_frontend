@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Sidebar from "./Sidebar";
 import ActiveContent from "./activeContent/ActiveContent";
 import HomePageViewModel from "../../viewModel/HomePageViewModel";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const [homePageViewModel, setHomePageViewModel] = useState(
-    new HomePageViewModel(useNavigate())
-  );
-  homePageViewModel.updateView = () => {
-    setHomePageViewModel(homePageViewModel.copy);
+  const navigate = useNavigate();
+
+  const viewModel = useMemo(() => new HomePageViewModel(navigate), [navigate]);
+  const [viewModelState, setViewModelState] = useState(viewModel.project());
+
+  viewModel.updateView = () => {
+    setViewModelState(viewModel.project());
   };
   return (
     <div className="wrapper d-flex align-items-stretch">
       <Sidebar
-        sBarCollapsed={homePageViewModel.sBarCollapsed}
-        handleSBItemChange={homePageViewModel.handleSBItemChange}
+        sBarCollapsed={viewModelState.sBarCollapsed}
+        handleSBItemChange={viewModel.handleSBItemChange}
       />
-      <ActiveContent
-        handleSBCollapsing={homePageViewModel.handleSBCollapsing}
-      />
+      <ActiveContent handleSBCollapsing={viewModel.handleSBCollapsing} />
     </div>
   );
 };

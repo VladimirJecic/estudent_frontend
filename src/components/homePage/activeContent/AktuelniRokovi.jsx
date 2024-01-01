@@ -1,21 +1,21 @@
 import "../../../assets/componentCSS/AktuelniRokovi.css";
 import AktuelniRokoviViewModel from "../../../viewModel/AktuelniRokoviViewModel.js";
 import { dateToString } from "../../../utils/DateUtility.js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 const AktuelniRokovi = () => {
-  const [aktuelniRokoviVM, setAktuelniRokoviVM] = useState(
-    new AktuelniRokoviViewModel()
-  );
-  aktuelniRokoviVM.updateView = () => {
-    setAktuelniRokoviVM(aktuelniRokoviVM.copy());
+  const viewModel = useMemo(() => new AktuelniRokoviViewModel(), []);
+  const [viewModelState, setViewModelState] = useState(viewModel.project());
+
+  viewModel.updateView = () => {
+    setViewModelState(viewModel.project());
   };
   useEffect(() => {
-    aktuelniRokoviVM.ucitajAktuelneRokove();
-  }, []);
+    viewModel.ucitajAktuelneRokove();
+  }, [viewModel]);
   return (
     <div>
       <p>Aktuelni Rokovi</p>
-      {aktuelniRokoviVM.aktuelniRokovi.length === 0 ? (
+      {viewModelState.aktuelniRokovi.length === 0 ? (
         <p> Nema trenutno aktuelnih rokova</p>
       ) : (
         <div className="tableWrapper">
@@ -37,7 +37,7 @@ const AktuelniRokovi = () => {
               </tr>
             </thead>
             <tbody>
-              {aktuelniRokoviVM.aktuelniRokovi.map((rok, key) => (
+              {viewModelState.aktuelniRokovi.map((rok, key) => (
                 <tr key={key}>
                   <td>{rok.name}</td>
                   <td>{dateToString(rok.dateRegistrationStart)}</td>
@@ -56,7 +56,7 @@ const AktuelniRokovi = () => {
           </table>
         </div>
       )}
-      {aktuelniRokoviVM.aktuelniRokovi.length !== 0 ? null : (
+      {viewModelState.aktuelniRokovi.length !== 0 ? null : (
         <div className="tableWrapper">
           <table>
             <thead>
@@ -76,7 +76,7 @@ const AktuelniRokovi = () => {
               </tr>
             </thead>
             <tbody>
-              {aktuelniRokoviVM.aktuelniRokovi.map((rok, key) => (
+              {viewModelState.aktuelniRokovi.map((rok, key) => (
                 <tr key={key}>
                   <td>{rok.name}</td>
                   <td>{dateToString(rok.dateRegistrationStart)}</td>

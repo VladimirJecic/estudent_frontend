@@ -6,12 +6,16 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
 import LoginViewModel from "../viewModel/LoginViewModel";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const EStudentRoutes = () => {
-  const [loginViewModel, setLoginViewModel] = useState(new LoginViewModel());
+  const loginViewModel = useMemo(() => new LoginViewModel(), []);
+  const [loginViewModelState, setLoginViewModelState] = useState(
+    loginViewModel.project()
+  );
+
   loginViewModel.updateView = () => {
-    setLoginViewModel(loginViewModel.copy());
+    setLoginViewModelState(loginViewModel.project());
   };
   return (
     <BrowserRouter className="App">
@@ -20,16 +24,16 @@ const EStudentRoutes = () => {
         <Route
           path="login"
           element={
-            loginViewModel.loginMode === "sign_in" ? (
+            loginViewModelState.loginMode === "sign_in" ? (
               <SignIn
-                warningVisibility={loginViewModel.warningVisibility}
+                warningVisibility={loginViewModelState.warningVisibility}
                 changeLoginMode={loginViewModel.changeLoginMode}
                 changeUserData={loginViewModel.changeUserData}
                 handleLogin={loginViewModel.handleLogin}
               />
             ) : (
               <SignUp
-                warningVisibility={loginViewModel.warningVisibility}
+                warningVisibility={loginViewModelState.warningVisibility}
                 changeLoginMode={loginViewModel.changeLoginMode}
                 changeUserData={loginViewModel.changeUserData}
                 handleRegister={loginViewModel.handleRegister}

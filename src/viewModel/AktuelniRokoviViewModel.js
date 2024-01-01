@@ -13,11 +13,12 @@ export default class AktuelniRokoviViewModel {
     this.sviIspiti = [];
     this.updateView = undefined;
   }
-  copy = () => {
-    const copyOfThis = new AktuelniRokoviViewModel();
-    copyOfThis.aktuelniRokovi = this.aktuelniRokovi;
-    copyOfThis.updateView = this.updateView;
-    return copyOfThis;
+  project = () => {
+    return {
+      aktuelniRokovi: this.aktuelniRokovi,
+      mojiIspiti: this.mojiIspiti,
+      sviIspiti: this.sviIspiti,
+    };
   };
 
   ucitajAktuelneRokove = async () => {

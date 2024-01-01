@@ -1,4 +1,4 @@
-import PolozeniIspitiViewModel from "../../../viewModel/PolozeniIspitiViewModel.js";
+// import PolozeniIspitiViewModel from "../../../viewModel/PolozeniIspitiViewModel.js";
 const PolozeniIspiti = () => {
   // const polozeniIspitiVM = new PolozeniIspitiViewModel();
   return (

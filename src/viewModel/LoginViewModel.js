@@ -14,13 +14,12 @@ export default class LoginViewModel {
     this.user = new User();
     this.updateView = undefined;
   }
-  copy = () => {
-    const copyOfThis = new LoginViewModel();
-    copyOfThis.warningVisibility = this.warningVisibility;
-    copyOfThis.loginMode = this.loginMode;
-    copyOfThis.user = this.user;
-    copyOfThis.updateView = this.updateView;
-    return copyOfThis;
+  project = () => {
+    return {
+      warningVisibility: this.warningVisibility,
+      loginMode: this.loginMode,
+      user: this.user,
+    };
   };
   changeLoginMode = () => {
     this.warningVisibility = false;
