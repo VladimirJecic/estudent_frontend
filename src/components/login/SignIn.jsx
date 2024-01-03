@@ -3,7 +3,7 @@ import "../../assets/componentCSS/LoginPage.css";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = ({
-  warningVisibility,
+  errorMessage,
   changeLoginMode,
   changeUserData,
   handleLogin,
@@ -39,11 +39,18 @@ const SignIn = ({
             placeholder="password"
             onChange={(e) => changeUserData(e)}
           />
-          {warningVisibility ? (
-            <p className="warning" role="alert">
-              That was the wrong username or password. Please try again.
-            </p>
-          ) : null}
+          {errorMessage && (
+            <div className="warning" role="alert">
+              {errorMessage?.split(".").map((errLine, key) => {
+                return (
+                  <p key={key} className="errLine">
+                    {errLine}
+                    <br />
+                  </p>
+                );
+              })}
+            </div>
+          )}
           <input type="submit" className="fadeIn fourth" value="Log In" />
         </form>
       </div>

@@ -45,10 +45,20 @@ const AktuelniRokovi = () => {
                   <td>{dateToString(rok.dateStart)}</td>
                   <td>{dateToString(rok.dateEnd)}</td>
                   <td>
-                    <button className="tableButton">moji</button>
+                    <button
+                      onClick={() => viewModel.ucitajMojeIspite(key)}
+                      className="tableButton"
+                    >
+                      moji
+                    </button>
                   </td>
                   <td>
-                    <button className="tableButton">svi</button>
+                    <button
+                      onClick={() => viewModel.ucitajSveIspite(key)}
+                      className="tableButton"
+                    >
+                      svi
+                    </button>
                   </td>
                 </tr>
               ))}

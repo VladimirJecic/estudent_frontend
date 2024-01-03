@@ -1,20 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import "../../assets/main.js";
+import "../../assets/componentCSS/Header.css";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 
-function Header({ handleSBCollapsing }) {
+function Header({ handleSBCollapsing, logOut }) {
   const [hBarCollapsed, setHBarCollapsed] = useState(true);
-  const navigate = useNavigate();
   const handleHBCollapsing = () => {
-    //postaviti novu css klasu kojom ce se klikom na kollapse postaviti
-    //rounded-circle 7rem
     setHBarCollapsed(!hBarCollapsed);
   };
-  const logout = () => {
-    //brise token i navlink na login
-    navigate("/login");
-  };
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const userString = user?.name + " (" + user?.indexNum + ")";
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -22,7 +16,7 @@ function Header({ handleSBCollapsing }) {
           type="button"
           id="sidebarCollapse"
           className="btn btn-primary"
-          onClick={handleSBCollapsing}
+          onClick={() => handleSBCollapsing()}
         >
           <i className="fa fa-bars"></i>
           <span className="sr-only">Toggle Menu</span>
@@ -46,7 +40,7 @@ function Header({ handleSBCollapsing }) {
           className={`collapse navbar-collapse ${hBarCollapsed ? "" : "show"}`}
           id="navbarSupportedContent"
         >
-          <ul className="nav navbar-nav ml-auto">
+          <ul className="nav navbar-nav ml-auto header">
             {/* <li
               className="nav-item active"
               onClick={() => handleSBItemChange("rokovi")}
@@ -65,11 +59,11 @@ function Header({ handleSBCollapsing }) {
             >
               <a className="nav-link">Prijava ispita</a>
             </li> */}
-            <li className="nav-item" onClick={() => logout()}>
-              <a className="nav-link">
-                <span className="fa fa-user"></span> Vladimir Jecic (2017/0079)
-                Kraj rada <span className="fa fa-power-off"></span>
-              </a>
+            <li className="nav-item">
+              <span className="fa fa-user"></span> {userString}
+            </li>
+            <li className="nav-item" onClick={() => logOut()}>
+              Kraj rada<span className="fa fa-power-off"></span>
             </li>
           </ul>
         </div>

@@ -27,4 +27,7 @@ export default class User {
     this.token = json.token;
     return this;
   }
+  toString() {
+    return this.name + " (" + this.indexNum + ")";
+  }
 }

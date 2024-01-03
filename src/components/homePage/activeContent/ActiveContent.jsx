@@ -5,10 +5,14 @@ import PolozeniIspiti from "./PolozeniIspiti.jsx";
 import PrijavaIspita from "./PrijavaIspita.jsx";
 // import useActiveContentViewModel from "../../../viewModel/ActiveContentViewModel.js";
 
-const ActiveContent = ({ handleSBCollapsing }) => {
+const ActiveContent = ({ handleSBCollapsing, logOut, user }) => {
   return (
     <div id="content" className="p-4 p-md-5 content">
-      <Header handleSBCollapsing={handleSBCollapsing} />
+      <Header
+        handleSBCollapsing={handleSBCollapsing}
+        logOut={logOut}
+        user={user}
+      />
       <Routes>
         <Route path="rokovi" element={<AktuelniRokovi />} />
         <Route path="polozeni_ispiti" element={<PolozeniIspiti />} />

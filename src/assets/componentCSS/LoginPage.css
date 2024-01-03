@@ -2,7 +2,9 @@
 @import "~typeface-poppins";
 
 /* BASIC */
-
+p.errLine {
+  margin-bottom: 0;
+}
 div.loginRoot {
   background-color: #3e64ff;
   font-family: "Poppins", sans-serif;

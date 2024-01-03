@@ -3,26 +3,26 @@ import User from "../model/User.js";
 const { localhost } = require("../assets/config.js");
 
 export default class LoginViewModel {
-  warningVisibility;
   loginMode;
   user;
   updateView;
+  errorMessage;
 
   constructor() {
-    this.warningVisibility = false;
     this.loginMode = "sign_in";
     this.user = new User();
     this.updateView = undefined;
+    this.errorMessage = undefined;
   }
   project = () => {
     return {
-      warningVisibility: this.warningVisibility,
       loginMode: this.loginMode,
       user: this.user,
+      errorMessage: this.errorMessage,
     };
   };
   changeLoginMode = () => {
-    this.warningVisibility = false;
+    this.errorMessage = undefined;
     this.loginMode = this.loginMode === "sign_in" ? "sign_up" : "sign_in";
     this.updateView?.();
   };
@@ -47,6 +47,7 @@ export default class LoginViewModel {
     this.updateView?.();
   };
   handleLogin = async (event, navigate) => {
+    this.errorMessage = undefined;
     event.preventDefault();
     try {
       const response = await axios.post(`${localhost}:8000/api/login`, {
@@ -57,40 +58,51 @@ export default class LoginViewModel {
       if (response.data.success === true) {
         console.log(response.data);
         // Set the access token in session storage
-        const token = response.data.data.token;
-        window.sessionStorage.setItem("auth_token", token);
-        this.user.token = token;
-        this.updateView?.();
+        this.user.fromJSON(response.data.data);
+        window.sessionStorage.setItem("user", JSON.stringify(this.user));
         navigate("/home/rokovi"); // Navigate to the home route
       } else {
-        this.warningVisibility = true; // Set warning if login fails
+        this.errorMessage = response.data.message;
       }
     } catch (error) {
       console.log(error);
+      if (error.response.status === 404) {
+        this.errorMessage =
+          "That was the wrong username or password. Please try again.";
+      } else {
+        this.errorMessage = error.response.data.message;
+      }
     }
+    this.updateView?.();
   };
   handleRegister = async (event, navigate) => {
+    this.errorMessage = undefined;
     event.preventDefault();
     try {
-      const response = await axios.post(`${localhost}:8000/api/login`, {
+      const response = await axios.post(`${localhost}:8000/api/register`, {
         indexNum: this.user.indexNum,
         name: this.user.name,
         password: this.user.password,
-        c_password: this.user.confirmPassword,
+        confirmPassword: this.user.confirmPassword,
       });
       if (response.data.success === true) {
         console.log(response.data);
         // Set the access token in session storage
-        const token = response.data.data.token;
-        window.sessionStorage.setItem("auth_token", token);
-        this.user.token = token;
+        this.user.fromJSON(response.data.data);
+        window.sessionStorage.setItem("user", JSON.stringify(this.user));
         this.updateView?.();
         navigate("/home/rokovi"); // Navigate to the home route
       } else {
-        this.warningVisibility = true;
+        this.errorMessage = response.data.message;
       }
     } catch (error) {
       console.log(error);
+      if (error.response.status === 401) {
+        this.errorMessage =
+          error.response.data.message +
+          "Only admin users can create new accounts.";
+      }
     }
+    this.updateView?.();
   };
 }

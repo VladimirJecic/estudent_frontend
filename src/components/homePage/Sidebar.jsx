@@ -3,7 +3,7 @@ import React from "react";
 import Image from "react-bootstrap/Image";
 import logoFon from "../../assets/logo-fon.png";
 
-function Sidebar({ sBarCollapsed, handleSBItemChange }) {
+function Sidebar({ sBarCollapsed, handleSBItemChange, user, logOut }) {
   return (
     <nav id="sidebar" className={`${sBarCollapsed ? "active" : ""}`}>
       <h1>
@@ -32,7 +32,7 @@ function Sidebar({ sBarCollapsed, handleSBItemChange }) {
             <span className="fa fa-sticky-note"></span> Prijava ispita
           </a>
         </li>
-        <li>
+        <li onClick={() => logOut()}>
           <a>
             <span className="fa fa-power-off"></span> Kraj rada
           </a>

@@ -23,9 +23,9 @@ export default class AktuelniRokoviViewModel {
 
   ucitajAktuelneRokove = async () => {
     try {
-      const token = sessionStorage.auth_token;
+      const token = JSON.parse(sessionStorage.user).token;
       const response = await axios.get(
-        `${localhost}:8000/api/exam-periods-active`,
+        `${localhost}:8000/api/exam-periods?onlyActive=${true}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,6 +48,36 @@ export default class AktuelniRokoviViewModel {
     }
     return undefined;
   };
-  ucitajMojeIspite = async () => {};
-  ucitajSveIspite = async () => {};
+  ucitajMojeIspite = async (key) => {
+    // try {
+    //   const token = sessionStorage.auth_token;
+    //   const response = axios.get(
+    //     `${localhost}:8000/api/course-exams/${
+    //       this.aktuelniRokovi[key].name
+    //     }?indexNum=${indexNum}&passed=true`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   );
+    //   if (response.data.success === true) {
+    //     const newPeriods = response.data.data.map((jsonExamPeriod) => {
+    //       return new ExamPeriod().fromJSON(jsonExamPeriod);
+    //     });
+    //     this.aktuelniRokovi = newPeriods;
+    //     this.updateView?.();
+    //     console.log("rokovi postavljeni");
+    //   } else {
+    //     console.error(response.data);
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    // return undefined;
+  };
+  ucitajSveIspite = async (key) => {
+    this.sviIspiti = this.aktuelniRokovi[key].exams;
+    this.updateView?.();
+  };
 }

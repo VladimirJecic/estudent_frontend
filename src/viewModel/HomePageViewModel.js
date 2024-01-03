@@ -1,5 +1,5 @@
 export default class HomePageViewModel {
-  sBarCollapse;
+  sBarCollapsed;
   sBarItem;
   updateView;
   #navigate;
@@ -23,5 +23,9 @@ export default class HomePageViewModel {
     this.sBarItem = item;
     this.updateView?.();
     this.#navigate?.("/home/" + this.sBarItem);
+  };
+  logOut = () => {
+    sessionStorage.clear();
+    this.#navigate("/login");
   };
 }

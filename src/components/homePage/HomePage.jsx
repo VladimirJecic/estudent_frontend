@@ -13,13 +13,18 @@ const HomePage = () => {
   viewModel.updateView = () => {
     setViewModelState(viewModel.project());
   };
+
   return (
     <div className="wrapper d-flex align-items-stretch">
       <Sidebar
         sBarCollapsed={viewModelState.sBarCollapsed}
         handleSBItemChange={viewModel.handleSBItemChange}
+        logOut={viewModel.logOut}
       />
-      <ActiveContent handleSBCollapsing={viewModel.handleSBCollapsing} />
+      <ActiveContent
+        handleSBCollapsing={viewModel.handleSBCollapsing}
+        logOut={viewModel.logOut}
+      />
     </div>
   );
 };

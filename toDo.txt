@@ -1,0 +1,22 @@
+-SignIn option is visible only to user with role admin in storage,requires to add role to User model
+-if user is successfully registered a message that says student account created indexNum:..., name:,,,.password:... and email:...
+-if user that is admin is logedOut , his sessionStorage is not deleted, otherwise it is deleted
+
+-ucitavanje mojihIspita
+-ucitanje polozenih ispita...slicno
+-prijavaispita je isto sta i ucitavanje mojih ispita, ali ce klikom na prijavi ispit biti moguce da se ispit prijavi nakon cega ce biti prikazan u listi/tabeli ispod sa      prijavljenim ispitima za taj tok.
+-napisati factory na backendu koji ce popuniti nekoliko examRegistrationa sa ocenama 5-10.
+-poziv REST API je bio zahtev ... npr da se pozove neki restapi kalendar i da se prikaze na stranici.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-ActiveContent has additional page called UpisOcena za korisnike koji su admini
+ucitava se lista svih ExamRegistrationa iz predmeta na kojem je User prijavljen iz rokova ciji je datum zavrsetka mladji do 30 dana od danasnjeg datuma
+pored tabele sa prijavama postoji filter po broju indexa,na dugme izmeni, prikazuje se komponenta-modul WindowUpisOcene sa ucitanim podacima prijave
+-Nakon zeljenih izmena, klikom na sacuvaj poziva se sistem da sacuva prijavu,ako je uspesno sacuvana prikazuje poruku o uspesnosti,u suprotnom o neuspesnosti
+(crvena i zelena boja)
+
+-admin takodje ima tab Prijava/Odjava Studenata, gde iz padajuce liste bira neki od kurseva na koji je trenutni admin sam prijavljen 
+nakon cega mu se izlistavaju svi useri koji su trenutno prijavljeni na kurs sa dugmetom odjavi
+takodje postoji i text polje indexNum gde je moguce da admin upise indexNum studenta kojeg hoce da prijavi na kurs i na dugme prijavi pozove sistem da prijavi
+tog studenta na predmet.Kao i ostale i ta operacija moze biti uspesna ili neuspesna(student je vec prijavljen na kursu).
+
