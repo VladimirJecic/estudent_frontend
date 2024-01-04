@@ -24,6 +24,7 @@ const HomePage = () => {
       <ActiveContent
         handleSBCollapsing={viewModel.handleSBCollapsing}
         logOut={viewModel.logOut}
+        signUp={viewModel.signUp}
       />
     </div>
   );

@@ -3,28 +3,20 @@ import User from "../model/User.js";
 const { localhost } = require("../assets/config.js");
 
 export default class LoginViewModel {
-  loginMode;
   user;
   updateView;
   errorMessage;
 
   constructor() {
-    this.loginMode = "sign_in";
     this.user = new User();
     this.updateView = undefined;
     this.errorMessage = undefined;
   }
   project = () => {
     return {
-      loginMode: this.loginMode,
       user: this.user,
       errorMessage: this.errorMessage,
     };
-  };
-  changeLoginMode = () => {
-    this.errorMessage = undefined;
-    this.loginMode = this.loginMode === "sign_in" ? "sign_up" : "sign_in";
-    this.updateView?.();
   };
   changeUserData = (event) => {
     switch (event.target.name) {
@@ -91,7 +83,7 @@ export default class LoginViewModel {
         this.user.fromJSON(response.data.data);
         window.sessionStorage.setItem("user", JSON.stringify(this.user));
         this.updateView?.();
-        navigate("/home/rokovi"); // Navigate to the home route
+        // navigate("/home/rokovi"); // Navigate to the home route
       } else {
         this.errorMessage = response.data.message;
       }
@@ -104,5 +96,8 @@ export default class LoginViewModel {
       }
     }
     this.updateView?.();
+  };
+  isAuthenticated = () => {
+    return sessionStorage.getItem("user") !== null;
   };
 }

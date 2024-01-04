@@ -2,6 +2,12 @@
 @import "~typeface-poppins";
 
 /* BASIC */
+h2.back-arrow:before {
+  font-size: 20px;
+}
+h2.back-arrow {
+  transform: translateY(4px);
+}
 p.errLine {
   margin-bottom: 0;
 }

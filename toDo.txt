@@ -1,4 +1,5 @@
 -SignIn option is visible only to user with role admin in storage,requires to add role to User model
+-staviti da admin ne vidi polja Polozeni Ispiti i Prijava Ispita u SideBaru
 -if user is successfully registered a message that says student account created indexNum:..., name:,,,.password:... and email:...
 -if user that is admin is logedOut , his sessionStorage is not deleted, otherwise it is deleted
 

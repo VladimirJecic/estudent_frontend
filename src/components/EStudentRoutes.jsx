@@ -6,6 +6,7 @@ import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
 import LoginViewModel from "../viewModel/LoginViewModel";
 import { useState, useMemo } from "react";
+import { useEffect } from "react";
 const EStudentRoutes = () => {
   const loginViewModel = useMemo(() => new LoginViewModel(), []);
   const [loginViewModelState, setLoginViewModelState] = useState(
@@ -16,34 +17,41 @@ const EStudentRoutes = () => {
     setLoginViewModelState(loginViewModel.project());
   };
 
+  useEffect(() => {
+    if (
+      window.location.pathname.startsWith("/home") &&
+      !loginViewModel.isAuthenticated()
+    ) {
+      window.location.replace("/login");
+    }
+  }, [loginViewModel]);
   return (
     <BrowserRouter className="App">
       <Routes>
-        <Route path="/*" element={<Navigate to="/login" />} />
+        loginViewModel.isAuthenticated() && (
         <Route
           path="login"
           element={
-            loginViewModelState.loginMode === "sign_in" ? (
-              <SignIn
-                errorMessage={loginViewModelState.errorMessage}
-                changeLoginMode={loginViewModel.changeLoginMode}
-                changeUserData={loginViewModel.changeUserData}
-                handleLogin={loginViewModel.handleLogin}
-              />
-            ) : (
-              <SignUp
-                errorMessage={loginViewModelState.errorMessage}
-                changeLoginMode={loginViewModel.changeLoginMode}
-                changeUserData={loginViewModel.changeUserData}
-                handleRegister={loginViewModel.handleRegister}
-              />
-            )
+            <SignIn
+              errorMessage={loginViewModelState.errorMessage}
+              changeUserData={loginViewModel.changeUserData}
+              handleLogin={loginViewModel.handleLogin}
+            />
           }
         />
         <Route
-          path="home/*"
-          element={<HomePage user={loginViewModelState.user} />}
-        ></Route>
+          path="signUp"
+          element={
+            <SignUp
+              errorMessage={loginViewModelState.errorMessage}
+              changeUserData={loginViewModel.changeUserData}
+              handleRegister={loginViewModel.handleRegister}
+            />
+          }
+        />
+        <Route path="home/*" element={<HomePage />}></Route>
+        )
+        <Route path="/*" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   );

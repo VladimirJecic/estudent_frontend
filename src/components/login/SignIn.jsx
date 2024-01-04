@@ -2,23 +2,12 @@ import logo from "../../assets/logo-small.jpg";
 import "../../assets/componentCSS/LoginPage.css";
 import { useNavigate } from "react-router-dom";
 
-const SignIn = ({
-  errorMessage,
-  changeLoginMode,
-  changeUserData,
-  handleLogin,
-}) => {
+const SignIn = ({ errorMessage, changeUserData, handleLogin }) => {
   const navigate = useNavigate();
   return (
     <div className="wrapper fadeInDown loginRoot">
       <div className="formContent">
         <h2 className="active">Sign In</h2>
-        <h2
-          className="inactive underlineHover"
-          onClick={() => changeLoginMode()}
-        >
-          Sign up
-        </h2>
         <div className="fadeIn first">
           <img src={logo} className="icon" alt="User Icon" />
         </div>

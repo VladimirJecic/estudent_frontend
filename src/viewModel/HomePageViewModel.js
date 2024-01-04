@@ -28,4 +28,7 @@ export default class HomePageViewModel {
     sessionStorage.clear();
     this.#navigate("/login");
   };
+  signUp = () => {
+    this.#navigate("/signUp");
+  };
 }
