@@ -44,8 +44,10 @@ const EStudentRoutes = () => {
           element={
             <SignUp
               errorMessage={loginViewModelState.errorMessage}
+              successMessage={loginViewModelState.successMessage}
               changeUserData={loginViewModel.changeUserData}
               handleRegister={loginViewModel.handleRegister}
+              hideWindow={loginViewModel.hideWindow}
             />
           }
         />

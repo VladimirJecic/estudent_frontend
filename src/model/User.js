@@ -17,14 +17,14 @@ export default class User {
     this.token = "";
   }
 
-  fromJSON(json) {
-    this.name = json.name;
-    this.indexNum = json.indexNum;
-    this.password = json.password;
-    this.confirmPassword = json.confirmPassword;
-    this.email = json.email;
-    this.role = json.role;
-    this.token = json.token;
+  withJSON(json) {
+    this.name = json?.name ?? this.name;
+    this.indexNum = json?.indexNum ?? this.indexNum;
+    this.password = json?.password ?? this.password;
+    this.confirmPassword = json?.confirmPassword ?? this.password;
+    this.email = json?.email ?? this.email;
+    this.role = json?.role ?? this.role;
+    this.token = json?.token ?? this.token;
     return this;
   }
   toString() {

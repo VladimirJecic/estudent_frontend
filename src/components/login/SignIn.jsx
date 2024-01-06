@@ -16,7 +16,7 @@ const SignIn = ({ errorMessage, changeUserData, handleLogin }) => {
             type="text"
             className="fadeIn second"
             name="indexNum"
-            placeholder="index number, in format xxxx/20xx"
+            placeholder="index number, in format 20xx/xxxx"
             onChange={(e) => {
               changeUserData(e);
             }}

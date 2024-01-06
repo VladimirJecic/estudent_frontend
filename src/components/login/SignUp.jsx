@@ -1,10 +1,23 @@
 import logo from "../../assets/logo-small.jpg";
 import "../../assets/componentCSS/LoginPage.css";
 import { useNavigate } from "react-router-dom";
-const SignUp = ({ errorMessage, changeUserData, handleRegister }) => {
+import SuccessWindow from "./SuccessWindow";
+const SignUp = ({
+  errorMessage,
+  successMessage,
+  changeUserData,
+  handleRegister,
+  hideWindow,
+}) => {
   const navigate = useNavigate();
   return (
     <div className="wrapper fadeInDown loginRoot">
+      {successMessage && (
+        <SuccessWindow
+          successMessage={successMessage}
+          hideWindow={hideWindow}
+        />
+      )}
       <div className="formContent">
         <h2
           className="inactive underlineHover fa fa-long-arrow-left back-arrow"
@@ -49,10 +62,13 @@ const SignUp = ({ errorMessage, changeUserData, handleRegister }) => {
             className="fadeIn third"
             name="confirmPassword"
             placeholder="confirm password"
+            onChange={(e) => {
+              changeUserData(e);
+            }}
           />
           <br></br>
           {errorMessage && (
-            <div className="warning" role="alert">
+            <div className="warning">
               {errorMessage?.split(".").map((errLine, key) => {
                 return (
                   <p key={key} className="errLine">

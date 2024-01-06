@@ -12,12 +12,12 @@ export default class CreateCourse {
     this.participants = [];
   }
 
-  fromJSON(json) {
+  withJSON(json) {
     this.name = json.name;
     this.semester = json.semester;
     this.espb = json.espb;
     this.participants = json.participants.map((jsonParticipant) =>
-      new User().fromJSON(jsonParticipant)
+      new User().withJSON(jsonParticipant)
     );
     return this;
   }

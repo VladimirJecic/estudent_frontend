@@ -6,16 +6,19 @@ export default class LoginViewModel {
   user;
   updateView;
   errorMessage;
+  successMessage;
 
   constructor() {
     this.user = new User();
     this.updateView = undefined;
     this.errorMessage = undefined;
+    this.successMessage = undefined;
   }
   project = () => {
     return {
       user: this.user,
       errorMessage: this.errorMessage,
+      successMessage: this.successMessage,
     };
   };
   changeUserData = (event) => {
@@ -50,7 +53,7 @@ export default class LoginViewModel {
       if (response.data.success === true) {
         console.log(response.data);
         // Set the access token in session storage
-        this.user.fromJSON(response.data.data);
+        this.user.withJSON(response.data.data);
         window.sessionStorage.setItem("user", JSON.stringify(this.user));
         navigate("/home/rokovi"); // Navigate to the home route
       } else {
@@ -58,46 +61,70 @@ export default class LoginViewModel {
       }
     } catch (error) {
       console.log(error);
-      if (error.response.status === 404) {
+      if (error.response === undefined) {
+        this.errorMessage = "No response from server";
+      } else if (error.response?.status === 404) {
         this.errorMessage =
           "That was the wrong username or password. Please try again.";
       } else {
-        this.errorMessage = error.response.data.message;
+        this.errorMessage = error.response?.data?.message;
       }
     }
     this.updateView?.();
   };
   handleRegister = async (event, navigate) => {
-    this.errorMessage = undefined;
     event.preventDefault();
+    this.errorMessage = undefined;
+    const token = JSON.parse(sessionStorage.user).token;
+    const data = JSON.stringify({
+      indexNum: this.user.indexNum,
+      name: this.user.name,
+      password: this.user.password,
+      confirmPassword: this.user.confirmPassword,
+    });
+    const config = {
+      method: "post",
+      url: "http://localhost:8000/api/register",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data,
+    };
     try {
-      const response = await axios.post(`${localhost}:8000/api/register`, {
-        indexNum: this.user.indexNum,
-        name: this.user.name,
-        password: this.user.password,
-        confirmPassword: this.user.confirmPassword,
-      });
+      const response = await axios.request(config);
       if (response.data.success === true) {
         console.log(response.data);
-        // Set the access token in session storage
-        this.user.fromJSON(response.data.data);
-        window.sessionStorage.setItem("user", JSON.stringify(this.user));
-        this.updateView?.();
-        // navigate("/home/rokovi"); // Navigate to the home route
+        this.user.withJSON(response.data.data);
+        this.successMessage = `
+          name: ${this.user.name}\n
+          indexNum: ${this.user.indexNum}\n
+          email: ${this.user.email}\n
+          role: ${this.user.role}\n
+          token: ${this.user.token}`;
       } else {
         this.errorMessage = response.data.message;
       }
     } catch (error) {
       console.log(error);
-      if (error.response.status === 401) {
+
+      if (error.response === undefined) {
+        this.errorMessage = "No response from server";
+      } else if (error.response?.status === 401) {
         this.errorMessage =
-          error.response.data.message +
+          error.response?.data?.message +
           "Only admin users can create new accounts.";
+      } else {
+        alert(error);
       }
     }
     this.updateView?.();
   };
   isAuthenticated = () => {
     return sessionStorage.getItem("user") !== null;
+  };
+  hideWindow = () => {
+    this.successMessage = undefined;
+    this.updateView?.();
   };
 }

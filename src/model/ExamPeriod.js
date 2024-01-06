@@ -17,14 +17,14 @@ export default class ExamPeriod {
     this.exams = [];
   }
 
-  fromJSON(json) {
+  withJSON(json) {
     this.name = json.name;
     this.dateRegistrationStart = new Date(json.dateRegistrationStart);
     this.dateRegistrationEnd = new Date(json.dateRegistrationEnd);
     this.dateStart = new Date(json.dateStart);
     this.dateEnd = new Date(json.dateEnd);
     this.exams = json.exams.map((jsonExam) =>
-      new CourseExam().fromJSON(jsonExam)
+      new CourseExam().withJSON(jsonExam)
     );
     return this;
   }

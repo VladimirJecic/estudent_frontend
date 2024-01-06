@@ -35,7 +35,7 @@ export default class AktuelniRokoviViewModel {
 
       if (response.data.success === true) {
         const newPeriods = response.data.data.map((jsonExamPeriod) => {
-          return new ExamPeriod().fromJSON(jsonExamPeriod);
+          return new ExamPeriod().withJSON(jsonExamPeriod);
         });
         this.aktuelniRokovi = newPeriods;
         this.updateView?.();
@@ -63,7 +63,7 @@ export default class AktuelniRokoviViewModel {
     //   );
     //   if (response.data.success === true) {
     //     const newPeriods = response.data.data.map((jsonExamPeriod) => {
-    //       return new ExamPeriod().fromJSON(jsonExamPeriod);
+    //       return new ExamPeriod().withJSON(jsonExamPeriod);
     //     });
     //     this.aktuelniRokovi = newPeriods;
     //     this.updateView?.();

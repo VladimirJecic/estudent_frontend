@@ -10922,7 +10922,7 @@ a[data-toggle="collapse"] {
 }
 div.wrapper.d-flex.align-items-stretch {
   overflow-y: hidden;
-  height: 1000px;
+  height: 100%;
 }
 
 @media (max-width: 610px) {

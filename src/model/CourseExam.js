@@ -11,8 +11,8 @@ export default class CourseExam {
     this.hall = "";
   }
 
-  fromJSON(json) {
-    this.course = new Course().fromJSON(json.course);
+  withJSON(json) {
+    this.course = new Course().withJSON(json.course);
     this.examDateTime = new Date(json.examDateTime);
     this.hall = json.hall;
     return this;

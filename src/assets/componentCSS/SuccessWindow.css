@@ -1,0 +1,100 @@
+div.window-background.success {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.25s ease all;
+  z-index: 500;
+}
+
+div.success div.window-content {
+  background: #c5cad2;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 70vw;
+  height: 60vh;
+  /* overflow-y: scroll;
+  word-wrap: anywhere; */
+}
+
+div.success div.window-header {
+  display: flex;
+  border-radius: 5px 5px 0 0;
+  height: 60px;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(32, 76, 122);
+  font-size: 1.5em;
+  color: azure;
+  text-shadow: 0 0 3px #000000;
+}
+
+div.success b.window-title {
+  margin-left: 60px;
+  flex: 90%;
+}
+
+div.success button.close {
+  font-size: 2rem;
+  cursor: pointer;
+  background-color: rgb(32, 76, 122);
+  border: none;
+  color: azure;
+  flex: 10%;
+}
+
+div.success .window-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  color: black;
+  font-size: 1.5em;
+  text-align: center;
+  overflow-y: scroll;
+  word-wrap: anywhere;
+  height: calc(60vh - 60px);
+}
+
+div.success p.window-message {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  text-align: start;
+  max-height: 10px;
+}
+.green {
+  color: #28a745;
+}
+@media (max-width: 915px) {
+  div.success div.window-content {
+    width: 400px;
+    height: 400px;
+  }
+  div.success .window-body {
+    height: 340px;
+  }
+
+  div.success .window-body {
+    font-size: 1.2em;
+  }
+}
+@media (max-width: 915px) {
+  div.success div.window-content {
+    width: 400px;
+    height: 400px;
+  }
+  div.success .window-body {
+    height: 340px;
+  }
+
+  div.success .window-body {
+    font-size: 1.2em;
+  }
+}
