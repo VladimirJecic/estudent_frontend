@@ -1,10 +1,9 @@
 import Course from "./Course.js";
-
+import { dateTimeToString } from "../../../utils/DateUtility.js";
 export default class CourseExam {
   course;
   examDateTime;
   hall;
-
   constructor() {
     this.course = {};
     this.examDateTime = new Date();
@@ -13,7 +12,7 @@ export default class CourseExam {
 
   withJSON(json) {
     this.course = new Course().withJSON(json.course);
-    this.examDateTime = new Date(json.examDateTime);
+    this.examDateTime = dateTimeToString(Date(json.examDateTime));
     this.hall = json.hall;
     return this;
   }

@@ -34,7 +34,7 @@ function Sidebar({ sBarCollapsed, handleSBItemChange, user, logOut }) {
         </li>
         <li onClick={() => logOut()}>
           <a>
-            <span className="fa fa-power-off"></span> Kraj rada
+            <span className="fa fa-power-off"></span> Izloguj me
           </a>
         </li>
       </ul>

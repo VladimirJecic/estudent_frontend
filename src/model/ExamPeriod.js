@@ -1,5 +1,5 @@
 import CourseExam from "./CourseExam.js";
-
+import { dateToString } from "../../../utils/DateUtility.js";
 export default class ExamPeriod {
   name;
   dateRegistrationStart;
