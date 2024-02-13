@@ -52,12 +52,12 @@ export default class AktuelniRokoviViewModel {
     return undefined;
   };
   ucitajMojeIspite = async (key) => {
-    this.sviIspiti = undefined;
-    this.mojiIspiti = undefined;
+    this.sviIspiti = [];
+    this.mojiIspiti = [];
     this.imeTrazenogRoka = this.aktuelniRokovi[key].name;
     try {
       const token = JSON.parse(sessionStorage.user).token;
-      const response = axios.get(
+      const response = await axios.get(
         `${localhost}:8000/api/course-exams/?examPeriod=${this.imeTrazenogRoka}`,
         {
           headers: {
@@ -66,11 +66,11 @@ export default class AktuelniRokoviViewModel {
         }
       );
       if (response.data.success === true) {
-        this.mojiIspiti = response.data.data.exams.map((jsonExam) =>
+        this.mojiIspiti = response.data.data.courseExams.map((jsonExam) =>
           new CourseExam().withJSON(jsonExam)
         );
         this.updateView?.();
-        console.log("moji ispiti postavljeni");
+        console.log(response.data.message);
       } else {
         console.error(response.data);
       }
@@ -80,7 +80,7 @@ export default class AktuelniRokoviViewModel {
     return undefined;
   };
   ucitajSveIspite = async (key) => {
-    this.mojiIspiti = undefined;
+    this.mojiIspiti = [];
     this.sviIspiti = this.aktuelniRokovi[key].exams;
     this.imeTrazenogRoka = this.aktuelniRokovi[key].name;
     this.updateView?.();

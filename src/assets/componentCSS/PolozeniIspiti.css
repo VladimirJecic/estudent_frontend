@@ -1,0 +1,10 @@
+.polozeniIspiti tfoot td {
+  text-align: left;
+}
+.polozeniIspiti td {
+  font-size: 1rem;
+}
+.polozeniIspiti table {
+  border-collapse: collapse;
+  text-align: center;
+}

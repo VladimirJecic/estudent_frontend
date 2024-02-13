@@ -70,7 +70,7 @@ function Header({ handleSBCollapsing, signUp, logOut }) {
               </li>
             )}
             <li className="nav-item" onClick={() => logOut()}>
-              Izloguj me <span className="fa fa-power-off"></span>
+              Izloguj me <span className="fa fa-power-off izlogujMe"></span>
             </li>
           </ul>
         </div>

@@ -4,6 +4,9 @@ ul.header {
 span.fa.fa-user-plus {
   padding-left: 1vw;
 }
+.izlogujMe {
+  cursor: pointer;
+}
 @media (min-width: 992px) {
   .nav-item {
     padding-right: 0.5rem;

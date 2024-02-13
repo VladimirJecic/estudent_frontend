@@ -1,5 +1,4 @@
 import Course from "./Course.js";
-import { dateTimeToString } from "../../../utils/DateUtility.js";
 export default class CourseExam {
   course;
   examDateTime;
@@ -12,7 +11,7 @@ export default class CourseExam {
 
   withJSON(json) {
     this.course = new Course().withJSON(json.course);
-    this.examDateTime = dateTimeToString(Date(json.examDateTime));
+    this.examDateTime = new Date(json.examDateTime);
     this.hall = json.hall;
     return this;
   }

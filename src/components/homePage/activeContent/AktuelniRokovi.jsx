@@ -13,8 +13,8 @@ const AktuelniRokovi = () => {
     viewModel.ucitajAktuelneRokove();
   }, [viewModel]);
   return (
-    <div>
-      <p>Ispiti</p>
+    <div className="aktuelniRokovi">
+      <h2 className="mb-4">Rokovi</h2>
       {viewModelState.aktuelniRokovi.length === 0 ? (
         <p> Nema trenutno aktuelnih rokova</p>
       ) : (
@@ -66,9 +66,13 @@ const AktuelniRokovi = () => {
           </table>
         </div>
       )}
-      {viewModelState.sviIspiti && (
+      {viewModelState.sviIspiti.length === 0 ? (
+        <></>
+      ) : (
         <div className="tableWrapper">
-          <p>Svi Ispiti za {viewModelState.imeTrazenogRoka}</p>
+          <p className="sviIspitiTitle">
+            Svi Ispiti za {viewModelState.imeTrazenogRoka}
+          </p>
           <table>
             <thead>
               <tr>
@@ -81,6 +85,37 @@ const AktuelniRokovi = () => {
             </thead>
             <tbody>
               {viewModelState.sviIspiti.map((courseExam, key) => (
+                <tr key={key}>
+                  <td>{courseExam.course.name}</td>
+                  <td>{courseExam.course.semester}</td>
+                  <td>{courseExam.course.espb}</td>
+                  <td>{dateTimeToString(courseExam.examDateTime)}</td>
+                  <td>{courseExam.hall}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {viewModelState.mojiIspiti.length === 0 ? (
+        <></>
+      ) : (
+        <div className="tableWrapper">
+          <p className="mojiIspitiTitle">
+            Moji Ispiti za {viewModelState.imeTrazenogRoka}
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Predmet</th>
+                <th>Semestar</th>
+                <th>Espb</th>
+                <th>Vreme Polaganja</th>
+                <th>Sala</th>
+              </tr>
+            </thead>
+            <tbody>
+              {viewModelState.mojiIspiti.map((courseExam, key) => (
                 <tr key={key}>
                   <td>{courseExam.course.name}</td>
                   <td>{courseExam.course.semester}</td>
