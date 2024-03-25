@@ -5,6 +5,7 @@
   font-size: 1rem;
 }
 .polozeniIspiti table {
+  width: 60vw;
   border-collapse: collapse;
   text-align: center;
 }

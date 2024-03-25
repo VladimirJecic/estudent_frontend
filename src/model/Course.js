@@ -1,22 +1,25 @@
 import User from "./User.js";
+import DomainObject from "./DomainObject.js";
 
-export default class CreateCourse {
+export default class CreateCourse extends DomainObject {
   name;
   semester;
   espb;
   participants;
   constructor() {
+    super();
+    this.id = -1;
     this.name = "";
     this.semester = "";
     this.espb = 0;
     this.participants = [];
   }
-
   withJSON(json) {
-    this.name = json.name;
-    this.semester = json.semester;
-    this.espb = json.espb;
-    this.participants = json.participants.map((jsonParticipant) =>
+    this.id = json?.id;
+    this.name = json?.name;
+    this.semester = json?.semester;
+    this.espb = json?.espb;
+    this.participants = json?.participants?.map((jsonParticipant) =>
       new User().withJSON(jsonParticipant)
     );
     return this;

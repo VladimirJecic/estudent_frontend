@@ -1,7 +1,7 @@
 import PrijavaIspitaViewModel from "../../../viewModel/PrijavaIspitaViewModel.js";
+import SuccessWindow from "../../login/SuccessWindow.jsx";
 import { useMemo, useState, useEffect } from "react";
 import { dateTimeToString } from "../../../utils/DateUtility.js";
-import { formatNumberToTwoDecimalPlaces } from "../../../utils/NumberUtility.js";
 import "../../../assets/componentCSS/PrijavaIspita.css";
 
 const PrijavaIspita = () => {
@@ -13,22 +13,29 @@ const PrijavaIspita = () => {
   };
   useEffect(() => {
     viewModel.ucitajPotencijalnePrijave();
-    //viewModel.ucitajPostojecePrijave();
-  }, [viewModel]);
+    viewModel.ucitajPostojecePrijave();
+  }, [viewModel, viewModelState]);
   return (
     <div className="prijavaIspita">
       <h2 className="mb-4">Ispiti koje mogu da prijavim</h2>
       {viewModelState.potencijalnePrijave.length === 0 ? (
-        <p> Prijava ispita nije u toku</p>
+        <p> {viewModel.vratiPorukuPotencijalnePrijave()}</p>
       ) : (
         <div className="tableWrapper prijavaIspita">
+          {viewModelState.successMessage && (
+            <SuccessWindow
+              title="Prijava ispita"
+              successMessage={viewModelState.successMessage}
+              hideWindow={viewModel.hideWindow}
+            />
+          )}
           <table>
             <thead>
               <tr>
                 <th>Naziv Ispita</th>
                 <th>Espb</th>
                 <th>Vreme polaganja</th>
-                <th colSpan={2}>Akcija</th>
+                <th colSpan={2}></th>
               </tr>
             </thead>
             <tbody>
@@ -39,18 +46,10 @@ const PrijavaIspita = () => {
                   <td>{dateTimeToString(polaganje.courseExam.examDateTime)}</td>
                   <td>
                     <button
-                      onClick={() => viewModel.ucitajMojeIspite(key)}
+                      onClick={() => viewModel.sacuvajPrijavu(key)}
                       className="tableButton"
                     >
                       prijavi
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => viewModel.ucitajMojeIspite(key)}
-                      className="tableButton"
-                    >
-                      odjavi
                     </button>
                   </td>
                 </tr>
@@ -62,7 +61,7 @@ const PrijavaIspita = () => {
       <h2 className="mb-4 prijavljeniIspitiTitle">Prijavljeni ispiti</h2>
       {viewModelState.postojecePrijave.length === 0 ? (
         <div className="bg-info w-50 text-center ">
-          <h5> Niste prijavili nijedan ispit!</h5>
+          <h5> {viewModel.vratiPorukuPostojecePrijave()}</h5>
         </div>
       ) : (
         <div className="tableWrapper prijavaIspita">
@@ -87,15 +86,6 @@ const PrijavaIspita = () => {
                 </tr>
               ))}
             </tbody>
-            <tfoot>
-              <tr>
-                <td style={{ textAlign: "left" }} colSpan={7}>
-                  Prosečna ocena:{" "}
-                  {formatNumberToTwoDecimalPlaces(viewModel.prosecnaOcena())},
-                  Ukupno ostvareno ESPB poena: {viewModel.ukupnoESPB()}
-                </td>
-              </tr>
-            </tfoot>
           </table>
         </div>
       )}

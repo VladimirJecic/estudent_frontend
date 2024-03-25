@@ -2,6 +2,7 @@ import "../../../assets/componentCSS/AktuelniRokovi.css";
 import AktuelniRokoviViewModel from "../../../viewModel/AktuelniRokoviViewModel.js";
 import { dateToString, dateTimeToString } from "../../../utils/DateUtility.js";
 import { useEffect, useState, useMemo } from "react";
+import LoginViewModel from "../../../viewModel/LoginViewModel.js";
 const AktuelniRokovi = () => {
   const viewModel = useMemo(() => new AktuelniRokoviViewModel(), []);
   const [viewModelState, setViewModelState] = useState(viewModel.project());
@@ -16,7 +17,7 @@ const AktuelniRokovi = () => {
     <div className="aktuelniRokovi">
       <h2 className="mb-4">Rokovi</h2>
       {viewModelState.aktuelniRokovi.length === 0 ? (
-        <p> Nema trenutno aktuelnih rokova</p>
+        <p>{viewModel.vratiPoruku()}</p>
       ) : (
         <div className="tableWrapper">
           <table>
@@ -44,14 +45,16 @@ const AktuelniRokovi = () => {
                   <td>{dateToString(rok.dateRegistrationEnd)}</td>
                   <td>{dateToString(rok.dateStart)}</td>
                   <td>{dateToString(rok.dateEnd)}</td>
-                  <td>
-                    <button
-                      onClick={() => viewModel.ucitajMojeIspite(key)}
-                      className="tableButton"
-                    >
-                      moji
-                    </button>
-                  </td>
+                  {!LoginViewModel.getStoredUser()?.isAdmin() && (
+                    <td>
+                      <button
+                        onClick={() => viewModel.ucitajMojeIspite(key)}
+                        className="tableButton"
+                      >
+                        moji
+                      </button>
+                    </td>
+                  )}
                   <td>
                     <button
                       onClick={() => viewModel.ucitajSveIspite(key)}

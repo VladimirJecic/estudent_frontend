@@ -2,8 +2,9 @@
 import React from "react";
 import Image from "react-bootstrap/Image";
 import logoFon from "../../assets/logo-fon.png";
+import LoginViewModel from "../../viewModel/LoginViewModel";
 
-function Sidebar({ sBarCollapsed, handleSBItemChange, user, logOut }) {
+function Sidebar({ sBarCollapsed, handleSBItemChange, logOut }) {
   return (
     <nav id="sidebar" className={`${sBarCollapsed ? "active" : ""}`}>
       <h1>
@@ -21,17 +22,27 @@ function Sidebar({ sBarCollapsed, handleSBItemChange, user, logOut }) {
             <span className="far fa-calendar-check" aria-hidden="true"></span>{" "}
             Aktuelni rokovi
           </a>
-        </li>
-        <li onClick={() => handleSBItemChange("polozeni_ispiti")}>
-          <a>
-            <span className="fa fa-th-large"></span> Polozeni ispiti
-          </a>
-        </li>
-        <li onClick={() => handleSBItemChange("prijava_ispita")}>
-          <a>
-            <span className="fa fa-sticky-note"></span> Prijava ispita
-          </a>
-        </li>
+        </li>{" "}
+        {LoginViewModel.getStoredUser()?.isAdmin() ? (
+          <li onClick={() => handleSBItemChange("ocena_radova")}>
+            <a>
+              <span className="fa-solid fa-pen-to-square"></span> Ocena Radova
+            </a>
+          </li>
+        ) : (
+          <>
+            <li onClick={() => handleSBItemChange("polozeni_ispiti")}>
+              <a>
+                <span className="fa fa-th-large"></span> Polozeni ispiti
+              </a>
+            </li>
+            <li onClick={() => handleSBItemChange("prijava_ispita")}>
+              <a>
+                <span className="fa fa-sticky-note"></span> Prijava ispita
+              </a>
+            </li>
+          </>
+        )}
         <li onClick={() => logOut()}>
           <a>
             <span className="fa fa-power-off"></span> Izloguj me

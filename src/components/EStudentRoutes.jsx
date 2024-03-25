@@ -6,7 +6,7 @@ import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
 import LoginViewModel from "../viewModel/LoginViewModel";
 import { useState, useMemo } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 const EStudentRoutes = () => {
   const loginViewModel = useMemo(() => new LoginViewModel(), []);
   const [loginViewModelState, setLoginViewModelState] = useState(
@@ -17,18 +17,17 @@ const EStudentRoutes = () => {
     setLoginViewModelState(loginViewModel.project());
   };
 
-  useEffect(() => {
-    if (
-      window.location.pathname.startsWith("/home") &&
-      !loginViewModel.isAuthenticated()
-    ) {
-      window.location.replace("/login");
-    }
-  }, [loginViewModel]);
+  // useEffect(() => {
+  //   if (
+  //     window.location.pathname.startsWith("/home")
+  //     //  &&!LoginViewModel.getStoredUser().isAdmin()
+  //   ) {
+  //     window.location.replace("/login");
+  //   }
+  // }, [loginViewModel]);
   return (
     <BrowserRouter className="App">
       <Routes>
-        loginViewModel.isAuthenticated() && (
         <Route
           path="login"
           element={
@@ -39,20 +38,21 @@ const EStudentRoutes = () => {
             />
           }
         />
-        <Route
-          path="signUp"
-          element={
-            <SignUp
-              errorMessage={loginViewModelState.errorMessage}
-              successMessage={loginViewModelState.successMessage}
-              changeUserData={loginViewModel.changeUserData}
-              handleRegister={loginViewModel.handleRegister}
-              hideWindow={loginViewModel.hideWindow}
-            />
-          }
-        />
+        {LoginViewModel.getStoredUser()?.isAdmin() && (
+          <Route
+            path="signUp"
+            element={
+              <SignUp
+                errorMessage={loginViewModelState.errorMessage}
+                successMessage={loginViewModelState.successMessage}
+                changeUserData={loginViewModel.changeUserData}
+                handleRegister={loginViewModel.handleRegister}
+                hideWindow={loginViewModel.hideWindow}
+              />
+            }
+          />
+        )}
         <Route path="home/*" element={<HomePage />}></Route>
-        )
         <Route path="/*" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>

@@ -2,13 +2,21 @@ import AktuelniRokovi from "./AktuelniRokovi.jsx";
 import { Routes, Route } from "react-router-dom";
 import PolozeniIspiti from "./PolozeniIspiti.jsx";
 import PrijavaIspita from "./PrijavaIspita.jsx";
+import LoginViewModel from "../../../viewModel/LoginViewModel.js";
+import OcenaRadova from "./OcenaRadova.jsx";
 
 const ActiveContent = () => {
   return (
     <Routes>
+      {LoginViewModel.getStoredUser()?.isAdmin() ? (
+        <Route path="ocena_radova" element={<OcenaRadova />} />
+      ) : (
+        <>
+          <Route path="polozeni_ispiti" element={<PolozeniIspiti />} />
+          <Route path="prijava_ispita" element={<PrijavaIspita />} />
+        </>
+      )}
       <Route path="rokovi" element={<AktuelniRokovi />} />
-      <Route path="polozeni_ispiti" element={<PolozeniIspiti />} />
-      <Route path="prijava_ispita" element={<PrijavaIspita />} />
     </Routes>
   );
 };

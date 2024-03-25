@@ -16,8 +16,8 @@ div.success div.window-content {
   background: #c5cad2;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  width: 70vw;
-  height: 60vh;
+  width: fit-content;
+  height: fit-content;
   /* overflow-y: scroll;
   word-wrap: anywhere; */
 }
@@ -56,18 +56,20 @@ div.success .window-body {
   color: black;
   font-size: 1.5em;
   text-align: center;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   word-wrap: anywhere;
-  height: calc(60vh - 60px);
+  /* height: calc(60vh - 60px); */
 }
 
 div.success p.window-message {
   margin-left: 20px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  text-align: flex-start;
-  max-height: 10px;
+  text-align: center;
+  /* max-height: 10px; */
+  /* overflow: auto; */
 }
 .green {
   color: #28a745;
@@ -75,26 +77,12 @@ div.success p.window-message {
 @media (max-width: 915px) {
   div.success div.window-content {
     width: 400px;
-    height: 400px;
   }
-  div.success .window-body {
-    height: 340px;
-  }
-
+  /* div.success .window-body {
+    height: fit-content;
+  } */
   div.success .window-body {
     font-size: 1.2em;
-  }
-}
-@media (max-width: 915px) {
-  div.success div.window-content {
-    width: 400px;
-    height: 400px;
-  }
-  div.success .window-body {
-    height: 340px;
-  }
-
-  div.success .window-body {
-    font-size: 1.2em;
+    align-items: center;
   }
 }

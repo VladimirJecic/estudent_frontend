@@ -14,6 +14,7 @@ const SignUp = ({
     <div className="wrapper fadeInDown loginRoot">
       {successMessage && (
         <SuccessWindow
+          title="Registration successful"
           successMessage={successMessage}
           hideWindow={hideWindow}
         />

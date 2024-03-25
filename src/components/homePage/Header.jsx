@@ -1,15 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "../../assets/componentCSS/Header.css";
 import { useState } from "react";
-
+import LoginViewModel from "../../viewModel/LoginViewModel";
 function Header({ handleSBCollapsing, signUp, logOut }) {
   const [hBarCollapsed, setHBarCollapsed] = useState(true);
   const handleHBCollapsing = () => {
     setHBarCollapsed(!hBarCollapsed);
   };
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  const userString = user?.name + " (" + user?.indexNum + ")";
-  const isAdmin = JSON.parse(sessionStorage.getItem("user"))?.role === "admin";
+  const user = LoginViewModel.getStoredUser();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -61,9 +59,9 @@ function Header({ handleSBCollapsing, signUp, logOut }) {
               <a className="nav-link">Prijava ispita</a>
             </li> */}
             <li className="nav-item">
-              <span className="fa fa-user"></span> {userString}
+              <span className="fa fa-user"></span> {user.toString()}
             </li>
-            {isAdmin && (
+            {user?.isAdmin() && (
               <li className="nav-item" onClick={() => signUp()}>
                 <span className="fa fa-user-plus"></span> {"\u00A0"} Registruj
                 novog studenta

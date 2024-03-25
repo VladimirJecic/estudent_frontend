@@ -42,8 +42,8 @@ export default class LoginViewModel {
     this.updateView?.();
   };
   handleLogin = async (event, navigate) => {
-    this.errorMessage = undefined;
     event.preventDefault();
+    this.errorMessage = undefined;
     try {
       const response = await axios.post(`${localhost}:8000/api/login`, {
         indexNum: this.user.indexNum,
@@ -72,10 +72,10 @@ export default class LoginViewModel {
     }
     this.updateView?.();
   };
-  handleRegister = async (event, navigate) => {
+  handleRegister = async (event) => {
     event.preventDefault();
     this.errorMessage = undefined;
-    const token = JSON.parse(sessionStorage.user).token;
+    const token = LoginViewModel.getStoredUser()?.token;
     const data = JSON.stringify({
       indexNum: this.user.indexNum,
       name: this.user.name,
@@ -101,7 +101,7 @@ export default class LoginViewModel {
           indexNum: ${this.user.indexNum}\n
           email: ${this.user.email}\n
           role: ${this.user.role}\n
-          token: ${this.user.token}`;
+          token: ${this.user.token}`; //
       } else {
         this.errorMessage = response.data.message;
       }
@@ -120,9 +120,11 @@ export default class LoginViewModel {
     }
     this.updateView?.();
   };
-  isAuthenticated = () => {
-    return sessionStorage.getItem("user") !== null;
+  static getStoredUser = () => {
+    const jsonUser = JSON.parse(sessionStorage.getItem("user"));
+    return jsonUser ? new User().withJSON(jsonUser) : undefined;
   };
+
   hideWindow = () => {
     this.successMessage = undefined;
     this.updateView?.();

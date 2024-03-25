@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect } from "react";
 import { dateToString } from "../../../utils/DateUtility.js";
 import { formatNumberToTwoDecimalPlaces } from "../../../utils/NumberUtility.js";
 import "../../../assets/componentCSS/PolozeniIspiti.css";
-const PolozeniIspiti = () => {
+const OcenaRadova = () => {
   const viewModel = useMemo(() => new PolozeniIspitiViewModel(), []);
   const [viewModelState, setViewModelState] = useState(viewModel.project());
 
@@ -17,7 +17,7 @@ const PolozeniIspiti = () => {
     <div className="polozeniIspiti">
       <h2 className="mb-4">Položeni ispiti</h2>
       {viewModelState.polozeniIspiti.length === 0 ? (
-        <p> {viewModel.vratiPoruku()}</p>
+        <p> Nema položenih ispita</p>
       ) : (
         <div className="tableWrapper">
           <table>
@@ -60,4 +60,4 @@ const PolozeniIspiti = () => {
     </div>
   );
 };
-export default PolozeniIspiti;
+export default OcenaRadova;
