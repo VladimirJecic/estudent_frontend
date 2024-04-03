@@ -1,0 +1,11 @@
+.neocenjenaPolaganja tfoot td {
+  text-align: left;
+}
+.neocenjenaPolaganja td {
+  font-size: 1rem;
+}
+.neocenjenaPolaganja table {
+  width: 60vw;
+  border-collapse: collapse;
+  text-align: center;
+}

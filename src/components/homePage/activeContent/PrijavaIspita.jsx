@@ -1,7 +1,7 @@
-import PrijavaIspitaViewModel from "../../../viewModel/PrijavaIspitaViewModel.js";
-import SuccessWindow from "../../login/SuccessWindow.jsx";
 import { useMemo, useState, useEffect } from "react";
+import PrijavaIspitaViewModel from "../../../viewModel/PrijavaIspitaViewModel.js";
 import { dateTimeToString } from "../../../utils/DateUtility.js";
+import SuccessWindow from "../../login/SuccessWindow.jsx";
 import "../../../assets/componentCSS/PrijavaIspita.css";
 
 const PrijavaIspita = () => {
@@ -12,9 +12,8 @@ const PrijavaIspita = () => {
     setViewModelState(viewModel.project());
   };
   useEffect(() => {
-    viewModel.ucitajPotencijalnePrijave();
-    viewModel.ucitajPostojecePrijave();
-  }, [viewModel, viewModelState]);
+    viewModel.setupView();
+  }, [viewModel]);
   return (
     <div className="prijavaIspita">
       <h2 className="mb-4">Ispiti koje mogu da prijavim</h2>
@@ -35,25 +34,31 @@ const PrijavaIspita = () => {
                 <th>Naziv Ispita</th>
                 <th>Espb</th>
                 <th>Vreme polaganja</th>
-                <th colSpan={2}></th>
+                {/* <th colSpan={2}></th> */}
               </tr>
             </thead>
             <tbody>
-              {viewModelState.potencijalnePrijave.map((polaganje, key) => (
-                <tr key={key}>
-                  <td>{polaganje.courseExam.course.name}</td>
-                  <td>{polaganje.courseExam.course.espb}</td>
-                  <td>{dateTimeToString(polaganje.courseExam.examDateTime)}</td>
-                  <td>
-                    <button
-                      onClick={() => viewModel.sacuvajPrijavu(key)}
-                      className="tableButton"
-                    >
-                      prijavi
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {viewModelState.potencijalnePrijave.map(
+                (examRegistration, key) => (
+                  <tr key={key}>
+                    <td>{examRegistration.courseExam.course.name}</td>
+                    <td>{examRegistration.courseExam.course.espb}</td>
+                    <td>
+                      {dateTimeToString(
+                        examRegistration.courseExam.examDateTime
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => viewModel.sacuvajPrijavu(key)}
+                        className="tableButton"
+                      >
+                        prijavi
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </div>
@@ -68,21 +73,30 @@ const PrijavaIspita = () => {
           <table>
             <thead>
               <tr>
-                <th rowSpan={2}>Naziv Ispita</th>
-                <th rowSpan={1}>Espb</th>
-                <th rowSpan={3}>Vreme polaganja</th>
+                <th>Naziv Ispita</th>
+                <th>Espb</th>
+                <th>Vreme polaganja</th>
               </tr>
             </thead>
             <tbody>
-              {viewModelState.polozeniIspiti.map((polaganje, key) => (
+              {viewModelState.postojecePrijave.map((examRegistration, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
-                  <td>{polaganje.courseExam.course.name}</td>
-                  <td>{polaganje.mark}</td>
-                  <td>{polaganje.courseExam.course.espb}</td>
-                  <td>{dateTimeToString(polaganje.courseExam)}</td>
-                  <td>{polaganje.signed_by.name}</td>
-                  <td>{polaganje.comment}</td>
+                  <td>{examRegistration.courseExam.course.name}</td>
+                  <td>{examRegistration.courseExam.course.espb}</td>
+                  <td>
+                    {dateTimeToString(examRegistration.courseExam.examDateTime)}
+                  </td>
+                  {examRegistration.courseExam.examPeriod.dateRegistrationEnd >
+                  new Date() ? (
+                    <td>
+                      <button
+                        onClick={() => viewModel.obrisiPrijavu(key)}
+                        className="tableButton"
+                      >
+                        odjavi
+                      </button>
+                    </td>
+                  ) : null}
                 </tr>
               ))}
             </tbody>

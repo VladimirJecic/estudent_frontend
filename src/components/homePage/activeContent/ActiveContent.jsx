@@ -3,13 +3,13 @@ import { Routes, Route } from "react-router-dom";
 import PolozeniIspiti from "./PolozeniIspiti.jsx";
 import PrijavaIspita from "./PrijavaIspita.jsx";
 import LoginViewModel from "../../../viewModel/LoginViewModel.js";
-import OcenaRadova from "./OcenaRadova.jsx";
+import UpisOcena from "./UpisOcena.jsx";
 
 const ActiveContent = () => {
   return (
     <Routes>
       {LoginViewModel.getStoredUser()?.isAdmin() ? (
-        <Route path="ocena_radova" element={<OcenaRadova />} />
+        <Route path="upis_ocena" element={<UpisOcena />} />
       ) : (
         <>
           <Route path="polozeni_ispiti" element={<PolozeniIspiti />} />

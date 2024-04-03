@@ -46,11 +46,11 @@ export default class AktuelniRokoviViewModel {
           this.updateView?.();
           console.log("rokovi postavljeni");
         } else {
-          console.error(response.data);
+          console.error(response.data.data);
         }
       })
       .catch((error) => {
-        alert(error);
+        alert(error.response.data.data);
         console.error(error);
       })
       .finally(() => (this.#ucitavaSe = false));
@@ -76,10 +76,10 @@ export default class AktuelniRokoviViewModel {
         this.updateView?.();
         console.log(response.data.message);
       } else {
-        console.error(response.data);
+        console.error(response.data.data);
       }
     } catch (error) {
-      alert(error);
+      alert(error.response.data.data);
       console.error(error);
     }
     return undefined;

@@ -34,10 +34,12 @@ export default class PolozeniIspitiViewModel {
           );
           this.updateView?.();
           console.info("polozeni ispiti ucitani");
+        } else {
+          console.error(response.data.data);
         }
       })
       .catch((error) => {
-        alert(error);
+        alert(error.response.data.data);
         console.error(error);
       })
       .finally(() => {
