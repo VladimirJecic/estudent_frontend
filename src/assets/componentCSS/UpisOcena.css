@@ -1,7 +1,11 @@
-.neocenjenaPolaganja tfoot td {
-  text-align: left;
+div.neocenjenaPolaganja {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.neocenjenaPolaganja td {
+.neocenjenaPolaganja td p {
+  padding: 0 1vw;
+  margin-bottom: 0;
   font-size: 1rem;
 }
 .neocenjenaPolaganja table {

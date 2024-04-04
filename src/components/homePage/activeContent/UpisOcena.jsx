@@ -11,7 +11,7 @@ const UpisOcena = () => {
     setViewModelState(viewModel.project());
   };
   useEffect(() => {
-    viewModel.ucitajNeocenjenaPolaganja();
+    viewModel.setupView();
   }, [viewModel]);
   return (
     <div className="neocenjenaPolaganja">
@@ -30,7 +30,9 @@ const UpisOcena = () => {
           <table>
             <thead>
               <tr>
+                <th rowSpan={1}>R.Br</th>
                 <th rowSpan={1}>Broj indexa</th>
+                <th rowSpan={2}>Naziv Ispita</th>
                 <th rowSpan={2}>Ime</th>
                 <th rowSpan={1}>Ocena</th>
                 <th rowSpan={3}>Poslednji datum izmene</th>
@@ -39,28 +41,38 @@ const UpisOcena = () => {
               </tr>
             </thead>
             <tbody>
-              {viewModelState.neocenjenaPolaganja.map((polaganje, key) => (
+              {viewModelState.neocenjenaPolaganja.map((prijava, key) => (
                 <tr key={key}>
-                  <td>{key + 1}</td>
-                  <td>{polaganje.student.indexNum}</td>
-                  <td>{polaganje.student.name}</td>
+                  <td>
+                    <p>{key + 1}</p>
+                  </td>
+                  <td>
+                    <p>{prijava.student.indexNum}</p>
+                  </td>
+                  <td>
+                    <p>{prijava.courseExam.course.name}</p>
+                  </td>
+                  <td>
+                    <p>{prijava.student.name}</p>
+                  </td>
                   <td>
                     <input
                       type="text"
                       name="mark"
-                      placeholder={polaganje.mark}
+                      value={prijava.mark}
                       onChange={(e) => {
                         viewModel.changePolaganje(e, key);
                       }}
                     />
                   </td>
-                  <td>{dateToString(polaganje.updated_at)}</td>
-                  <td>{polaganje.signed_by.name}</td>
+                  <td>{dateToString(prijava.updated_at)}</td>
+                  <td>{prijava.signed_by.name}</td>
                   <td>
-                    <input
+                    <textarea
                       type="text"
                       name="comment"
-                      placeholder={polaganje.comment}
+                      placeholder=""
+                      value={prijava.comment}
                       onChange={(e) => {
                         viewModel.changePolaganje(e, key);
                       }}

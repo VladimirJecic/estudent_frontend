@@ -50,7 +50,7 @@ export default class AktuelniRokoviViewModel {
         }
       })
       .catch((error) => {
-        alert(error.response.data.data);
+        alert("Doslo je do greske prilikom obrade zahteva");
         console.error(error);
       })
       .finally(() => (this.#ucitavaSe = false));
@@ -79,7 +79,7 @@ export default class AktuelniRokoviViewModel {
         console.error(response.data.data);
       }
     } catch (error) {
-      alert(error.response.data.data);
+      alert("Doslo je do greske prilikom obrade zahteva");
       console.error(error);
     }
     return undefined;

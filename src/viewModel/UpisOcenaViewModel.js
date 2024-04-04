@@ -19,6 +19,9 @@ export default class UpisOcenaViewModel {
       successMessage: this.#successMessage,
     };
   };
+  setupView = async () => {
+    this.ucitajNeocenjenaPolaganja();
+  };
   changePolaganje = (event, key) => {
     const polaganje = this.#neocenjenaPolaganja[key];
     switch (event.target.name) {
@@ -32,6 +35,7 @@ export default class UpisOcenaViewModel {
         console.error("Unexpected target.name in changePolaganje");
         return;
     }
+    this.#neocenjenaPolaganja[key] = polaganje;
     this.updateView?.();
   };
   ucitajNeocenjenaPolaganja = async () => {
@@ -50,14 +54,14 @@ export default class UpisOcenaViewModel {
             (jsonExamRegistration) =>
               new ExamRegistration().withJSON(jsonExamRegistration)
           );
-          this.updateView?.();
           console.info("neocenjena polaganja ucitana");
+          this.updateView?.();
         } else {
-          console.error(response.data.data);
+          console.error(response.data);
         }
       })
       .catch((error) => {
-        alert(error.response.data.data);
+        alert("Doslo je do greske prilikom obrade zahteva");
         console.error(error);
       })
       .finally(() => {
@@ -65,13 +69,14 @@ export default class UpisOcenaViewModel {
       });
   };
   sacuvajPrijavu = async (key) => {
-    const examRegistration = this.potencijalnePrijave[key];
+    const examRegistration = this.#neocenjenaPolaganja[key];
     const data = JSON.stringify({
       course_id: examRegistration.courseExam.course.id,
       exam_period_id: examRegistration.courseExam.examPeriod.id,
       student_id: examRegistration.student.id,
       mark: examRegistration.mark,
-      signed_by_id: examRegistration.signed_by_id,
+      comment: examRegistration.comment,
+      signed_by_id: LoginViewModel.getStoredUser()?.id,
     });
     const token = LoginViewModel.getStoredUser()?.token;
     const config = {
@@ -86,9 +91,9 @@ export default class UpisOcenaViewModel {
     axios
       .request(config)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 204) {
           this.#successMessage = `Izmene sačuvane!`;
-          this.updateView();
+          this.setupView();
         } else {
           console.error(response.data.data);
         }

@@ -58,7 +58,7 @@ export default class PrijavaIspitaViewModel {
         }
       })
       .catch((error) => {
-        alert(error.response.data.data);
+        alert("Doslo je do greske prilikom obrade zahteva");
         console.error(error);
       })
       .finally(() => {
@@ -125,7 +125,7 @@ export default class PrijavaIspitaViewModel {
         if (error.response === undefined) {
           console.error("No response from server");
         } else {
-          alert(error.response.data.data);
+          alert("Doslo je do greske prilikom obrade zahteva");
         }
       });
   };
@@ -160,7 +160,7 @@ export default class PrijavaIspitaViewModel {
         if (error.response === undefined) {
           console.error("No response from server");
         } else {
-          alert(error.response.data.data);
+          alert("Doslo je do greske prilikom obrade zahteva");
         }
       });
   };

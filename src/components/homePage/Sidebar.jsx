@@ -26,7 +26,7 @@ function Sidebar({ sBarCollapsed, handleSBItemChange, logOut }) {
         {LoginViewModel.getStoredUser()?.isAdmin() ? (
           <li onClick={() => handleSBItemChange("upis_ocena")}>
             <a>
-              <span className="fa-solid fa-pen-to-square"></span> Upis Ocena
+              <span className="fa-solid fa-pen-to-square"></span> Upis ocena
             </a>
           </li>
         ) : (

@@ -34,11 +34,6 @@ div.success div.window-header {
   text-shadow: 0 0 3px #000000;
 }
 
-div.success b.window-title {
-  margin-left: 60px;
-  flex: 90%;
-}
-
 div.success button.close {
   font-size: 2rem;
   cursor: pointer;
@@ -75,6 +70,10 @@ div.success p.window-message {
   color: #28a745;
 }
 @media (max-width: 915px) {
+  div.success b.window-title {
+    margin-left: 60px;
+    flex: 90%;
+  }
   div.success div.window-content {
     width: 400px;
   }

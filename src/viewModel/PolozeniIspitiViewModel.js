@@ -39,7 +39,7 @@ export default class PolozeniIspitiViewModel {
         }
       })
       .catch((error) => {
-        alert(error.response.data.data);
+        alert("Doslo je do greske prilikom obrade zahteva");
         console.error(error);
       })
       .finally(() => {
