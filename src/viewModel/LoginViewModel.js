@@ -56,14 +56,12 @@ export default class LoginViewModel {
         this.#user.withJSON(response.data.data);
         window.sessionStorage.setItem("user", JSON.stringify(this.#user));
         navigate("/home/rokovi"); // Navigate to the home route
-      } else {
-        this.#errorMessage = response.data.data;
       }
     } catch (error) {
       console.log(error);
       if (error.response === undefined) {
         this.#errorMessage = "No response from server";
-      } else if (error.response?.status === 404) {
+      } else if (error.response?.status === 401) {
         this.#errorMessage =
           "That was the wrong username or password. Please try again.";
       } else {
@@ -101,9 +99,7 @@ export default class LoginViewModel {
           indexNum: ${this.#user.indexNum}\n
           email: ${this.#user.email}\n
           role: ${this.#user.role}\n
-          token: ${this.#user.token}`; //
-      } else {
-        this.#errorMessage = response.data.message;
+          `; //token: ${this.#user.token}
       }
     } catch (error) {
       console.log(error);
@@ -114,6 +110,8 @@ export default class LoginViewModel {
         this.#errorMessage =
           error.response?.data?.message +
           "Only admin users can create new accounts.";
+      } else if (error.response?.status === 409) {
+        this.#errorMessage = error.response?.data?.message;
       } else {
         alert(error.response.data.data);
       }

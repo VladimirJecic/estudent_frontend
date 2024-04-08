@@ -44,6 +44,7 @@ export default class PrijavaIspitaViewModel {
         },
       })
       .then((response) => {
+        console.log(response.data.message);
         if (response.data.success === true) {
           const student = LoginViewModel.getStoredUser();
           this.#potencijalnePrijave = response.data.data.courseExams.map(
@@ -52,9 +53,6 @@ export default class PrijavaIspitaViewModel {
                 .withCourseExam(new CourseExam().withJSON(jsonCourseExam))
                 .withStudent(student)
           );
-          console.log(response.data.message);
-        } else {
-          console.error(response.data);
         }
       })
       .catch((error) => {
@@ -82,8 +80,6 @@ export default class PrijavaIspitaViewModel {
               new ExamRegistration().withJSON(jsonExamRegistration)
           );
           console.log(response.data.message);
-        } else {
-          console.error(response.data);
         }
       })
       .catch((error) => {
@@ -116,8 +112,6 @@ export default class PrijavaIspitaViewModel {
         if (response.data.success === true) {
           this.#successMessage = `Ispit ${examRegistration.courseExam.course.name} u roku ${examRegistration.courseExam.examPeriod.name} uspešno prijavljen!`;
           this.setupView();
-        } else {
-          console.error(response.data.data);
         }
       })
       .catch((error) => {
@@ -175,5 +169,5 @@ export default class PrijavaIspitaViewModel {
   vratiPorukuPostojecePrijave = () =>
     this.#ucitavaSePostojecePrijave
       ? "učitava se..."
-      : "Niste prijavili nijedan ispit!";
+      : "Niste prijavili nijedan ispit";
 }

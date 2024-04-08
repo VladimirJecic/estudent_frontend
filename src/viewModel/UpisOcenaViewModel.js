@@ -43,7 +43,7 @@ export default class UpisOcenaViewModel {
     this.#neocenjenaPolaganja = [];
     const token = JSON.parse(sessionStorage.user).token;
     axios
-      .get(`${localhost}:8000/api/exam-registrations/forGrading`, {
+      .get(`${localhost}:8000/api/exam-registrations/notGraded/all`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,8 +56,6 @@ export default class UpisOcenaViewModel {
           );
           console.info("neocenjena polaganja ucitana");
           this.updateView?.();
-        } else {
-          console.error(response.data);
         }
       })
       .catch((error) => {

@@ -39,14 +39,12 @@ export default class AktuelniRokoviViewModel {
         },
       })
       .then((response) => {
+        console.log(response.data.message);
         if (response.data.success === true) {
           this.#aktuelniRokovi = response.data.data.map((jsonExamPeriod) => {
             return new ExamPeriod().withJSON(jsonExamPeriod);
           });
           this.updateView?.();
-          console.log("rokovi postavljeni");
-        } else {
-          console.error(response.data.data);
         }
       })
       .catch((error) => {
@@ -69,12 +67,12 @@ export default class AktuelniRokoviViewModel {
           },
         }
       );
+      console.log(response.data.message);
       if (response.data.success === true) {
         this.#mojiIspiti = response.data.data.courseExams.map((jsonExam) =>
           new CourseExam().withJSON(jsonExam)
         );
         this.updateView?.();
-        console.log(response.data.message);
       } else {
         console.error(response.data.data);
       }
