@@ -1,12 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import HomePage from "./homePage/HomePage";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-// import useLoginViewModel from "../viewModel/LoginViewModel";
 import SignIn from "./login/SignIn";
 import SignUp from "./login/SignUp";
 import LoginViewModel from "../viewModel/LoginViewModel";
 import { useState, useMemo } from "react";
-// import { useEffect } from "react";
 const EStudentRoutes = () => {
   const loginViewModel = useMemo(() => new LoginViewModel(), []);
   const [loginViewModelState, setLoginViewModelState] = useState(
@@ -16,15 +13,6 @@ const EStudentRoutes = () => {
   loginViewModel.updateView = () => {
     setLoginViewModelState(loginViewModel.project());
   };
-
-  // useEffect(() => {
-  //   if (
-  //     window.location.pathname.startsWith("/home")
-  //     //  &&!LoginViewModel.getStoredUser().isAdmin()
-  //   ) {
-  //     window.location.replace("/login");
-  //   }
-  // }, [loginViewModel]);
   return (
     <BrowserRouter className="App">
       <Routes>
@@ -53,7 +41,7 @@ const EStudentRoutes = () => {
           />
         )}
         <Route path="home/*" element={<HomePage />}></Route>
-        <Route path="/*" element={<Navigate to="/login" />} />
+        <Route path="/*" element={<Navigate to="login" />} />
       </Routes>
     </BrowserRouter>
   );

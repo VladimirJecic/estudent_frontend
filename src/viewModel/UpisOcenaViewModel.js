@@ -101,7 +101,7 @@ export default class UpisOcenaViewModel {
         if (error.response === undefined) {
           console.error("No response from server");
         } else {
-          alert(error.response.data.data);
+          alert(JSON.stringify(error.response?.data?.data));
         }
       });
   };

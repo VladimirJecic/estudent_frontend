@@ -106,14 +106,12 @@ export default class LoginViewModel {
 
       if (error.response === undefined) {
         this.#errorMessage = "No response from server";
-      } else if (error.response?.status === 401) {
-        this.#errorMessage =
-          error.response?.data?.message +
-          "Only admin users can create new accounts.";
       } else if (error.response?.status === 409) {
         this.#errorMessage = error.response?.data?.message;
+      } else if (error.response?.status === 400) {
+        this.#errorMessage = JSON.stringify(error.response?.data?.data);
       } else {
-        alert(error.response.data.data);
+        alert(JSON.stringify(error.response?.data?.data));
       }
     }
     this.updateView?.();
