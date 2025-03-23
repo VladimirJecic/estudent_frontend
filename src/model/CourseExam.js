@@ -13,9 +13,9 @@ export default class CourseExam extends DomainObject {
     this.examDateTime = new Date();
     this.hall = "";
   }
-  withJSON(json) {
-    this.examPeriod = new ExamPeriod().withJSON(json?.examPeriod);
-    this.course = new Course().withJSON(json?.course);
+  fromJSON(json) {
+    this.examPeriod = new ExamPeriod().fromJSON(json?.examPeriod);
+    this.course = new Course().fromJSON(json?.course);
     this.examDateTime = new Date(json?.examDateTime);
     this.hall = json?.hall;
     return this;

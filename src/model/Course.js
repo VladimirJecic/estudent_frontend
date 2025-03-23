@@ -14,13 +14,13 @@ export default class CreateCourse extends DomainObject {
     this.espb = 0;
     this.participants = [];
   }
-  withJSON(json) {
+  fromJSON(json) {
     this.id = json?.id;
     this.name = json?.name;
     this.semester = json?.semester;
     this.espb = json?.espb;
     this.participants = json?.participants?.map((jsonParticipant) =>
-      new User().withJSON(jsonParticipant)
+      new User().fromJSON(jsonParticipant)
     );
     return this;
   }

@@ -20,7 +20,7 @@ export default class User extends DomainObject {
     this.role = "student";
     this.token = "";
   }
-  withJSON(json) {
+  fromJSON(json) {
     this.id = json?.id;
     this.name = json?.name;
     this.indexNum = json?.indexNum;

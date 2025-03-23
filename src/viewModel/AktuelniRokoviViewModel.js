@@ -42,7 +42,7 @@ export default class AktuelniRokoviViewModel {
         console.log(response.data.message);
         if (response.data.success === true) {
           this.#aktuelniRokovi = response.data.data.map((jsonExamPeriod) => {
-            return new ExamPeriod().withJSON(jsonExamPeriod);
+            return new ExamPeriod().fromJSON(jsonExamPeriod);
           });
           this.updateView?.();
         }
@@ -70,7 +70,7 @@ export default class AktuelniRokoviViewModel {
       console.log(response.data.message);
       if (response.data.success === true) {
         this.#mojiIspiti = response.data.data.courseExams.map((jsonExam) =>
-          new CourseExam().withJSON(jsonExam)
+          new CourseExam().fromJSON(jsonExam)
         );
         this.updateView?.();
       } else {

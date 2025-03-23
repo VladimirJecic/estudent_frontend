@@ -1,7 +1,7 @@
 export default class DomainObject {
-  withJSON(json) {
+  fromJSON(json) {
     throw new Error(
-      `Abstract method ${this.withJSON.name} not implemented in class ${this.constructor.name}`
+      `Abstract method ${this.fromJSON.name} not implemented in class ${this.constructor.name}`
     );
   }
 }

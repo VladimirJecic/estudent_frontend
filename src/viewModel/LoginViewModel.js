@@ -53,7 +53,7 @@ export default class LoginViewModel {
       if (response.data.success === true) {
         console.log(response.data);
         // Set the access token in session storage
-        this.#user.withJSON(response.data.data);
+        this.#user.fromJSON(response.data.data);
         window.sessionStorage.setItem("user", JSON.stringify(this.#user));
         navigate("/home/rokovi"); // Navigate to the home route
       }
@@ -93,7 +93,7 @@ export default class LoginViewModel {
       const response = await axios.request(config);
       if (response.data.success === true) {
         console.log(response.data);
-        this.#user.withJSON(response.data.data);
+        this.#user.fromJSON(response.data.data);
         this.#successMessage = `
           name: ${this.#user.name}\n
           indexNum: ${this.#user.indexNum}\n
@@ -118,7 +118,7 @@ export default class LoginViewModel {
   };
   static getStoredUser = () => {
     const jsonUser = JSON.parse(sessionStorage.getItem("user"));
-    return jsonUser ? new User().withJSON(jsonUser) : undefined;
+    return jsonUser ? new User().fromJSON(jsonUser) : undefined;
   };
 
   hideWindow = () => {

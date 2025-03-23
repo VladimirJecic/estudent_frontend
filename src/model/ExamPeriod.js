@@ -19,7 +19,7 @@ export default class ExamPeriod extends DomainObject {
     this.exams = [];
   }
 
-  withJSON(json) {
+  fromJSON(json) {
     this.id = json?.id;
     this.name = json?.name;
     this.dateRegistrationStart = new Date(json?.dateRegistrationStart);
@@ -27,7 +27,7 @@ export default class ExamPeriod extends DomainObject {
     this.dateStart = new Date(json?.dateStart);
     this.dateEnd = new Date(json?.dateEnd);
     this.exams = json?.exams?.map((jsonExam) =>
-      new CourseExam().withJSON(jsonExam)
+      new CourseExam().fromJSON(jsonExam)
     );
     return this;
   }

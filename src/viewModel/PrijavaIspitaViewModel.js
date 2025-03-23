@@ -50,7 +50,7 @@ export default class PrijavaIspitaViewModel {
           this.#potencijalnePrijave = response.data.data.courseExams.map(
             (jsonCourseExam) =>
               new ExamRegistration()
-                .withCourseExam(new CourseExam().withJSON(jsonCourseExam))
+                .withCourseExam(new CourseExam().fromJSON(jsonCourseExam))
                 .withStudent(student)
           );
         }
@@ -77,7 +77,7 @@ export default class PrijavaIspitaViewModel {
         if (response.data.success === true) {
           this.#postojecePrijave = response.data.data.examRegistrations.map(
             (jsonExamRegistration) =>
-              new ExamRegistration().withJSON(jsonExamRegistration)
+              new ExamRegistration().fromJSON(jsonExamRegistration)
           );
           console.log(response.data.message);
         }

@@ -18,10 +18,10 @@ export default class ExamRegistration extends DomainObject {
     this.comment = "";
     this.updated_at = new Date(0);
   }
-  withJSON(json) {
-    this.courseExam = new CourseExam().withJSON(json?.courseExam);
-    this.student = new User().withJSON(json?.student);
-    this.signed_by = new User().withJSON(json?.signed_by);
+  fromJSON(json) {
+    this.courseExam = new CourseExam().fromJSON(json?.courseExam);
+    this.student = new User().fromJSON(json?.student);
+    this.signed_by = new User().fromJSON(json?.signed_by);
     this.mark = json?.mark;
     this.comment = json?.comment;
     this.updated_at = new Date(json?.updated_at);

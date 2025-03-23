@@ -52,7 +52,7 @@ export default class UpisOcenaViewModel {
         if (response.data.success === true) {
           this.#neocenjenaPolaganja = response.data.data.examRegistrations.map(
             (jsonExamRegistration) =>
-              new ExamRegistration().withJSON(jsonExamRegistration)
+              new ExamRegistration().fromJSON(jsonExamRegistration)
           );
           console.info("neocenjena polaganja ucitana");
           this.updateView?.();

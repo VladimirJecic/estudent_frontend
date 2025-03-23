@@ -30,7 +30,7 @@ export default class PolozeniIspitiViewModel {
         if (response.data.success === true) {
           this.#polozeniIspiti = response.data.data.examRegistrations.map(
             (jsonExamRegistration) =>
-              new ExamRegistration().withJSON(jsonExamRegistration)
+              new ExamRegistration().fromJSON(jsonExamRegistration)
           );
           this.updateView?.();
           console.info("polozeni ispiti ucitani");
