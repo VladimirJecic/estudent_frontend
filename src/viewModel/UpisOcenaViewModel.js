@@ -43,7 +43,7 @@ export default class UpisOcenaViewModel {
     this.#neocenjenaPolaganja = [];
     const token = JSON.parse(sessionStorage.user).token;
     axios
-      .get(`${localhost}:8000/api/exam-registrations/notGraded/all`, {
+      .get(`${localhost}:8081/api/exam-registrations/notGraded/all`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -79,7 +79,7 @@ export default class UpisOcenaViewModel {
     const token = LoginViewModel.getStoredUser()?.token;
     const config = {
       method: "put",
-      url: "http://localhost:8000/api/exam-registrations",
+      url: "http://localhost:8081/api/exam-registrations",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

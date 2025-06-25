@@ -1,3 +1,8 @@
+div.neocenjenaPolaganja table {
+  width: 90vw;
+  border-collapse: collapse;
+  text-align: center;
+}
 div.neocenjenaPolaganja {
   display: flex;
   flex-direction: column;

@@ -60,12 +60,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("background.jpg");
+  background-image: url("logo-fon.png");
   background-size: cover;
   background-position: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  opacity: 0.25; /* Adjust overlay opacity */
-  filter: grayscale(100%); /* Apply grayscale filter */
+  background-color: rgba(64, 103, 138, 0.5);
+  opacity: 0.07; /* Adjust overlay opacity */
+  filter: grayscale(50%); /* Apply grayscale filter */
 }
 html {
   font-family: sans-serif;
@@ -10774,7 +10774,7 @@ h5,
 #sidebar {
   min-width: 270px;
   max-width: 270px;
-  background: #3e64ff;
+  background: #4e66c4;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
@@ -10908,13 +10908,13 @@ a[data-toggle="collapse"] {
 }
 
 .btn.btn-primary {
-  background: #3e64ff;
-  border-color: #3e64ff;
+  background: #4e66c4;
+  border-color: #4e66c4;
 }
 .btn.btn-primary:hover,
 .btn.btn-primary:focus {
-  background: #3e64ff !important;
-  border-color: #3e64ff !important;
+  background: #4e66c4 !important;
+  border-color: #4e66c4 !important;
 }
 @media (max-width: 991.98px) {
   .footer {

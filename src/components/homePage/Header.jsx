@@ -61,12 +61,12 @@ function Header({ handleSBCollapsing, signUp, logOut }) {
             <li className="nav-item">
               <span className="fa fa-user"></span> {user.toString()}
             </li>
-            {user?.isAdmin() && (
+            {/* {user?.isAdmin() && (
               <li className="nav-item" onClick={() => signUp()}>
                 <span className="fa fa-user-plus"></span> {"\u00A0"} Registruj
                 novog studenta
               </li>
-            )}
+            )} */}
             <li className="nav-item" onClick={() => logOut()}>
               Izloguj me <span className="fa fa-power-off izlogujMe"></span>
             </li>

@@ -33,7 +33,7 @@ export default class AktuelniRokoviViewModel {
     this.#ucitavaSe = true;
     const token = JSON.parse(sessionStorage.user).token;
     axios
-      .get(`${localhost}:8000/api/exam-periods?onlyActive=${true}`, {
+      .get(`${localhost}:8081/api/exam-periods?onlyActive=${true}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,7 +60,7 @@ export default class AktuelniRokoviViewModel {
     try {
       const token = JSON.parse(sessionStorage.user).token;
       const response = await axios.get(
-        `${localhost}:8000/api/course-exams/${this.#imeTrazenogRoka}`,
+        `${localhost}:8081/api/course-exams/${this.#imeTrazenogRoka}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -17,7 +17,9 @@ const UpisOcena = () => {
     <div className="neocenjenaPolaganja">
       <h2 className="mb-4">Neocenjena polaganja</h2>
       {viewModelState.neocenjenaPolaganja.length === 0 ? (
-        <p>{viewModel.vratiPoruku()}</p>
+        <div className="bg-info w-50 text-center ">
+          <h5> {viewModel.vratiPoruku()}</h5>
+        </div>
       ) : (
         <div className="tableWrapper">
           {viewModelState.successMessage && (
@@ -52,11 +54,12 @@ const UpisOcena = () => {
                   <td>
                     <p>{prijava.courseExam.course.name}</p>
                   </td>
-                  <td>
+                  <td className="w-25">
                     <p>{prijava.student.name}</p>
                   </td>
                   <td>
                     <input
+                      className="form-control text-center"
                       type="text"
                       name="mark"
                       value={prijava.mark}
@@ -67,8 +70,9 @@ const UpisOcena = () => {
                   </td>
                   <td>{dateToString(prijava.updated_at)}</td>
                   <td>{prijava.signed_by.name}</td>
-                  <td>
+                  <td td className="w-25">
                     <textarea
+                      className="form-control"
                       type="text"
                       name="comment"
                       placeholder=""

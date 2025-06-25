@@ -17,7 +17,9 @@ const AktuelniRokovi = () => {
     <div className="aktuelniRokovi">
       <h2 className="mb-4">Rokovi</h2>
       {viewModelState.aktuelniRokovi.length === 0 ? (
-        <p>{viewModel.vratiPoruku()}</p>
+        <div className="bg-info w-50 text-center mx-auto">
+          <h5 className="mr-9"> {viewModel.vratiPoruku()}</h5>
+        </div>
       ) : (
         <div className="tableWrapper">
           <table>
@@ -26,7 +28,10 @@ const AktuelniRokovi = () => {
                 <th rowSpan={2}>Rok</th>
                 <th colSpan={2}>Prijava</th>
                 <th colSpan={2}>Trajanje</th>
-                <th rowSpan={2} colSpan={2}>
+                <th
+                  rowSpan={2}
+                  colSpan={LoginViewModel.getStoredUser()?.isAdmin() ? 1 : 2}
+                >
                   Ispiti
                 </th>
               </tr>
@@ -73,9 +78,9 @@ const AktuelniRokovi = () => {
         <></>
       ) : (
         <div className="tableWrapper">
-          <p className="sviIspitiTitle">
+          <h5 className="mb-3 mt-4">
             Svi Ispiti za {viewModelState.imeTrazenogRoka}
-          </p>
+          </h5>
           <table>
             <thead>
               <tr>
@@ -104,9 +109,10 @@ const AktuelniRokovi = () => {
         <></>
       ) : (
         <div className="tableWrapper">
-          <p className="mojiIspitiTitle">
+          <h5 className="mb-3 mt-4">
             Moji Ispiti za {viewModelState.imeTrazenogRoka}
-          </p>
+          </h5>
+
           <table>
             <thead>
               <tr>

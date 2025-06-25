@@ -21,7 +21,7 @@ export default class PolozeniIspitiViewModel {
     this.#polozeniIspiti = [];
     const token = JSON.parse(sessionStorage.user).token;
     axios
-      .get(`${localhost}:8000/api/exam-registrations/?excludeFailed=${true}`, {
+      .get(`${localhost}:8081/api/exam-registrations/?excludeFailed=${true}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

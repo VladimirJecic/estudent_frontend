@@ -38,7 +38,7 @@ export default class PrijavaIspitaViewModel {
     this.#potencijalnePrijave = [];
     const token = JSON.parse(sessionStorage.user).token;
     return axios
-      .get(`${localhost}:8000/api/course-exams/registable`, {
+      .get(`${localhost}:8081/api/course-exams/registable`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -68,7 +68,7 @@ export default class PrijavaIspitaViewModel {
     this.#postojecePrijave = [];
     const token = JSON.parse(sessionStorage.user).token;
     return axios
-      .get(`${localhost}:8000/api/exam-registrations/notGraded`, {
+      .get(`${localhost}:8081/api/exam-registrations/notGraded`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,7 +99,7 @@ export default class PrijavaIspitaViewModel {
     const token = LoginViewModel.getStoredUser()?.token;
     const config = {
       method: "post",
-      url: "http://localhost:8000/api/exam-registrations",
+      url: "http://localhost:8081/api/exam-registrations",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ export default class PrijavaIspitaViewModel {
       .request(config)
       .then((response) => {
         if (response.data.success === true) {
-          this.#successMessage = `Ispit ${examRegistration.courseExam.course.name} u roku ${examRegistration.courseExam.examPeriod.name} uspešno prijavljen!`;
+          this.#successMessage = `Ispit ${examRegistration.courseExam.course.name} u roku ${examRegistration.courseExam.examPeriod.name} je uspešno prijavljen!`;
           this.setupView();
         }
       })
@@ -133,7 +133,7 @@ export default class PrijavaIspitaViewModel {
     const token = LoginViewModel.getStoredUser()?.token;
     const config = {
       method: "delete",
-      url: "http://localhost:8000/api/exam-registrations",
+      url: "http://localhost:8081/api/exam-registrations",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

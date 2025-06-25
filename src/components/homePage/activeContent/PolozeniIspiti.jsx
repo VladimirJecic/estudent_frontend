@@ -14,10 +14,12 @@ const PolozeniIspiti = () => {
     viewModel.ucitajPolozeneIspite();
   }, [viewModel]);
   return (
-    <div className="polozeniIspiti">
+    <div className="polozeniIspiti text-center d-flex flex-column align-items-center">
       <h2 className="mb-4">Položeni ispiti</h2>
       {viewModelState.polozeniIspiti.length === 0 ? (
-        <p> {viewModel.vratiPoruku()}</p>
+        <div className="bg-info w-50 text-center mx-auto">
+          <h5> {viewModel.vratiPoruku()}</h5>
+        </div>
       ) : (
         <div className="tableWrapper">
           <table>

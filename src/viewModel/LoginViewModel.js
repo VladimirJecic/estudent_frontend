@@ -45,7 +45,7 @@ export default class LoginViewModel {
     event.preventDefault();
     this.#errorMessage = undefined;
     try {
-      const response = await axios.post(`${localhost}:8000/api/login`, {
+      const response = await axios.post(`${localhost}:8081/api/login`, {
         indexNum: this.#user.indexNum,
         password: this.#user.password,
         token: this.#user.token,
@@ -82,7 +82,7 @@ export default class LoginViewModel {
     });
     const config = {
       method: "post",
-      url: "http://localhost:8000/api/register",
+      url: "http://localhost:8081/api/register",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

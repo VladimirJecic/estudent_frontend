@@ -18,7 +18,9 @@ const PrijavaIspita = () => {
     <div className="prijavaIspita">
       <h2 className="mb-4">Ispiti koje mogu da prijavim</h2>
       {viewModelState.potencijalnePrijave.length === 0 ? (
-        <p> {viewModel.vratiPorukuPotencijalnePrijave()}</p>
+        <div className="bg-info w-50 text-center ">
+          <h5> {viewModel.vratiPorukuPostojecePrijave()}</h5>
+        </div>
       ) : (
         <div className="tableWrapper prijavaIspita">
           {viewModelState.successMessage && (
@@ -34,7 +36,7 @@ const PrijavaIspita = () => {
                 <th>Naziv Ispita</th>
                 <th>Espb</th>
                 <th>Vreme polaganja</th>
-                {/* <th colSpan={2}></th> */}
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -76,6 +78,7 @@ const PrijavaIspita = () => {
                 <th>Naziv Ispita</th>
                 <th>Espb</th>
                 <th>Vreme polaganja</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
