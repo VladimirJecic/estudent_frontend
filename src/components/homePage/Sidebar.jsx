@@ -41,6 +41,19 @@ function Sidebar({ sBarCollapsed, handleSBItemChange, logOut }) {
                 <span className="fa fa-sticky-note"></span> Prijava ispita
               </a>
             </li>
+            <li onClick={() => handleSBItemChange("izvestaj_polaganja")}>
+              <a>
+                <span className="fa-solid fa-file-lines"></span> Izveštaj
+                polaganja ispita
+              </a>
+            </li>
+
+            <li onClick={() => handleSBItemChange("izvestaj_predmeta")}>
+              <a>
+                <span className="fa-solid fa-chart-simple"></span> Izveštaj o
+                predmetu
+              </a>
+            </li>
           </>
         )}
         <li onClick={() => logOut()}>

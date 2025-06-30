@@ -15,8 +15,8 @@ export default class HomePageViewModel {
       sBarItem: this.#sBarItem,
     };
   };
-  handleSBCollapsing = () => {
-    this.#sBarCollapsed = !this.#sBarCollapsed;
+  setSBarCollapsed = (collapsed) => {
+    this.#sBarCollapsed = collapsed;
     this.updateView?.();
   };
   handleSBItemChange = (item) => {

@@ -10851,9 +10851,9 @@ h5,
   margin-right: 15px;
 }
 @media (max-width: 991.98px) {
-  #sidebar ul li a span {
+  /* #sidebar ul li a span {
     display: block;
-  }
+  } */
 }
 #sidebar ul li a:hover {
   color: #fff;
@@ -10862,14 +10862,19 @@ h5,
   background: transparent;
   color: #fff;
 }
+
 @media (max-width: 991.98px) {
-  #sidebar {
+  /* #sidebar {
     min-width: 80px;
     max-width: 80px;
     text-align: center;
     margin-left: -80px !important;
+  }*/
+  #sidebar {
+    display: none;
   }
   #sidebar.active {
+    display: block;
     margin-left: 0 !important;
   }
 }

@@ -1,0 +1,24 @@
+.custom-text-input {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-text-input input {
+  padding-right: 24px; /* space for clear button */
+}
+
+.custom-text-input .clear-btn {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+}
+
+.custom-text-input .clear-btn:hover {
+  color: #000;
+}

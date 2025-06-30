@@ -24,12 +24,14 @@ const HomePage = () => {
       />
       <div id="content" className="p-4 p-md-5 content">
         <Header
-          handleSBCollapsing={viewModel.handleSBCollapsing}
+          sBarCollapsed={viewModelState.sBarCollapsed}
+          setSBarCollapsed={viewModel.setSBarCollapsed}
           logOut={viewModel.logOut}
           signUp={viewModel.signUp}
         />
         <ActiveContent
-          handleSBCollapsing={viewModel.handleSBCollapsing}
+          sBarCollapsed={viewModelState.sBarCollapsed}
+          setSBarCollapsed={viewModel.setSBarCollapsed}
           logOut={viewModel.logOut}
           signUp={viewModel.signUp}
         />

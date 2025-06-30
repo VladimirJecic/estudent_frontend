@@ -1,13 +1,38 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "../../assets/componentCSS/Header.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginViewModel from "../../viewModel/LoginViewModel";
-function Header({ handleSBCollapsing, signUp, logOut }) {
+function Header({ sBarCollapsed, setSBarCollapsed, signUp, logOut }) {
   const [hBarCollapsed, setHBarCollapsed] = useState(true);
-  const handleHBCollapsing = () => {
+  const handleHBCollapseChange = () => {
     setHBarCollapsed(!hBarCollapsed);
   };
+  const handleSBCollapseChange = () => {
+    setSBarCollapsed(!sBarCollapsed);
+  };
   const user = LoginViewModel.getStoredUser();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 991px)");
+
+    const handleResize = () => {
+      if (mediaQuery.matches) {
+        setSBarCollapsed(false);
+      }
+    };
+    // Initial check
+    handleResize();
+
+    // Add listener
+    mediaQuery.addEventListener("change", handleResize);
+
+    // Clean up
+    return () => {
+      mediaQuery.removeEventListener("change", handleResize);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -15,7 +40,7 @@ function Header({ handleSBCollapsing, signUp, logOut }) {
           type="button"
           id="sidebarCollapse"
           className="btn btn-primary"
-          onClick={() => handleSBCollapsing()}
+          onClick={() => handleSBCollapseChange()}
         >
           <i className="fa fa-bars"></i>
           <span className="sr-only">Toggle Menu</span>
@@ -31,7 +56,7 @@ function Header({ handleSBCollapsing, signUp, logOut }) {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          onClick={handleHBCollapsing}
+          onClick={handleHBCollapseChange}
         >
           <i className="fa fa-bars"></i>
         </button>

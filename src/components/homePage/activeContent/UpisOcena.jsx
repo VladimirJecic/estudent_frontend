@@ -38,7 +38,6 @@ const UpisOcena = () => {
                 <th rowSpan={2}>Ime</th>
                 <th rowSpan={1}>Ocena</th>
                 <th rowSpan={3}>Poslednji datum izmene</th>
-                <th rowSpan={2}>Potpisao nastavnik</th>
                 <th rowSpan={2}>Dodatne informacije</th>
               </tr>
             </thead>
@@ -69,7 +68,6 @@ const UpisOcena = () => {
                     />
                   </td>
                   <td>{dateToString(prijava.updated_at)}</td>
-                  <td>{prijava.signed_by.name}</td>
                   <td td className="w-25">
                     <textarea
                       className="form-control"

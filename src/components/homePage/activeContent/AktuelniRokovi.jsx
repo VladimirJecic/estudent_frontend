@@ -36,9 +36,9 @@ const AktuelniRokovi = () => {
                 </th>
               </tr>
               <tr>
-                <th>pocetak</th>
+                <th>početak</th>
                 <th>kraj</th>
-                <th>pocetak</th>
+                <th>početak</th>
                 <th>kraj</th>
               </tr>
             </thead>
