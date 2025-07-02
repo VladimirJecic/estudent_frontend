@@ -1,0 +1,6 @@
+.react-datepicker__close-icon {
+  right: 20px !important; /* default is 0px */
+}
+.custom-datepicker {
+  min-width: 17vw;
+}

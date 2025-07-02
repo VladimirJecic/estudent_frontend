@@ -1,28 +1,33 @@
-import React from "react";
-import "@/../assets/componentCSS/TextInput.css";
+import React, { useRef, useState } from "react";
+import "@/assets/componentCSS/TextInput.css";
+import { has, set } from "lodash";
 
 interface TextInputProps {
-  value: string;
+  // value?: string;
   onChange: (value: string) => void;
   placeholder?: string;
   isClearable?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
-  value,
+  // value,
   onChange,
   placeholder = "",
   isClearable = false,
 }) => {
+  const [hasText, setHasText] = useState(false);
   return (
     <div className="custom-text-input">
       <input
+        className="mx-"
         type="text"
         placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          setHasText(e.target.value.length > 0);
+          onChange(e.target.value);
+        }}
       />
-      {isClearable && value && (
+      {isClearable && hasText && (
         <button
           className="clear-btn"
           onClick={() => onChange("")}

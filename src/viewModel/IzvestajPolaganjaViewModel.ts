@@ -1,6 +1,8 @@
-import { CourseExamAPIService } from "@/api/courseExam";
+import { CourseExamAPIService } from "@/api/courseExams";
 import { CourseExam, DocumentBlob } from "@/types/items";
 import { CourseExamPageCriteria } from "@/types/items";
+import "@/assets/componentCSS/DatePicker.css";
+import { NoContentError } from "@/errors/NoContentError";
 export default class IzvestajPolaganjaViewModel {
   #courseExams: CourseExam[];
   #totalPages: number;
@@ -28,12 +30,12 @@ export default class IzvestajPolaganjaViewModel {
       );
       this.#courseExams = courseExams.content;
       this.#totalPages = courseExams.totalPages;
-      this.updateView?.();
     } catch (error) {
       console.error(error);
       alert("Doslo je do greske prilikom pretrage polaganja");
     } finally {
       this.#ucitavaSe = false;
+      this.updateView?.();
     }
   };
   downloadCourseExamReport = async (courseExam: CourseExam) => {
@@ -52,8 +54,12 @@ export default class IzvestajPolaganjaViewModel {
 
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error(error);
-      alert("Doslo je do greske prilikom skidanje izvestaja");
+      if (error instanceof NoContentError) {
+        alert("Nema prijava za ovo polaganje");
+      } else {
+        console.error(error);
+        alert("Doslo je do greske prilikom skidanje izvestaja");
+      }
     }
   };
 }

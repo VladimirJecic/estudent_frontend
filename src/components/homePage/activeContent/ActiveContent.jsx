@@ -2,7 +2,7 @@ import AktuelniRokovi from "./AktuelniRokovi.jsx";
 import { Routes, Route } from "react-router-dom";
 import PolozeniIspiti from "./PolozeniIspiti.jsx";
 import PrijavaIspita from "./PrijavaIspita.jsx";
-import IzvestajPolaganja from "./IzvestajPolaganja.jsx";
+import IzvestajPolaganja from "./IzvestajPolaganja.tsx";
 import LoginViewModel from "../../../viewModel/LoginViewModel.js";
 import UpisOcena from "./UpisOcena.jsx";
 

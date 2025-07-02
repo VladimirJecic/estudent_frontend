@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useCallback } from "react";
-import { dateToString } from "@/utils/DateUtility.js";
-import IzvestajPolaganjaViewModel from "@/viewModel/IzvestajPolaganjaViewModel.js";
+import IzvestajPolaganjaViewModel from "@/viewModel/IzvestajPolaganjaViewModel";
 import TextInput from "@/components/custom/TextInput";
 import Pagination from "@/components/custom/Pagination.jsx";
 import DatePicker from "react-datepicker";
 import debounce from "lodash/debounce";
 import { CourseExamPageCriteria } from "@/types/items.js";
+import { format } from "date-fns";
 
 const IzvestajPolaganja = () => {
   const viewModel = useMemo(() => new IzvestajPolaganjaViewModel(), []);
@@ -15,44 +15,83 @@ const IzvestajPolaganja = () => {
     setViewModelState(viewModel.project());
   };
 
-  const [courseName, setCourseName] = useState("");
+  // const [typedCourseName, setTypedCourseName] = useState("");
+  const [searchedCourseName, setSearchedCourseName] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
-  const debouncedHandleChangeCourseName = useCallback(
+  const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
-      return handleChangeCourseName(value);
+      if (value.length > 2) setSearchedCourseName(value);
     }, 500),
     []
   );
 
-  const handleChangeCourseName = (value: string) => {
-    if (value.length > 2) {
-      setPage(1);
-      searchCourseExams();
-    }
-  };
-  const searchCourseExams = () => {
+  const handlePageChange = (newPage: number) => {
+    setPage(page);
     const pageCriteria: CourseExamPageCriteria = {
-      page: page,
+      page: newPage,
       pageSize: pageSize,
-      courseName: courseName,
+      courseName: searchedCourseName,
       dateFrom: dateFrom,
       dateTo: dateTo,
     };
-
     viewModel.searchCourseExams(pageCriteria);
   };
+  // const handleChangeCourseName = (newCourseName: string) => {
+  //   if (undefined !== newCourseName && newCourseName.length > 2) {
+  //     setPage(1);
+  //     const pageCriteria: CourseExamPageCriteria = {
+  //       page: 1,
+  //       pageSize: pageSize,
+  //       courseName: newCourseName,
+  //       dateFrom: dateFrom,
+  //       dateTo: dateTo,
+  //     };
+  //     viewModel.searchCourseExams(pageCriteria);
+  //   }
+  // };
+  // const handleDateFromChange = (newDateFrom: Date | null) => {
+  //   setDateFrom(newDateFrom);
+  //   setPage(1);
+  //   const pageCriteria: CourseExamPageCriteria = {
+  //     page: 1,
+  //     pageSize: pageSize,
+  //     courseName: typedCourseName,
+  //     dateFrom: newDateFrom,
+  //     dateTo: dateTo,
+  //   };
+  //   viewModel.searchCourseExams(pageCriteria);
+  // };
+  // const handleDateToChange = (newDateTo: Date | null) => {
+  //   setDateTo(newDateTo);
+  //   setPage(1);
+  //   const pageCriteria: CourseExamPageCriteria = {
+  //     page: 1,
+  //     pageSize: pageSize,
+  //     courseName: typedCourseName,
+  //     dateFrom: dateFrom,
+  //     dateTo: newDateTo,
+  //   };
+  //   viewModel.searchCourseExams(pageCriteria);
+  // };
 
   //#region OnMount
   useEffect(() => {
-    searchCourseExams();
-  }, [viewModel]);
+    const pageCriteria: CourseExamPageCriteria = {
+      page: 1,
+      pageSize: pageSize,
+      courseName: searchedCourseName,
+      dateFrom: dateFrom,
+      dateTo: dateTo,
+    };
+    viewModel.searchCourseExams(pageCriteria);
+  }, [searchedCourseName, dateFrom, dateTo]);
   //#endregion OnMount
   return (
-    <div>
+    <div className="d-flex flex-column align-items-center text-center">
       <h2 className="mb-4">Izveštaj polaganja</h2>
       {viewModelState.courseExams.length === 0 &&
       viewModelState.ucitavaSe === true ? (
@@ -60,34 +99,30 @@ const IzvestajPolaganja = () => {
           <h5> {"učitava se..."}</h5>
         </div>
       ) : (
-        <>
-          <div className="d-inline-flex p-2 align-items-center justify-content-around">
+        <div className="mx-auto mt-3">
+          <div className="d-flex w-100 mr-auto  mb-4">
             <TextInput
-              value={courseName}
               onChange={(value: string) => {
-                setCourseName(value);
-                debouncedHandleChangeCourseName(value);
+                debounced_handleChangeCourseName(value);
               }}
               placeholder="Naziv ispita"
               isClearable
             />
             <DatePicker
+              className="custom-datepicker mx-3"
               placeholderText="Datum od"
               selected={dateFrom}
               dateFormat="dd/MM/yyyy"
-              onChange={(date: Date | null) => {
-                setDateFrom(date);
-                searchCourseExams();
-              }}
+              onChange={(date: Date | null) => setDateFrom(date)}
               isClearable={true}
             />
             <DatePicker
+              className="custom-datepicker mx-3"
               placeholderText="Datum do"
               selected={dateTo}
               dateFormat="dd/MM/yyyy"
               onChange={(date: Date | null) => {
                 setDateTo(date);
-                searchCourseExams();
               }}
               isClearable={true}
             />
@@ -112,7 +147,7 @@ const IzvestajPolaganja = () => {
                       <p>{courseExam.examPeriod.name}</p>
                     </td>
                     <td>
-                      <p>{dateToString(courseExam.examDateTime)}</p>
+                      <p>{format(courseExam.examDateTime, "dd/MM/yyyy")}</p>
                     </td>
                     <td>
                       <button
@@ -134,12 +169,9 @@ const IzvestajPolaganja = () => {
           <Pagination
             currentPage={page}
             totalPages={viewModelState.totalPages}
-            onPageChange={(page: number) => {
-              setPage(page);
-              searchCourseExams();
-            }}
+            onPageChange={(page: number) => handlePageChange(page)}
           ></Pagination>
-        </>
+        </div>
       )}
     </div>
   );

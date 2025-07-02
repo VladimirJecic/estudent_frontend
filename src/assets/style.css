@@ -10936,3 +10936,10 @@ div.wrapper.d-flex.align-items-stretch {
     width: unset;
   }
 }
+.tableWrapper {
+  z-index: 0;
+  position: relative;
+}
+button.react-datepicker-close-icon {
+  padding: 0 20px 0 0;
+}

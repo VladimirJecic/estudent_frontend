@@ -1,6 +1,7 @@
 import { BlobResponse, CourseExam, DocumentBlob } from "@/types/items";
 import { CourseExamPageCriteria, PageResponse } from "@/types/items";
 import apiService from ".";
+import { format } from "date-fns/format";
 
 export class CourseExamAPIService {
   static createQueryString(pageCriteria: CourseExamPageCriteria): string {
@@ -11,14 +12,17 @@ export class CourseExamAPIService {
       queryParams.push(
         `page-size=${encodeURIComponent(pageCriteria.pageSize)}`
       );
-    if ("" !== pageCriteria.courseName)
+    if (pageCriteria.courseName.length > 0)
       queryParams.push(
         `course-name=${encodeURIComponent(pageCriteria.courseName)}`
       );
-    if (null !== pageCriteria.dateFrom)
+    if (pageCriteria.dateFrom)
       queryParams.push(
-        `date-from=${encodeURIComponent(pageCriteria.dateFrom.toISOString())}`
+        `date-from=${encodeURIComponent(
+          format(pageCriteria.dateFrom, "yyyy-MM-dd")
+        )}`
       );
+
     if (null !== pageCriteria.dateTo)
       queryParams.push(
         `date-to=${encodeURIComponent(pageCriteria.dateTo.toISOString())}`
@@ -45,7 +49,6 @@ export class CourseExamAPIService {
         responseType: "blob",
       }
     );
-
     const contentDisposition = response.headers.get("Content-Disposition");
     const match = contentDisposition?.match(/filename="?([^"]+)"?/);
     const filename =

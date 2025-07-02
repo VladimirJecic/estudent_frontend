@@ -5,11 +5,12 @@
 
 .custom-text-input input {
   padding-right: 24px; /* space for clear button */
+  width: 20vw;
 }
 
 .custom-text-input .clear-btn {
   position: absolute;
-  right: 6px;
+  right: 28px;
   top: 50%;
   transform: translateY(-50%);
   background: none;

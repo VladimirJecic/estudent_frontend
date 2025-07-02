@@ -17,18 +17,32 @@ function Sidebar({ sBarCollapsed, handleSBItemChange, logOut }) {
         </a>
       </h1>
       <ul className="list-unstyled components mb-5">
-        <li className="active" onClick={() => handleSBItemChange("rokovi")}>
+        <li onClick={() => handleSBItemChange("rokovi")}>
           <a>
             <span className="far fa-calendar-check" aria-hidden="true"></span>{" "}
             Aktuelni rokovi
           </a>
         </li>{" "}
         {LoginViewModel.getStoredUser()?.isAdmin() ? (
-          <li onClick={() => handleSBItemChange("upis_ocena")}>
-            <a>
-              <span className="fa-solid fa-pen-to-square"></span> Upis ocena
-            </a>
-          </li>
+          <>
+            <li onClick={() => handleSBItemChange("upis_ocena")}>
+              <a>
+                <span className="fa-solid fa-pen-to-square"></span> Upis ocena
+              </a>
+            </li>
+            <li onClick={() => handleSBItemChange("izvestaj_polaganja")}>
+              <a>
+                <span className="fa-solid fa-file-lines"></span> Izveštaj
+                polaganja ispita
+              </a>
+            </li>
+            <li onClick={() => handleSBItemChange("izvestaj_predmeta")}>
+              <a>
+                <span className="fa-solid fa-chart-simple"></span> Izveštaj o
+                predmetu
+              </a>
+            </li>
+          </>
         ) : (
           <>
             <li onClick={() => handleSBItemChange("polozeni_ispiti")}>
@@ -39,19 +53,6 @@ function Sidebar({ sBarCollapsed, handleSBItemChange, logOut }) {
             <li onClick={() => handleSBItemChange("prijava_ispita")}>
               <a>
                 <span className="fa fa-sticky-note"></span> Prijava ispita
-              </a>
-            </li>
-            <li onClick={() => handleSBItemChange("izvestaj_polaganja")}>
-              <a>
-                <span className="fa-solid fa-file-lines"></span> Izveštaj
-                polaganja ispita
-              </a>
-            </li>
-
-            <li onClick={() => handleSBItemChange("izvestaj_predmeta")}>
-              <a>
-                <span className="fa-solid fa-chart-simple"></span> Izveštaj o
-                predmetu
               </a>
             </li>
           </>

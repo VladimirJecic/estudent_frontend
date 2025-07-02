@@ -7,7 +7,7 @@ const SignIn = ({ errorMessage, changeUserData, handleLogin }) => {
   return (
     <div className="wrapper fadeInDown loginRoot">
       <div className="formContent">
-        <h2 className="active">Sign In</h2>
+        <h2 className="font-weight-bold text-secondary">Sign In</h2>
         <div className="fadeIn first">
           <img src={logo} className="icon" alt="User Icon" />
         </div>
