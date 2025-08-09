@@ -6,7 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "popper.js";
 import "bootstrap";
 import "./assets/style.css";
-import "./assets/componentCSS/common.css";
+import "./assets/componentCSS/base.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

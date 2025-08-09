@@ -1,10 +1,45 @@
+export type UpdateExamRegistration = {
+  mark: number;
+  hasAttended: boolean;
+  comment: string;
+};
+
+export type SubmitExamRegistration = {
+  courseExamId: number;
+  studentId?: number;
+};
+export type ExamRegistration = {
+  id: number;
+  courseExam: CourseExam;
+  student: User;
+  signedBy: User;
+  mark: number;
+  comment: string;
+  updatedAt: Date;
+  hasAttended: boolean;
+};
+export interface ExamRegistrationPresentation extends ExamRegistration {
+  studentIndexNum: string;
+  studentName: string;
+  courseName: string;
+  courseEspb: number;
+  updatedAtFormatted: string;
+  examDateTimeFormatted: string;
+  signedByName: string;
+}
 export type CourseExam = {
+  id: number;
   examPeriod: ExamPeriod;
   course: Course;
   examDateTime: Date;
   hall: string;
 };
-
+export interface CourseExamPresentation extends CourseExam {
+  courseName: string;
+  courseSemester: string;
+  courseEspb: number;
+  examDateTimeFormatted: string;
+}
 export type ExamPeriod = {
   id?: number;
   name: string;
@@ -12,8 +47,15 @@ export type ExamPeriod = {
   dateRegistrationEnd: Date;
   dateStart: Date;
   dateEnd: Date;
-  exams: CourseExam[];
+  courseExams: CourseExam[];
 };
+export interface ExamPeriodPresentation extends ExamPeriod {
+  dateRegistrationStartFormatted: string;
+  dateRegistrationEndFormatted: string;
+  dateStartFormatted: string;
+  dateEndFormatted: string;
+  courseExamPresentations: CourseExamPresentation[];
+}
 export type Course = {
   id?: number;
   name: string;
@@ -24,11 +66,10 @@ export type Course = {
 export type User = {
   name: string;
   indexNum: string;
-  password: string;
-  confirmPassword: string;
-  email: string;
-  role: string;
-  token: string;
+  email?: string;
+  role?: string;
+  isAdmin?: boolean;
+  token?: string;
 };
 export type PageResponse<T> = {
   content: T[];

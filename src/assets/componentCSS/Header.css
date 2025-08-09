@@ -1,3 +1,25 @@
+/* Logo image style for AppLayout */
+.logo-img {
+  width: 120px;
+}
+
+.logo-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
 ul.header {
   align-items: center;
 }

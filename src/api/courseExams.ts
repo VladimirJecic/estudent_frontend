@@ -1,4 +1,9 @@
-import { BlobResponse, CourseExam, DocumentBlob } from "@/types/items";
+import {
+  BlobResponse,
+  CourseExam,
+  DocumentBlob,
+  ExamPeriod,
+} from "@/types/items";
 import { CourseExamPageCriteria, PageResponse } from "@/types/items";
 import apiService from ".";
 import { format } from "date-fns/format";
@@ -30,12 +35,23 @@ export class CourseExamAPIService {
     return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
   }
 
-  static async getCourseExamsByCriteria(
-    pageCriteria: CourseExamPageCriteria
-  ): Promise<PageResponse<CourseExam>> {
+  static async getCourseExamsByCriteria(pageCriteria: CourseExamPageCriteria) {
     const queryParams = this.createQueryString(pageCriteria);
-    const response: PageResponse<CourseExam> = await apiService.GET(
+    const response = await apiService.GET<PageResponse<CourseExam>>(
       `/course-exams${queryParams}`
+    );
+    return response;
+  }
+  static async getRemainingCourseExams(examPeriod: ExamPeriod) {
+    const response = await apiService.GET<CourseExam[]>(
+      `/course-exams/remaining-course-exams?for-exam-period-id=${examPeriod.id}`,
+      {}
+    );
+    return response;
+  }
+  static async getRegisterableCourseExams(examPeriod: ExamPeriod) {
+    const response = await apiService.GET<CourseExam[]>(
+      `/course-exams/registerable-course-exams?for-exam-period-id=${examPeriod.id}`
     );
     return response;
   }

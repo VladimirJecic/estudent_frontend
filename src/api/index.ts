@@ -1,50 +1,22 @@
 /* eslint-disable no-extend-native */
-import { NoContentError } from "@/errors/NoContentError";
-import { EStudentApiError } from "@/types/items";
 import { format } from "date-fns";
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const isoDateTimeLocalRegex =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):\d{2}\.\d+Z$/;
 
-const BASE_URL = process.env.REACT_APP_ESTUDENT_API_BASE_URL;
+const BASE_URL: string = process.env.REACT_APP_ESTUDENT_API_BASE_URL!;
 
 function getAuthToken(path: string): string | null {
   return JSON.parse(sessionStorage.user).token;
 }
 
-// export async function POST<T>(
-//   path: string,
-//   payload: unknown,
-//   headers: Record<string, string> = {}
-// ): Promise<T> {
-//   try {
-//     const token = getAuthToken(path);
-//     const isFormData = payload instanceof FormData;
-
-//     const authHeaders: Record<string, string> = token
-//       ? { Authorization: `Bearer ${token}` }
-//       : {};
-
-//     const finalHeaders = {
-//       ...authHeaders,
-//       ...headers,
-//       ...(!isFormData && !headers["Content-Type"]
-//         ? { "Content-Type": "application/json" }
-//         : {}),
-//     };
-
-//     const response = await fetch(`${BASE_URL}${path}`, {
-//       method: "POST",
-//       headers: finalHeaders,
-//       body: isFormData ? (payload as FormData) : JSON.stringify(payload),
-//     });
-
-//     return await handleResponse(response);
-//   } catch (error) {
-//     throw new Error(`${(error as Error).message}`);
-//   }
-// }
+function getPOSTBaseUrl(path: string): string {
+  if (path === "/login" || path === "/logout") {
+    return BASE_URL?.endsWith("/api") ? BASE_URL.slice(0, -4) : BASE_URL;
+  }
+  return BASE_URL;
+}
 
 async function GET<T>(
   path: string,
@@ -66,46 +38,99 @@ async function GET<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    if (error instanceof NoContentError) throw error;
     throw new Error(`GET request failed: ${(error as Error).message}`);
   }
 }
 
-// export async function PUT<T>(
-//   path: string,
-//   payload: unknown,
-//   headers: Record<string, string> = {}
-// ): Promise<T> {
-//   try {
-//     const token = getAuthToken(path);
-//     const isFormData = payload instanceof FormData;
+export async function POST<T>(
+  path: string,
+  payload: unknown,
+  headers: Record<string, string> = {}
+): Promise<T> {
+  try {
+    const token = getAuthToken(path);
+    const isFormData = payload instanceof FormData;
 
-//     const authHeaders: Record<string, string> = token
-//       ? { Authorization: `Bearer ${token}` }
-//       : {};
+    const authHeaders: Record<string, string> = token
+      ? { Authorization: `Bearer ${token}` }
+      : {};
 
-//     const finalHeaders = {
-//       ...authHeaders,
-//       ...headers,
-//       ...(!isFormData && !headers["Content-Type"]
-//         ? { "Content-Type": "application/json" }
-//         : {}),
-//     };
+    const finalHeaders = {
+      ...authHeaders,
+      ...headers,
+      ...(!isFormData && !headers["Content-Type"]
+        ? { "Content-Type": "application/json" }
+        : {}),
+    };
 
-//     const response = await fetch(`${BASE_URL}${path}`, {
-//       method: "PUT",
-//       headers: finalHeaders,
-//       body: isFormData ? (payload as FormData) : JSON.stringify(payload),
-//     });
+    const response = await fetch(`${getPOSTBaseUrl(path)}${path}`, {
+      method: "POST",
+      headers: finalHeaders,
+      body: isFormData ? (payload as FormData) : JSON.stringify(payload),
+    });
 
-//     return await handleResponse(response);
-//   } catch (error) {
-//     throw new Error(`PUT request failed: ${(error as Error).message}`);
-//   }
-// }
+    return await handleResponse(response);
+  } catch (error) {
+    throw new Error(`${(error as Error).message}`);
+  }
+}
+
+export async function PUT<T>(
+  path: string,
+  payload: unknown,
+  headers: Record<string, string> = {}
+): Promise<T> {
+  try {
+    const token = getAuthToken(path);
+    const isFormData = payload instanceof FormData;
+
+    const authHeaders: Record<string, string> = token
+      ? { Authorization: `Bearer ${token}` }
+      : {};
+
+    const finalHeaders = {
+      ...authHeaders,
+      ...headers,
+      ...(!isFormData && !headers["Content-Type"]
+        ? { "Content-Type": "application/json" }
+        : {}),
+    };
+
+    const response = await fetch(`${BASE_URL}${path}`, {
+      method: "PUT",
+      headers: finalHeaders,
+      body: isFormData ? (payload as FormData) : JSON.stringify(payload),
+    });
+
+    return await handleResponse(response);
+  } catch (error) {
+    throw new Error(`PUT request failed: ${(error as Error).message}`);
+  }
+}
+export async function DELETE<T>(
+  path: string,
+  headers: Record<string, string> = { "Content-Type": "application/json" }
+): Promise<T> {
+  const token = getAuthToken(path);
+  const authHeaders: Record<string, string> = token
+    ? { Authorization: `Bearer ${token}` }
+    : {};
+  const finalHeaders = {
+    ...authHeaders,
+    ...headers,
+  };
+  try {
+    const response = await fetch(`${BASE_URL}${path}`, {
+      method: "DELETE",
+      headers: finalHeaders,
+    });
+    return await handleResponse(response);
+  } catch (error) {
+    throw new Error(`DELETE request failed: ${(error as Error).message}`);
+  }
+}
+
 async function handleResponse(response: Response) {
-  if (response.status === 204) throw new NoContentError();
-
   if (response.headers.get("Content-Disposition") !== null) return response;
   else return response.json().then(parseDates);
 }
@@ -156,5 +181,6 @@ Date.prototype.toJSON = function () {
     return format(this, "yyyy-MM-dd");
   }
 };
-const apiService = { GET };
+
+const apiService = { GET, POST, PUT, DELETE };
 export default apiService;

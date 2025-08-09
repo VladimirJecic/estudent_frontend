@@ -1,6 +1,4 @@
-import React, { useRef, useState } from "react";
-import "@/assets/componentCSS/TextInput.css";
-import { has, set } from "lodash";
+import React, { useState } from "react";
 
 interface TextInputProps {
   // value?: string;
