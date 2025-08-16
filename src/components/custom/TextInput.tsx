@@ -1,39 +1,90 @@
 import React, { useState } from "react";
 
 interface TextInputProps {
-  // value?: string;
+  type?: string;
+  className?: string;
+  value?: string;
   onChange: (value: string) => void;
   placeholder?: string;
   isClearable?: boolean;
+  errorMessage?: string;
+  hideDetails?: boolean | "auto";
+  prependIcon?: string;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
-  // value,
+  type = "text",
+  className = "",
+  value = undefined,
   onChange,
   placeholder = "",
   isClearable = false,
+  errorMessage,
+  hideDetails = "auto",
+  prependIcon,
 }) => {
   const [hasText, setHasText] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const shouldShowDetails =
+    hideDetails === false || (hideDetails === "auto" && !!errorMessage);
+  // showFloating is not needed, floating label is handled by class
   return (
-    <div className="custom-text-input">
+    <div
+      className={`custom-text-input${hasText ? " input-has-value" : ""}${
+        isFocused ? " input-focused" : ""
+      }`}
+    >
+      {prependIcon && (
+        <span className="prepend-icon">
+          <i className={`fa ${prependIcon}`}></i>
+        </span>
+      )}
+      {/* Floating label always present, animates up on focus or text */}
+      {placeholder && (
+        <label
+          className={`floating-label${
+            hasText || isFocused ? " floating-label--float" : ""
+          }`}
+        >
+          {placeholder}
+        </label>
+      )}
       <input
-        className="mx-"
-        type="text"
-        placeholder={placeholder}
+        name="textInput"
+        value={value}
+        className={className}
+        type={type}
+        aria-label={placeholder || "Text input"}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         onChange={(e) => {
           setHasText(e.target.value.length > 0);
           onChange(e.target.value);
         }}
       />
-      {isClearable && hasText && (
+      {isClearable && (
         <button
-          className="clear-btn"
-          onClick={() => onChange("")}
+          name="clearButton"
+          className={`clear-btn ${hasText ? "hasText" : "hasNoText"}`}
+          onClick={() => {
+            onChange("");
+            setHasText(false);
+          }}
           title="Clear"
+          tabIndex={hasText ? 0 : -1}
         >
-          ×
+          <span>×</span>
         </button>
       )}
+      <div
+        className={shouldShowDetails ? "details" : "details details--hidden"}
+      >
+        {shouldShowDetails && errorMessage && (
+          <div className="warning" role="alert">
+            <p className="errLine">{errorMessage}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

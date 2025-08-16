@@ -1,0 +1,14 @@
+/* Card.css - Bootstrap-inspired card for centered forms */
+.custom-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  max-width: 450px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

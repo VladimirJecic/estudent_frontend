@@ -1,25 +1,153 @@
 .custom-text-input {
   position: relative;
-  display: inline-block;
+}
+
+.custom-text-input .floating-label {
+  position: absolute;
+  left: 2.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary);
+  font-size: 1rem;
+  font-weight: 500;
+  background: var(--primary-lighten-3);
+  padding: 0 0.25rem;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+.custom-text-input .floating-label.floating-label--float {
+  top: 0.4rem;
+  left: 1.1rem;
+  font-size: 0.85rem;
+  background: var(--primary-lighten-3);
+  padding: 0 0.25rem;
+}
+.custom-text-input input {
+  padding-top: 1.5rem;
+}
+.clear-btn.hasText span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1.3rem;
+  color: var(--primary-lighten-3);
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-1px);
+}
+.clear-btn.hasNoText {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  display: none;
+}
+.clear-btn.hasText {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--secondary-lighten-1);
+  color: var(--primary-lighten-3);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border: none;
+  padding: 0;
+}
+/* Make the input container flex column, so input and details stack vertically */
+.custom-text-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .custom-text-input input {
-  padding-right: 24px; /* space for clear button */
-  width: 20vw;
+  width: 100%;
+  background-color: var(--primary-lighten-3);
+  border: none;
+  color: #0d0d0d;
+  padding: 1rem 2rem;
+  text-align: left;
+  text-decoration: none;
+  margin: 5px 0;
+  border: 2px solid var(--primary-lighten-2);
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  box-sizing: border-box;
+}
+
+.custom-text-input input:focus {
+  background-color: #fff;
+  border-bottom: 2px solid var(--primary);
+}
+
+.custom-text-input input::placeholder {
+  color: var(--primary-lighten-1);
+}
+
+.custom-text-input .details {
+  min-height: 1.5rem;
+}
+.custom-text-input .details.details--hidden {
+  min-height: 0;
+  height: 0;
+  overflow: hidden;
+}
+.custom-text-input .warning {
+  color: var(--error);
+}
+.custom-text-input .errLine {
+  margin-bottom: 0;
 }
 
 .custom-text-input .clear-btn {
   position: absolute;
-  right: 28px;
+  right: 0.5rem;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
-  border: none;
   cursor: pointer;
-  font-size: 16px;
-  color: #999;
+  font-size: 1.1rem;
+  transition: color 0.2s, opacity 0.2s, background 0.2s;
+  z-index: 2;
+}
+.custom-text-input input:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
 }
 
-.custom-text-input .clear-btn:hover {
-  color: #000;
+.custom-text-input input::placeholder {
+  color: #cccccc;
+}
+
+.custom-text-input .clear-btn.hasText:hover {
+  background: var(--secondary);
+  color: var(--primary-lighten-3);
+}
+.custom-text-input .prepend-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary);
+  font-size: 1.2rem;
+  z-index: 2;
+  pointer-events: none;
+}
+.custom-text-input {
+  position: relative;
+}
+.custom-text-input input {
+  padding-left: 2.6rem;
 }

@@ -5,15 +5,33 @@
 @import "./ExamRegistrationsAdd.css";
 @import "./ExamRegistrationsPassed.css";
 @import "./Header.css";
-@import "./LoginPage.css";
 @import "./Pagination.css";
 @import "./TextInput.css";
-.empty-header-cell {
-  background-color: transparent !important;
-  border: none;
-  box-shadow: none;
-  color: transparent;
+@import "./Button.css";
+@import "./Card.css";
+@import "./Container.css";
+
+div,
+form,
+body,
+html {
+  display: flex !important;
+  flex-direction: column;
 }
+
+html,
+#root,
+div.App,
+body {
+  background-color: #4e66c4;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 table {
   position: relative; /* So z-index works */
   z-index: 1; /* Sit above the background */
@@ -21,6 +39,7 @@ table {
   border-collapse: separate;
   border-spacing: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
   border-radius: 8px;
   overflow: hidden;
   background-color: #f8f9fa;
@@ -29,9 +48,96 @@ table {
   text-align: center;
 }
 
-table,
 tr,
 td,
 th {
   border: 1px solid black;
 }
+/*#region Colors*/
+:root {
+  --primary: #4e66c4; /* main blue */
+  --primary-darken-1: #3a4a8c; /* darker blue */
+  --primary-lighten-1: #bfc8e6; /* light blue-grey */
+  --primary-lighten-2: #e6e9f5; /* lighter, almost white */
+  --primary-lighten-3: #f8f9fa; /* near white */
+  --secondary: #6c757d; /* gray for tables, dialogs, cancel buttons */
+  --success: #28a745; /* green for success */
+  --error: #dc3545; /* red for error */
+  --secondary-darken-1: #495057; /* darker gray */
+  --secondary-lighten-1: #adb5bd; /* lighter gray */
+  --secondary-lighten-2: #dee2e6; /* even lighter gray */
+}
+
+.primary {
+  color: var(--primary) !important;
+}
+.primary-darken-1 {
+  color: var(--primary-darken-1) !important;
+}
+.primary-lighten-1 {
+  color: var(--primary-lighten-1) !important;
+}
+.primary-lighten-2 {
+  color: var(--primary-lighten-2) !important;
+}
+.primary-lighten-3 {
+  color: var(--primary-lighten-3) !important;
+}
+.secondary {
+  color: var(--secondary) !important;
+}
+.secondary-darken-1 {
+  color: var(--secondary-darken-1) !important;
+}
+.secondary-lighten-1 {
+  color: var(--secondary-lighten-1) !important;
+}
+.secondary-lighten-2 {
+  color: var(--secondary-lighten-2) !important;
+}
+.success {
+  color: var(--success) !important;
+}
+.error {
+  color: var(--error) !important;
+}
+.bg-primary {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+.bg-primary-darken-1 {
+  background-color: var(--primary-darken-1) !important;
+  color: #fff !important;
+}
+.bg-primary-lighten-1 {
+  background-color: var(--primary-lighten-1) !important;
+}
+.bg-primary-lighten-2 {
+  background-color: var(--primary-lighten-2) !important;
+}
+.bg-primary-lighten-3 {
+  background-color: var(--primary-lighten-3) !important;
+}
+.bg-secondary {
+  background-color: var(--secondary) !important;
+  color: #fff !important;
+}
+.bg-secondary-darken-1 {
+  background-color: var(--secondary-darken-1) !important;
+  color: #fff !important;
+}
+.bg-secondary-lighten-1 {
+  background-color: var(--secondary-lighten-1) !important;
+}
+.bg-secondary-lighten-2 {
+  background-color: var(--secondary-lighten-2) !important;
+}
+.bg-success {
+  background-color: var(--success) !important;
+  color: #fff !important;
+}
+.bg-error {
+  background-color: var(--error) !important;
+  color: #fff !important;
+}
+/*#endregion Colors*/

@@ -1,0 +1,11 @@
+/* Container.css - for custom Container component */
+.custom-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-container {
+  border-radius: 10px;
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.3);
+}

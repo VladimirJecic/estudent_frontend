@@ -4,8 +4,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "popper.js";
-import "bootstrap";
-import "./assets/style.css";
+//import "./assets/style.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/componentCSS/base.css";
 import "react-datepicker/dist/react-datepicker.css";
 

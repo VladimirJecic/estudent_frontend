@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "@/assets/logo-small.jpg";
+import logoFonSlova from "@/assets/logo-fon-slova.png";
 import { AuthAPIService } from "@/api/auth";
 import { useUser } from "@/context/UserContext";
 import type { LoginRequest } from "@/types/auth";
 
 import alertService from "@/services/AlertService";
 import { User } from "@/types/items";
+
+import TextInput from "../custom/TextInput";
+import Buton from "../custom/Buton";
+import Container from "../custom/Container";
 
 const LoginPage = () => {
   const [indexNum, setIndexNum] = useState("");
@@ -36,40 +40,44 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="wrapper fadeInDown loginRoot">
-      <div className="formContent">
-        <div className="fadeIn first">
-          <img src={logo} className="icon" alt="User Icon" />
-        </div>
-        <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            className="fadeIn second"
-            name="indexNum"
-            placeholder="20xx/xxxx"
-            value={indexNum}
-            onChange={(e) => setIndexNum(e.target.value)}
-          />
-          <input
-            type="password"
-            className="fadeIn third"
-            name="password"
-            placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {isCredentialsError && (
-            <div className="warning" role="alert">
-              <p className="errLine">
-                Pogrešan userName ili password
-                <br />
-              </p>
-            </div>
-          )}
-          <input type="submit" className="fadeIn fourth" value="Log In" />
-        </form>
-      </div>
-    </div>
+    <Container className="bg-white h-50 w-100 mx-5 px-5">
+      {/* <img src={logo} className="col-7" alt="User Icon" /> */}
+      <img src={logoFonSlova} className="col-5" alt="User Icon" />
+      <h4 className="mb-4 d-flex justify-content-center col-12 primary-darken-1">
+        E-Student
+      </h4>
+      <form className="col-12 align-self-center" onSubmit={handleLogin}>
+        <TextInput
+          className="m-2"
+          prependIcon="fa-user"
+          value={indexNum}
+          onChange={setIndexNum}
+          placeholder="Broj indexa u formatu 20xx/xxxx"
+          isClearable
+          errorMessage={
+            isCredentialsError
+              ? "Pogrešan broj indeksa ili password"
+              : undefined
+          }
+        />
+        <TextInput
+          type="password"
+          className="m-2"
+          value={password}
+          prependIcon="fa-lock"
+          onChange={setPassword}
+          placeholder="Lozinka"
+          errorMessage={
+            isCredentialsError
+              ? "Pogrešan broj indeksa ili password"
+              : undefined
+          }
+        />
+        <Buton type="submit" className="m-2">
+          Uloguj se
+        </Buton>
+      </form>
+    </Container>
   );
 };
 
