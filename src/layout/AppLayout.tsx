@@ -43,7 +43,7 @@ const AppLayout = () => {
             <button
               type="button"
               className="nav-btn"
-              onClick={() => navigate("/rokovi")}
+              onClick={() => navigate("/exam-periods")}
             >
               <span className="far fa-calendar-check" aria-hidden="true"></span>{" "}
               Aktuelni rokovi
@@ -55,7 +55,7 @@ const AppLayout = () => {
                 <button
                   type="button"
                   className="nav-btn"
-                  onClick={() => navigate("/upis-ocena")}
+                  onClick={() => navigate("/grade-entry")}
                 >
                   <span className="fa-solid fa-pen-to-square"></span> Upis ocena
                 </button>
@@ -64,7 +64,7 @@ const AppLayout = () => {
                 <button
                   type="button"
                   className="nav-btn"
-                  onClick={() => navigate("/izvestaj-polaganja")}
+                  onClick={() => navigate("/exam-report")}
                 >
                   <span className="fa-solid fa-file-lines"></span> Izveštaj
                   polaganja ispita
@@ -74,7 +74,7 @@ const AppLayout = () => {
                 <button
                   type="button"
                   className="nav-btn"
-                  onClick={() => navigate("/izvestaj_predmeta")}
+                  onClick={() => navigate("/subject-report")}
                 >
                   <span className="fa-solid fa-chart-simple"></span> Izveštaj o
                   predmetu
@@ -87,7 +87,7 @@ const AppLayout = () => {
                 <button
                   type="button"
                   className="nav-btn"
-                  onClick={() => navigate("/polozeni-ispiti")}
+                  onClick={() => navigate("/passed-exams")}
                 >
                   <span className="fa fa-th-large"></span> Polozeni ispiti
                 </button>
@@ -96,7 +96,7 @@ const AppLayout = () => {
                 <button
                   type="button"
                   className="nav-btn"
-                  onClick={() => navigate("/prijava-ispita")}
+                  onClick={() => navigate("/exam-registration")}
                 >
                   <span className="fa fa-sticky-note"></span> Prijava ispita
                 </button>
@@ -109,12 +109,6 @@ const AppLayout = () => {
             </button>
           </li>
         </ul>
-        <div className="footer">
-          <p>
-            Copyright &copy;{new Date().getFullYear()}
-            All rights reserved | Colorlib.com
-          </p>
-        </div>
       </nav>
       {/* Main Content */}
       <div id="content" className="p-4 p-md-5 content">

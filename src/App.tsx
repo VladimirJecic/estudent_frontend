@@ -11,7 +11,7 @@ const App = () => {
     <div className="App">
       <UserProvider>
         <AlertServiceProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/estudent">
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/" element={<AppLayout />}>

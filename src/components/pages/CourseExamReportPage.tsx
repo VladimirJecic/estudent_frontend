@@ -14,7 +14,6 @@ const CourseExamReportPage = () => {
     setViewModelState(viewModel.project());
   };
 
-  // const [typedCourseName, setTypedCourseName] = useState("");
   const [searchedCourseName, setSearchedCourseName] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
