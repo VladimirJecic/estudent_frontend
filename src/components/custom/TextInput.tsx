@@ -61,6 +61,11 @@ const TextInput: React.FC<TextInputProps> = ({
           setHasText(e.target.value.length > 0);
           onChange(e.target.value);
         }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault(); // Prevent clearing the input
+          }
+        }}
       />
       {isClearable && (
         <button
@@ -73,7 +78,7 @@ const TextInput: React.FC<TextInputProps> = ({
           title="Clear"
           tabIndex={hasText ? 0 : -1}
         >
-          <span>×</span>
+          <span className="pt-1">×</span>
         </button>
       )}
       <div

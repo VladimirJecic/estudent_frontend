@@ -37,6 +37,13 @@ const LoginPage = () => {
     }
   };
 
+  const handleKeyUp = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent clearing the input fields
+      handleLogin(e);
+    }
+  };
+
   return (
     <div className=" d-flex align-items-center justify-content-center bg-primary h-100 w-100">
       <Container className="bg-white h-50 p-5 col-4">
@@ -45,7 +52,11 @@ const LoginPage = () => {
         <h4 className="mt-2 mb-4 d-flex justify-content-center col-12 primary-darken-1">
           E-Student
         </h4>
-        <form className="col-12 align-self-center" onSubmit={handleLogin}>
+        <form
+          className="col-12 align-self-center"
+          onSubmit={handleLogin}
+          onKeyUp={handleKeyUp}
+        >
           <TextInput
             className="m-2"
             prependIcon="fa-user"
