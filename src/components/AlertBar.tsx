@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import alertService, { AlertState } from "@/services/AlertService";
+import React, { JSX } from "react";
+import { useAlertService } from "@/context/AlertServiceContext";
 
-const iconForType = (type: AlertState["type"]): JSX.Element => {
+const iconForType = (type: "success" | "error"): JSX.Element => {
   if (type === "success") {
     return (
       <span
@@ -22,20 +22,11 @@ const iconForType = (type: AlertState["type"]): JSX.Element => {
 };
 
 const AlertBar: React.FC = () => {
-  const [alertState, setAlertState] = useState<AlertState>(alertService.state);
-
-  useEffect(() => {
-    alertService.setListener(setAlertState);
-    return () => {
-      alertService.removeListener();
-    };
-  }, []);
-
+  const { alertState, hide } = useAlertService();
   if (!alertState.isVisible) return null;
-
   return (
     <div
-      className={`alert-bar d-flex align-items-center shadow ${
+      className={`alert-bar shadow ${
         alertState.type === "success"
           ? "bg-success-subtle text-success"
           : "bg-danger-subtle text-danger"
@@ -50,7 +41,7 @@ const AlertBar: React.FC = () => {
         type="button"
         aria-label="Close"
         className="alert-bar-close btn btn-link p-0 ms-3"
-        onClick={() => alertService.hide()}
+        onClick={hide}
       >
         ×
       </button>

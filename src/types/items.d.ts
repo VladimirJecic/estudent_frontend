@@ -97,3 +97,18 @@ interface BlobResponse {
     get(name: string): string | null;
   };
 }
+export type AlertType = "success" | "error";
+
+export interface AlertState {
+  isVisible: boolean;
+  type: AlertType;
+  message: string;
+}
+
+export interface AlertServiceContextType {
+  alert: (message: string, isPermanent?: boolean) => void;
+  error: (message: string, isPermanent?: boolean) => void;
+  hide: () => void;
+  alertState: AlertState;
+  setAlertState: React.Dispatch<React.SetStateAction<AlertState>>;
+}

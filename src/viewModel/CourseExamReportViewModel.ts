@@ -1,29 +1,35 @@
 import { CourseExamAPIService } from "@/api/courseExams";
 import { CourseExamPresentation, DocumentBlob } from "@/types/items";
-import { CourseExamPageCriteria } from "@/types/items";
+import type {
+  CourseExamPageCriteria,
+  AlertServiceContextType,
+} from "@/types/items";
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
-import alertService from "@/services/AlertService";
 export default class CourseExamReportViewModel {
   #courseExams: CourseExamPresentation[];
   #totalPages: number;
-  isLoadingCourseExams: boolean;
+  #isLoadingCourseExams: boolean;
+  #alertService: AlertServiceContextType;
   updateView: undefined | (() => void);
-  constructor() {
+
+  constructor(alertService: AlertServiceContextType) {
     this.#courseExams = [];
     this.#totalPages = 0;
-    this.isLoadingCourseExams = true;
+    this.#isLoadingCourseExams = true;
+    this.#alertService = alertService;
     this.updateView = undefined;
   }
+
   project = () => {
     return {
       courseExams: this.#courseExams,
       totalPages: this.#totalPages,
-      isLoadingCourseExams: this.isLoadingCourseExams,
+      isLoadingCourseExams: this.#isLoadingCourseExams,
     };
   };
 
   searchCourseExams = async (pageCriteria: CourseExamPageCriteria) => {
-    this.isLoadingCourseExams = true;
+    this.#isLoadingCourseExams = true;
     try {
       const pageResponse = await CourseExamAPIService.getCourseExamsByCriteria(
         pageCriteria
@@ -31,13 +37,16 @@ export default class CourseExamReportViewModel {
       this.#courseExams = toCourseExamPresentations(pageResponse.content);
       this.#totalPages = pageResponse.totalPages;
     } catch (error) {
-      alertService.error("Došlo je do greške prilikom pretrage polaganja.");
+      this.#alertService.error(
+        "Došlo je do greške prilikom pretrage polaganja."
+      );
       console.error(error);
     } finally {
-      this.isLoadingCourseExams = false;
+      this.#isLoadingCourseExams = false;
       this.updateView?.();
     }
   };
+
   downloadCourseExamReport = async (courseExam: CourseExamPresentation) => {
     try {
       const documentResponse: DocumentBlob =
@@ -54,7 +63,9 @@ export default class CourseExamReportViewModel {
 
       URL.revokeObjectURL(url);
     } catch (error) {
-      alertService.error("Došlo je do greške prilikom skidanja izveštaja.");
+      this.#alertService.error(
+        "Došlo je do greške prilikom skidanja izveštaja."
+      );
       console.error(error);
     }
   };

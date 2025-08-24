@@ -1,0 +1,112 @@
+/* AppLayout specific styles */
+
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+}
+
+div.wrapper.d-flex.align-items-stretch {
+  overflow-y: hidden;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+  margin-left: 5rem; /* Account for collapsed sidebar */
+  transition: margin-left 0.3s ease;
+}
+
+.content.expanded {
+  margin-left: 17rem; /* Account for expanded sidebar */
+}
+
+.content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../logo-fon.png");
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(64, 103, 138, 0.5);
+  opacity: 0.07;
+  filter: grayscale(50%);
+  z-index: -1;
+}
+
+.headerDiv {
+  padding-left: 6vw;
+  margin: auto;
+}
+
+.header-row {
+  width: 90%;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.header-row .headerDiv .h4 {
+  font-weight: 500;
+  color: var(--secondary-darken-1);
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.header-row .nav-item {
+  color: var(--primary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.header-row .nav-item .fa-user {
+  font-size: 1.1rem;
+}
+
+.header-row .nav-item .fa-power-off {
+  font-size: 1rem;
+}
+
+.logout-pointer {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.logout-pointer:hover {
+  color: var(--primary-lighten-1) !important;
+}
+
+.circularLogo {
+  border-radius: 50%;
+  width: 50%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.squareLogo {
+  border-radius: 0.5rem;
+  width: 100%;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+  .content,
+  .content.expanded {
+    margin-left: 0 !important;
+  }
+
+  .header-row {
+    width: 95%;
+  }
+}

@@ -2,7 +2,7 @@ import React from "react";
 
 interface ButonProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.FormEvent) => void;
   type?: "button" | "submit" | "reset";
   className?: string;
   disabled?: boolean;

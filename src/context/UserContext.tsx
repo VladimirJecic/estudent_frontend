@@ -4,6 +4,9 @@ import type { User } from "@/types/items";
 type UserContextType = {
   user: User | undefined;
   setUser: (user: User | undefined) => void;
+  isAuthenticated: boolean;
+  isAdmin?: boolean;
+  logOut?: () => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -13,7 +16,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const stored = sessionStorage.getItem("user");
     return stored ? (JSON.parse(stored) as User) : undefined;
   });
-
+  const updateUser = (user: User | undefined) => {
+    if (user) {
+      user.isAdmin = user.role === "admin";
+    }
+    setUser(user);
+  };
   useEffect(() => {
     if (user) {
       sessionStorage.setItem("user", JSON.stringify(user));
@@ -22,8 +30,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [user]);
 
+  const isAuthenticated = undefined !== user;
+  const isAdmin = user?.role === "admin";
+  const logOut = () => setUser(undefined);
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser: updateUser, isAuthenticated, isAdmin, logOut }}
+    >
       {children}
     </UserContext.Provider>
   );

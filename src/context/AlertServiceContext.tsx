@@ -1,19 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
-export type AlertType = "success" | "error";
-
-interface AlertState {
-  isVisible: boolean;
-  type: AlertType;
-  title: string;
-  message: string;
-}
-
-interface AlertServiceContextType {
-  alert: (title: string, message: string) => void;
-  error: (title: string, message: string) => void;
-  hide: () => void;
-}
+import AlertBar from "@/components/AlertBar";
+import { AlertServiceContextType, AlertState } from "@/types/items";
 
 const AlertServiceContext = createContext<AlertServiceContextType | undefined>(
   undefined
@@ -25,7 +12,6 @@ export const AlertServiceProvider: React.FC<{ children: ReactNode }> = ({
   const [alertState, setAlertState] = useState<AlertState>({
     isVisible: false,
     type: "success",
-    title: "",
     message: "",
   });
 
@@ -35,14 +21,18 @@ export const AlertServiceProvider: React.FC<{ children: ReactNode }> = ({
     }, 4000);
   };
 
-  const alert = (title: string, message: string) => {
-    setAlertState({ isVisible: true, type: "success", title, message });
-    autoHide();
+  const alert = (message: string, isPermanent?: boolean) => {
+    setAlertState({ isVisible: true, type: "success", message });
+    if (!isPermanent) {
+      autoHide();
+    }
   };
 
-  const error = (title: string, message: string) => {
-    setAlertState({ isVisible: true, type: "error", title, message });
-    autoHide();
+  const error = (message: string, isPermanent?: boolean) => {
+    setAlertState({ isVisible: true, type: "error", message });
+    if (!isPermanent) {
+      autoHide();
+    }
   };
 
   const hide = () => {
@@ -50,32 +40,12 @@ export const AlertServiceProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AlertServiceContext.Provider value={{ alert, error, hide }}>
+    <AlertServiceContext.Provider
+      value={{ alert, error, hide, alertState, setAlertState }}
+    >
       {children}
-      {alertState.isVisible && (
-        <div className={`window-background ${alertState.type}`}>
-          <div className="window-content">
-            <div className="window-header">
-              <b className="window-title col-10">{alertState.title}</b>
-              <button className="close col-2" onClick={hide}>
-                ×
-              </button>
-            </div>
-            <div className="window-body">
-              {alertState.message.split("\n").map((msgLine, key) => (
-                <p
-                  key={key}
-                  className={`window-message ${
-                    alertState.type === "success" ? "green" : "red"
-                  }`}
-                >
-                  {msgLine}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Render AlertBar globally */}
+      <AlertBar />
     </AlertServiceContext.Provider>
   );
 };

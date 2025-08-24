@@ -1,9 +1,9 @@
-import ExamPeriodsPage from "@/components/pages/ExamPeriodsPage";
-import LoginPage from "@/components/pages/LoginPage";
-import ExamRegistrationsPassedPage from "@/components/pages/ExamRegistrationsPassedPage";
-import ExamRegistrationsAddPage from "@/components/pages/ExamRegistrationsAddPage";
-import CourseExamReportPage from "@/components/pages/CourseExamReportPage";
-import ExamRegistrationGrading from "@/components/pages/ExamRegistrationGradingPage";
+import ExamPeriodsPage from "@/pages/ExamPeriodsPage";
+import LoginPage from "@/pages/LoginPage";
+import ExamRegistrationsPassedPage from "@/pages/ExamRegistrationsPassedPage";
+import ExamRegistrationsAddPage from "@/pages/ExamRegistrationsAddPage";
+import CourseExamReportPage from "@/pages/CourseExamReportPage";
+import ExamRegistrationGrading from "@/pages/ExamRegistrationGradingPage";
 
 export const routes = [
   { path: "/", element: <ExamPeriodsPage /> },

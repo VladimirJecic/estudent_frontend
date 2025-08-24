@@ -1,36 +1,26 @@
 .alert-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   position: fixed;
   top: 60px;
   right: 50%;
   transform: translate(50%, 5px);
   z-index: 9999;
-  min-width: 320px;
-  max-width: 480px;
   opacity: 1;
+  padding: 0.75rem 1.25rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  border-radius: var(--bs-border-radius, 0.375rem);
+  box-shadow: var(--bs-box-shadow, 0 2px 8px rgba(0, 0, 0, 0.15));
 }
 .alert-bar.success {
-  /* Use Bootstrap bg-success-subtle and text-success for background and text */
   background: var(--bs-success-bg-subtle, #e6f4ea);
   color: var(--bs-success-text-emphasis, #388e3c);
-  border-radius: var(--bs-border-radius, 0.375rem);
-  box-shadow: var(--bs-box-shadow, 0 2px 8px rgba(0, 0, 0, 0.15));
-  display: flex;
-  align-items: center;
-  padding: 0.75rem 1.25rem;
-  margin: 1rem 0;
-  font-size: 1rem;
 }
 .alert-bar.error {
-  /* Use Bootstrap bg-danger-subtle and text-danger for background and text */
   background: var(--bs-danger-bg-subtle, #fdecea);
   color: var(--bs-danger-text-emphasis, #d32f2f);
-  border-radius: var(--bs-border-radius, 0.375rem);
-  box-shadow: var(--bs-box-shadow, 0 2px 8px rgba(0, 0, 0, 0.15));
-  display: flex;
-  align-items: center;
-  padding: 0.75rem 1.25rem;
-  margin: 1rem 0;
-  font-size: 1rem;
 }
 .alert-bar-icon {
   font-size: 1.375rem; /* 22px */

@@ -7,25 +7,27 @@ import {
 } from "@/types/items";
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
 import { toExamPeriodPresentations } from "@/utils/examPeriodUtils";
-import alertService from "@/services/AlertService";
+import { AlertServiceContextType } from "@/types/items";
 
 export default class ExamPeriodsViewModel {
   #examPeriods: ExamPeriodPresentation[];
   #selectedExamPeriod: ExamPeriodPresentation | undefined;
   #remainingCourseExams: CourseExamPresentation[];
   #allCourseExams: CourseExamPresentation[];
-  isRemainingCourseExamsVisible: boolean;
-  isAllCourseExamsVisible: boolean;
+  #isRemainingCourseExamsVisible: boolean;
+  #isAllCourseExamsVisible: boolean;
   #isLoadingExamPeriods: boolean;
+  #alertService: AlertServiceContextType;
   updateView: (() => void) | undefined;
 
-  constructor() {
+  constructor(alertService: AlertServiceContextType) {
     this.#examPeriods = [];
     this.#remainingCourseExams = [];
     this.#allCourseExams = [];
+    this.#alertService = alertService;
     this.#isLoadingExamPeriods = true;
-    this.isRemainingCourseExamsVisible = false;
-    this.isAllCourseExamsVisible = false;
+    this.#isRemainingCourseExamsVisible = false;
+    this.#isAllCourseExamsVisible = false;
   }
 
   project = () => {
@@ -34,8 +36,8 @@ export default class ExamPeriodsViewModel {
       remainingCourseExams: this.#remainingCourseExams,
       allCourseExams: this.#allCourseExams,
       isLoadingExamPeriods: this.#isLoadingExamPeriods,
-      isRemainingCourseExamsVisible: this.isRemainingCourseExamsVisible,
-      isAllCourseExamsVisible: this.isAllCourseExamsVisible,
+      isRemainingCourseExamsVisible: this.#isRemainingCourseExamsVisible,
+      isAllCourseExamsVisible: this.#isAllCourseExamsVisible,
       selectedExamName: this.#selectedExamPeriod?.name,
     };
   };
@@ -43,12 +45,12 @@ export default class ExamPeriodsViewModel {
   showAllCourseExams = async (examPeriod: ExamPeriodPresentation) => {
     this.#selectedExamPeriod = examPeriod;
     this.#allCourseExams = examPeriod.courseExamPresentations;
-    this.isAllCourseExamsVisible = true;
+    this.#isAllCourseExamsVisible = true;
     this.updateView?.();
   };
   showRemainingCourseExams = async (examPeriod: ExamPeriodPresentation) => {
     await this.fetchRemainingCourseExams(examPeriod);
-    this.isRemainingCourseExamsVisible = true;
+    this.#isRemainingCourseExamsVisible = true;
     this.updateView?.();
   };
   fetchActiveExamPeriods = async () => {
@@ -58,7 +60,7 @@ export default class ExamPeriodsViewModel {
       this.#examPeriods = toExamPeriodPresentations(periods);
       this.updateView?.();
     } catch (error) {
-      alertService.error(
+      this.#alertService.error(
         "Došlo je do greške prilikom učitavanja aktuelnih rokova."
       );
       console.error(error);
@@ -75,7 +77,7 @@ export default class ExamPeriodsViewModel {
       this.#remainingCourseExams = toCourseExamPresentations(courseExams);
       this.updateView?.();
     } catch (error) {
-      alertService.error("Došlo je do greške prilikom obrade zahteva.");
+      this.#alertService.error("Došlo je do greške prilikom obrade zahteva.");
       console.error(error);
     }
   };

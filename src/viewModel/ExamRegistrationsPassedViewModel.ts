@@ -1,21 +1,26 @@
-import { ExamRegistration, ExamRegistrationPresentation } from "@/types/items";
+import {
+  AlertServiceContextType,
+  ExamRegistration,
+  ExamRegistrationPresentation,
+} from "@/types/items";
 import { ExamRegistrationAPIService } from "@/api/examRegistrations";
 import { toExamRegistrationPresentations } from "@/utils/examRegistrationUtils";
-import alertService from "@/services/AlertService";
 
 export default class ExamRegistrationsPassedViewModel {
   #examRegistrationsPassed: ExamRegistrationPresentation[];
   #isLoadingExamRegistrationsPassed: boolean;
   #averageMark: string;
   #totalESPB: number;
+  #alertService: AlertServiceContextType;
   updateView: (() => void) | undefined;
 
-  constructor() {
+  constructor(alertService: AlertServiceContextType) {
+    this.#alertService = alertService;
     this.#examRegistrationsPassed = [];
     this.#isLoadingExamRegistrationsPassed = true;
-    this.updateView = undefined;
     this.#averageMark = "Nema položenih ispita";
     this.#totalESPB = 0;
+    this.updateView = undefined;
   }
 
   project = () => {
@@ -39,7 +44,7 @@ export default class ExamRegistrationsPassedViewModel {
       this.#totalESPB = this.getTotalESPB();
       this.updateView?.();
     } catch (error) {
-      alertService.error(
+      this.#alertService.error(
         "Došlo je do greške prilikom učitavanja položenih ispita."
       );
       console.error(error);

@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ExamPeriodsViewModel from "@/viewModel/ExamPeriodsViewModel";
 import { useUser } from "@/context/UserContext";
 import { useEffect, useState, useMemo } from "react";
+import { useAlertService } from "@/context/AlertServiceContext";
 const ExamPeriodsPage = () => {
-  const viewModel = useMemo(() => new ExamPeriodsViewModel(), []);
+  const alertService = useAlertService();
+  const viewModel = useMemo(() => new ExamPeriodsViewModel(alertService), []);
   const [viewModelState, setViewModelState] = useState(viewModel.project());
   const { user } = useUser();
   viewModel.updateView = () => {

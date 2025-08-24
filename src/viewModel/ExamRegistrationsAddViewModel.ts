@@ -4,10 +4,11 @@ import {
   ExamRegistrationPresentation,
   CourseExamPresentation,
   SubmitExamRegistration,
+  AlertServiceContextType,
 } from "@/types/items";
 import { ExamRegistrationAPIService } from "@/api/examRegistrations";
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
-import alertService from "@/services/AlertService";
+import { useAlertService } from "@/context/AlertServiceContext";
 import { toExamRegistrationPresentations } from "@/utils/examRegistrationUtils";
 
 export default class ExamRegistrationsAddViewModel {
@@ -15,13 +16,15 @@ export default class ExamRegistrationsAddViewModel {
   #examRegistrationsExisting: ExamRegistrationPresentation[];
   #isLoadingExamRegistrationCandidates: boolean;
   #isLoadingExamRegistrationsExisting: boolean;
+  #alertService: AlertServiceContextType;
   updateView: (() => void) | undefined;
 
-  constructor() {
+  constructor(alertService: AlertServiceContextType) {
     this.#courseExamRegistrationCandidates = [];
     this.#examRegistrationsExisting = [];
     this.#isLoadingExamRegistrationCandidates = true;
     this.#isLoadingExamRegistrationsExisting = true;
+    this.#alertService = alertService;
     this.updateView = undefined;
   }
 
@@ -45,6 +48,7 @@ export default class ExamRegistrationsAddViewModel {
   };
 
   fetchCourseExamRegistrationCandidates = async () => {
+    const alertService = useAlertService();
     this.#isLoadingExamRegistrationCandidates = true;
     this.#courseExamRegistrationCandidates = [];
     try {
@@ -65,6 +69,7 @@ export default class ExamRegistrationsAddViewModel {
   fetchExamRegistrationsExisting = async () => {
     this.#isLoadingExamRegistrationsExisting = true;
     this.#examRegistrationsExisting = [];
+    const alertService = useAlertService();
     try {
       const examRegistrations: ExamRegistration[] =
         await ExamRegistrationAPIService.fetchExamRegistrationsExisting();
@@ -84,10 +89,10 @@ export default class ExamRegistrationsAddViewModel {
     try {
       const dto: SubmitExamRegistration = { courseExamId: courseExam.id };
       await ExamRegistrationAPIService.saveExamRegistration(dto);
-      alertService.success("Ispit je uspešno prijavljen.");
+      this.#alertService?.alert("Ispit je uspešno prijavljen.");
       await this.setupView();
     } catch (error) {
-      alertService.error("Neuspešna prijava ispita.");
+      this.#alertService?.error("Neuspešna prijava ispita.");
       console.error(error);
     }
   }
@@ -97,10 +102,10 @@ export default class ExamRegistrationsAddViewModel {
       await ExamRegistrationAPIService.deleteExamRegistration(
         examRegistration.id
       );
-      alertService.success("Ispit je uspešno odjavljen.");
+      this.#alertService?.alert("Ispit je uspešno odjavljen.");
       await this.setupView();
     } catch (error) {
-      alertService.error("Neuspešna odjava ispita.");
+      this.#alertService?.error("Neuspešna odjava ispita.");
       console.error(error);
     }
   }

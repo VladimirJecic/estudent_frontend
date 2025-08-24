@@ -1,10 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect } from "react";
 import ExamRegistrationGradingViewModel from "@/viewModel/ExamRegistrationGradingViewModel";
-import AlertBar from "@/components/AlertBar";
 import { ExamRegistrationPresentation } from "@/types/items";
+import { useAlertService } from "@/context/AlertServiceContext";
 
 const ExamRegistrationGrading = () => {
-  const viewModel = useMemo(() => new ExamRegistrationGradingViewModel(), []);
+  const alertService = useAlertService();
+  const viewModel = useMemo(
+    () => new ExamRegistrationGradingViewModel(alertService),
+    []
+  );
   const [viewModelState, setViewModelState] = useState(viewModel.project());
   const [examRegistrationsToGradeCopy, setExamRegistrationsToGradeCopy] =
     useState<ExamRegistrationPresentation[]>([]);
@@ -32,7 +37,7 @@ const ExamRegistrationGrading = () => {
 
   return (
     <div className="neocenjenaPolaganja">
-      <AlertBar />
+      {/* AlertBar removed; now handled globally */}
       <h2 className="mb-4">Neocenjena polaganja</h2>
       {!viewModelState.isExamRegistrationsLoaded ? (
         <div className="bg-info w-50 text-center ">

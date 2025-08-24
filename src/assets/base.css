@@ -1,15 +1,26 @@
-@import "./AlertBar.css";
-@import "./DatePicker.css";
-@import "./ExamPeriods.css";
-@import "./ExamRegistrationGrading.css";
-@import "./ExamRegistrationsAdd.css";
-@import "./ExamRegistrationsPassed.css";
-@import "./Header.css";
-@import "./Pagination.css";
-@import "./TextInput.css";
-@import "./Button.css";
-@import "./Card.css";
-@import "./Container.css";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import "./componentCSS/AlertBar.css";
+@import "./componentCSS/DatePicker.css";
+@import "./componentCSS/ExamPeriods.css";
+@import "./componentCSS/ExamRegistrationGrading.css";
+@import "./componentCSS/ExamRegistrationsAdd.css";
+@import "./componentCSS/ExamRegistrationsPassed.css";
+@import "./componentCSS/Header.css";
+@import "./componentCSS/Pagination.css";
+@import "./componentCSS/TextInput.css";
+@import "./componentCSS/Button.css";
+@import "./componentCSS/Card.css";
+@import "./componentCSS/Container.css";
+@import "./componentCSS/AppLayout.css";
+
+/* Global text styling */
+.h4,
+h4 {
+  font-weight: 400 !important;
+  font-size: 1.2rem !important;
+  line-height: 1.5;
+  font-family: "Poppins", Arial, sans-serif;
+}
 
 div,
 form,
@@ -23,12 +34,11 @@ html,
 #root,
 div.App,
 body {
-  background-color: #4e66c4;
+  font-family: "Poppins", Arial, sans-serif;
   overflow-y: hidden;
   overflow-x: hidden;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   height: 100vh;
 }
 
@@ -42,7 +52,7 @@ table {
   border: 1px solid black;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #f8f9fa;
+  background-color: var(--primary-lighten-3);
   font-family: "Segoe UI", sans-serif;
   font-size: 0.95rem;
   text-align: center;
@@ -51,7 +61,7 @@ table {
 tr,
 td,
 th {
-  border: 1px solid black;
+  border: 1px solid var(--secondary-darken-1);
 }
 /*#region Colors*/
 :root {
@@ -63,6 +73,7 @@ th {
   --secondary: #6c757d; /* gray for tables, dialogs, cancel buttons */
   --success: #28a745; /* green for success */
   --error: #dc3545; /* red for error */
+  --info: #17a2b8; /* cyan for info */
   --secondary-darken-1: #495057; /* darker gray */
   --secondary-lighten-1: #adb5bd; /* lighter gray */
   --secondary-lighten-2: #dee2e6; /* even lighter gray */
@@ -101,13 +112,16 @@ th {
 .error {
   color: var(--error) !important;
 }
+.info {
+  color: var(--info) !important;
+}
 .bg-primary {
   background-color: var(--primary) !important;
-  color: #fff !important;
+  color: white !important;
 }
 .bg-primary-darken-1 {
   background-color: var(--primary-darken-1) !important;
-  color: #fff !important;
+  color: white !important;
 }
 .bg-primary-lighten-1 {
   background-color: var(--primary-lighten-1) !important;
@@ -120,11 +134,11 @@ th {
 }
 .bg-secondary {
   background-color: var(--secondary) !important;
-  color: #fff !important;
+  color: white !important;
 }
 .bg-secondary-darken-1 {
   background-color: var(--secondary-darken-1) !important;
-  color: #fff !important;
+  color: white !important;
 }
 .bg-secondary-lighten-1 {
   background-color: var(--secondary-lighten-1) !important;
@@ -134,10 +148,13 @@ th {
 }
 .bg-success {
   background-color: var(--success) !important;
-  color: #fff !important;
+  color: white !important;
 }
 .bg-error {
   background-color: var(--error) !important;
-  color: #fff !important;
+  color: white !important;
+}
+.bg-info {
+  background-color: var(--info) !important;
 }
 /*#endregion Colors*/

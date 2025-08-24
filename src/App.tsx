@@ -1,6 +1,6 @@
-import AppLayout from "@/layout/AppLayout";
+import { AppLayout } from "@/layout/AppLayout";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "@/components/pages/LoginPage";
+import LoginPage from "@/pages/LoginPage";
 import { UserProvider } from "@/context/UserContext";
 import { AlertServiceProvider } from "@/context/AlertServiceContext";
 import RequireAuth from "@/context/RequireAuth";
@@ -23,7 +23,7 @@ const App = () => {
                   />
                 ))}
               </Route>
-              <Route path="*" element={<Navigate to="/" />} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
           </BrowserRouter>
         </AlertServiceProvider>

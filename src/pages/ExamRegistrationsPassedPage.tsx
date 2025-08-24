@@ -1,8 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ExamRegistrationsPassedViewModel from "@/viewModel/ExamRegistrationsPassedViewModel";
 import { useMemo, useState, useEffect } from "react";
-import "@/assets/componentCSS/ExamRegistrationsPassed.css";
+import { useAlertService } from "@/context/AlertServiceContext";
 const ExamRegistrationsPassedPage = () => {
-  const viewModel = useMemo(() => new ExamRegistrationsPassedViewModel(), []);
+  const alertService = useAlertService();
+  const viewModel = useMemo(
+    () => new ExamRegistrationsPassedViewModel(alertService),
+    []
+  );
   const [viewModelState, setViewModelState] = useState(viewModel.project());
 
   viewModel.updateView = () => {

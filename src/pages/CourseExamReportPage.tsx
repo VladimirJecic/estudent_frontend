@@ -6,9 +6,14 @@ import Pagination from "@/components/custom/Pagination";
 import DatePicker from "react-datepicker";
 import debounce from "lodash/debounce";
 import { CourseExamPageCriteria } from "@/types/items";
+import { useAlertService } from "@/context/AlertServiceContext";
 
 const CourseExamReportPage = () => {
-  const viewModel = useMemo(() => new CourseExamReportViewModel(), []);
+  const alertService = useAlertService();
+  const viewModel = useMemo(
+    () => new CourseExamReportViewModel(alertService),
+    []
+  );
   const [viewModelState, setViewModelState] = useState(viewModel.project());
   viewModel.updateView = () => {
     setViewModelState(viewModel.project());

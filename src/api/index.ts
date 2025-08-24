@@ -7,15 +7,10 @@ const isoDateTimeLocalRegex =
 
 const BASE_URL: string = process.env.REACT_APP_ESTUDENT_API_BASE_URL!;
 
-function getAuthToken(path: string): string | null {
-  return JSON.parse(sessionStorage.user).token;
-}
-
-function getPOSTBaseUrl(path: string): string {
-  if (path === "/login" || path === "/logout") {
-    return BASE_URL?.endsWith("/api") ? BASE_URL.slice(0, -4) : BASE_URL;
-  }
-  return BASE_URL;
+function getAuthToken(path: string): string | undefined {
+  return sessionStorage?.user
+    ? JSON.parse(sessionStorage?.user)?.token
+    : undefined;
 }
 
 async function GET<T>(
@@ -62,8 +57,10 @@ export async function POST<T>(
         ? { "Content-Type": "application/json" }
         : {}),
     };
+    const finalURL = `${BASE_URL}${path}`;
+    console.log(`POST request to: ${finalURL}`, finalHeaders);
 
-    const response = await fetch(`${getPOSTBaseUrl(path)}${path}`, {
+    const response = await fetch(finalURL, {
       method: "POST",
       headers: finalHeaders,
       body: isFormData ? (payload as FormData) : JSON.stringify(payload),
