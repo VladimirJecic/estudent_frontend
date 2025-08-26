@@ -1,5 +1,6 @@
+import { DateFormat } from "@/types/global";
 import { CourseExam, CourseExamPresentation } from "@/types/items";
-import { dateTimeToString } from "@/utils/dateUtility";
+import { format } from "date-fns";
 
 export function toCourseExamPresentation(
   exam: CourseExam
@@ -9,7 +10,7 @@ export function toCourseExamPresentation(
     courseName: exam.course.name,
     courseSemester: exam.course.semester,
     courseEspb: exam.course.espb,
-    examDateTimeFormatted: dateTimeToString(exam.examDateTime),
+    examDateTimeFormatted: format(exam.examDateTime, DateFormat.DATE_TIME),
   };
 }
 

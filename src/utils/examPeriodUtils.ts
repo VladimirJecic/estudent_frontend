@@ -1,16 +1,23 @@
+import { DateFormat } from "@/types/global";
 import { ExamPeriod, ExamPeriodPresentation } from "@/types/items";
-import { dateToString } from "@/utils/dateUtility";
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
+import { format } from "date-fns";
 
 export function toExamPeriodPresentation(
   period: ExamPeriod
 ): ExamPeriodPresentation {
   return {
     ...period,
-    dateRegistrationStartFormatted: dateToString(period.dateRegistrationStart),
-    dateRegistrationEndFormatted: dateToString(period.dateRegistrationEnd),
-    dateStartFormatted: dateToString(period.dateStart),
-    dateEndFormatted: dateToString(period.dateEnd),
+    dateRegistrationStartFormatted: format(
+      period.dateRegisterStart,
+      DateFormat.DATE
+    ),
+    dateRegistrationEndFormatted: format(
+      period.dateRegisterEnd,
+      DateFormat.DATE
+    ),
+    dateStartFormatted: format(period.dateStart, DateFormat.DATE),
+    dateEndFormatted: format(period.dateEnd, DateFormat.DATE),
     courseExamPresentations: toCourseExamPresentations(period.courseExams),
   };
 }
@@ -18,5 +25,5 @@ export function toExamPeriodPresentation(
 export function toExamPeriodPresentations(
   examPeriods: ExamPeriod[]
 ): ExamPeriodPresentation[] {
-  return examPeriods.map(toExamPeriodPresentation);
+  return examPeriods.map((ep) => toExamPeriodPresentation(ep));
 }

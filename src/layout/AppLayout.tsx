@@ -12,7 +12,7 @@ import { useUser } from "@/context/UserContext";
 export const AppLayout = () => {
   const navigate = useNavigate();
   const [sideBarExpanded, setSideBarExpanded] = useState(false);
-  const { user, isAdmin, logOut } = useUser();
+  const { user, isAdmin, isStudent, logOut } = useUser();
 
   return (
     <>
@@ -36,16 +36,20 @@ export const AppLayout = () => {
               title="Aktuelni rokovi"
               onClick={() => navigate("/exam-periods")}
             />
-            <ListItem
-              prependIcon="fa fa-th-large"
-              title="Položeni ispiti"
-              onClick={() => navigate("/passed-exams")}
-            />
-            <ListItem
-              prependIcon="fa fa-sticky-note"
-              title="Prijava ispita"
-              onClick={() => navigate("/exam-registration")}
-            />
+            {isStudent && (
+              <>
+                <ListItem
+                  prependIcon="fa fa-th-large"
+                  title="Položeni ispiti"
+                  onClick={() => navigate("/passed-exams")}
+                />
+                <ListItem
+                  prependIcon="fa fa-sticky-note"
+                  title="Prijava ispita"
+                  onClick={() => navigate("/exam-registration")}
+                />
+              </>
+            )}
             {isAdmin && (
               <>
                 <ListItem

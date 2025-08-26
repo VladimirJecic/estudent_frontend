@@ -1,4 +1,5 @@
 /* eslint-disable no-extend-native */
+import HTMLResponseError from "@/error/HTMLResponseError";
 import { format } from "date-fns";
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
@@ -33,7 +34,11 @@ async function GET<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    throw new Error(`GET request failed: ${(error as Error).message}`);
+    if (error instanceof HTMLResponseError) throw error;
+    else
+      throw new Error(`GET request failed: ${(error as Error).message}`, {
+        cause: error,
+      });
   }
 }
 
@@ -128,8 +133,12 @@ export async function DELETE<T>(
 }
 
 async function handleResponse(response: Response) {
-  if (response.headers.get("Content-Disposition") !== null) return response;
-  else return response.json().then(parseDates);
+  const contentType = response.headers.get("Content-Type");
+  if (contentType && contentType.includes("text/html")) {
+    throw new HTMLResponseError(await response.text(), response.status);
+  }
+  const parsed = await response.json().then((json) => parseDates(json.data));
+  return parsed;
 }
 function parseLocalDateTime(str: string): Date | null {
   // Match ISO string like "2025-06-20T10:00" or "2025-06-20T10:00:00.123"

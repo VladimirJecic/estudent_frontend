@@ -94,8 +94,8 @@ const ExamRegistrationsAddPage = () => {
                     <td>{examRegistration.courseName}</td>
                     <td>{examRegistration.courseEspb}</td>
                     <td>{examRegistration.examDateTimeFormatted}</td>
-                    {examRegistration.courseExam.examPeriod
-                      .dateRegistrationEnd > new Date() ? (
+                    {examRegistration.courseExam.examPeriod.dateRegisterEnd >
+                    new Date() ? (
                       <td>
                         <button
                           onClick={() =>

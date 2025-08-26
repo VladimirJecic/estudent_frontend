@@ -70,6 +70,7 @@ const TextInput: React.FC<TextInputProps> = ({
       {isClearable && (
         <button
           name="clearButton"
+          type="button"
           className={`clear-btn ${hasText ? "hasText" : "hasNoText"}`}
           onClick={() => {
             onChange("");

@@ -73,7 +73,7 @@ const ExamPeriodsPage = () => {
           </table>
         </div>
       )}
-      {viewModelState.isAllCourseExamsVisible ? (
+      {!viewModelState.isAllCourseExamsVisible ? (
         <></>
       ) : (
         <div className="tableWrapper">

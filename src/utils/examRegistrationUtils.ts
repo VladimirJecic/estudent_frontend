@@ -1,5 +1,6 @@
+import { DateFormat } from "@/types/global";
 import { ExamRegistration, ExamRegistrationPresentation } from "@/types/items";
-import { dateToString } from "@/utils/dateUtility";
+import { format } from "date-fns";
 
 export function toExamRegistrationPresentation(
   reg: ExamRegistration
@@ -10,9 +11,12 @@ export function toExamRegistrationPresentation(
     studentName: reg.student?.name || "",
     courseName: reg.courseExam.course.name,
     courseEspb: reg.courseExam.course.espb,
-    updatedAtFormatted: dateToString(reg.updatedAt),
+    updatedAtFormatted: format(reg.updatedAt, DateFormat.DATE),
     signedByName: reg.signedBy?.name || "",
-    examDateTimeFormatted: dateToString(reg.courseExam.examDateTime),
+    examDateTimeFormatted: format(
+      reg.courseExam.examDateTime,
+      DateFormat.DATE_TIME
+    ),
   };
 }
 

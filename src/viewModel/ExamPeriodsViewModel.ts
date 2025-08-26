@@ -8,6 +8,7 @@ import {
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
 import { toExamPeriodPresentations } from "@/utils/examPeriodUtils";
 import { AlertServiceContextType } from "@/types/items";
+import HTMLResponseError from "@/error/HTMLResponseError";
 
 export default class ExamPeriodsViewModel {
   #examPeriods: ExamPeriodPresentation[];
@@ -46,11 +47,13 @@ export default class ExamPeriodsViewModel {
     this.#selectedExamPeriod = examPeriod;
     this.#allCourseExams = examPeriod.courseExamPresentations;
     this.#isAllCourseExamsVisible = true;
+    this.#isRemainingCourseExamsVisible = false;
     this.updateView?.();
   };
   showRemainingCourseExams = async (examPeriod: ExamPeriodPresentation) => {
     await this.fetchRemainingCourseExams(examPeriod);
     this.#isRemainingCourseExamsVisible = true;
+    this.#isAllCourseExamsVisible = false;
     this.updateView?.();
   };
   fetchActiveExamPeriods = async () => {
@@ -58,14 +61,18 @@ export default class ExamPeriodsViewModel {
     try {
       const periods = await ExamPeriodAPIService.getActiveExamPeriods();
       this.#examPeriods = toExamPeriodPresentations(periods);
-      this.updateView?.();
     } catch (error) {
-      this.#alertService.error(
-        "Došlo je do greške prilikom učitavanja aktuelnih rokova."
-      );
-      console.error(error);
+      if (error instanceof HTMLResponseError) {
+        console.warn("HTML response received:", error.message);
+      } else {
+        this.#alertService.error(
+          "Došlo je do greške prilikom učitavanja aktuelnih rokova."
+        );
+        console.error(error);
+      }
     } finally {
       this.#isLoadingExamPeriods = false;
+      this.updateView?.();
     }
   };
   private fetchRemainingCourseExams = async (examPeriod: ExamPeriod) => {

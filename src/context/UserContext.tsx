@@ -6,6 +6,7 @@ type UserContextType = {
   setUser: (user: User | undefined) => void;
   isAuthenticated: boolean;
   isAdmin?: boolean;
+  isStudent?: boolean;
   logOut?: () => void;
 };
 
@@ -18,6 +19,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   });
   const updateUser = (user: User | undefined) => {
     if (user) {
+      sessionStorage.setItem("user", JSON.stringify(user));
       user.isAdmin = user.role === "admin";
     }
     setUser(user);
@@ -32,11 +34,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const isAuthenticated = undefined !== user;
   const isAdmin = user?.role === "admin";
+  const isStudent = user?.role === "student";
   const logOut = () => setUser(undefined);
 
   return (
     <UserContext.Provider
-      value={{ user, setUser: updateUser, isAuthenticated, isAdmin, logOut }}
+      value={{
+        user,
+        setUser: updateUser,
+        isAuthenticated,
+        isAdmin,
+        isStudent,
+        logOut,
+      }}
     >
       {children}
     </UserContext.Provider>

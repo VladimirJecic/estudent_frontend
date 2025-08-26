@@ -43,8 +43,8 @@ export interface CourseExamPresentation extends CourseExam {
 export type ExamPeriod = {
   id?: number;
   name: string;
-  dateRegistrationStart: Date;
-  dateRegistrationEnd: Date;
+  dateRegisterStart: Date;
+  dateRegisterEnd: Date;
   dateStart: Date;
   dateEnd: Date;
   courseExams: CourseExam[];
