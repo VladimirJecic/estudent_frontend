@@ -1,12 +1,14 @@
 /* eslint-disable no-extend-native */
 import HTMLResponseError from "@/error/HTMLResponseError";
+import ServerError from "@/error/ServerError";
+import { ServerResponse } from "@/types/items";
 import { format } from "date-fns";
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const isoDateTimeLocalRegex =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):\d{2}\.\d+Z$/;
 
-const BASE_URL: string = process.env.REACT_APP_ESTUDENT_API_BASE_URL!;
+const BASE_URL = import.meta.env.VITE_ESTUDENT_API_BASE_URL;
 
 function getAuthToken(path: string): string | undefined {
   return sessionStorage?.user
@@ -34,7 +36,8 @@ async function GET<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    if (error instanceof HTMLResponseError) throw error;
+    if (error instanceof HTMLResponseError || error instanceof ServerError)
+      throw error;
     else
       throw new Error(`GET request failed: ${(error as Error).message}`, {
         cause: error,
@@ -137,8 +140,14 @@ async function handleResponse(response: Response) {
   if (contentType && contentType.includes("text/html")) {
     throw new HTMLResponseError(await response.text(), response.status);
   }
-  const parsed = await response.json().then((json) => parseDates(json.data));
-  return parsed;
+  const serverResponse: ServerResponse =
+    (await response.json()) as ServerResponse;
+  serverResponse.statusCode = response.status;
+  if (serverResponse.success) {
+    return parseDates(serverResponse.data);
+  } else {
+    throw new ServerError(serverResponse);
+  }
 }
 function parseLocalDateTime(str: string): Date | null {
   // Match ISO string like "2025-06-20T10:00" or "2025-06-20T10:00:00.123"

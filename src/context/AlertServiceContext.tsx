@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import AlertBar from "@/components/AlertBar";
 import { AlertServiceContextType, AlertState } from "@/types/items";
+import HTMLResponseError from "@/error/HTMLResponseError";
+import ServerError from "@/error/ServerError";
 
 const AlertServiceContext = createContext<AlertServiceContextType | undefined>(
   undefined
@@ -32,6 +34,13 @@ export const AlertServiceProvider: React.FC<{ children: ReactNode }> = ({
     setAlertState({ isVisible: true, type: "error", message });
     if (!isPermanent) {
       autoHide();
+    }
+    if (error instanceof HTMLResponseError) {
+      console.warn("HTML response received");
+    } else if (error instanceof ServerError) {
+      console.debug(error);
+    } else {
+      console.error("Unknown error occurred");
     }
   };
 

@@ -1,3 +1,4 @@
+import "typeface-poppins";
 import ExamPeriodsPage from "@/pages/ExamPeriodsPage";
 import LoginPage from "@/pages/LoginPage";
 import ExamRegistrationsPassedPage from "@/pages/ExamRegistrationsPassedPage";

@@ -9,6 +9,7 @@ import { toCourseExamPresentations } from "@/utils/courseExamUtils";
 import { toExamPeriodPresentations } from "@/utils/examPeriodUtils";
 import { AlertServiceContextType } from "@/types/items";
 import HTMLResponseError from "@/error/HTMLResponseError";
+import ServerError from "@/error/ServerError";
 
 export default class ExamPeriodsViewModel {
   #examPeriods: ExamPeriodPresentation[];
@@ -63,7 +64,7 @@ export default class ExamPeriodsViewModel {
       this.#examPeriods = toExamPeriodPresentations(periods);
     } catch (error) {
       if (error instanceof HTMLResponseError) {
-        console.warn("HTML response received:", error.message);
+        console.warn("HTML response received");
       } else {
         this.#alertService.error(
           "Došlo je do greške prilikom učitavanja aktuelnih rokova."
@@ -85,7 +86,6 @@ export default class ExamPeriodsViewModel {
       this.updateView?.();
     } catch (error) {
       this.#alertService.error("Došlo je do greške prilikom obrade zahteva.");
-      console.error(error);
     }
   };
 }
