@@ -3,6 +3,11 @@ import ExamPeriodsViewModel from "@/viewModel/ExamPeriodsViewModel";
 import { useUser } from "@/context/UserContext";
 import { useEffect, useState, useMemo } from "react";
 import { useAlertService } from "@/context/AlertServiceContext";
+import Container from "@/components/custom/Container";
+import Title from "@/components/custom/Title";
+import Info from "@/components/custom/Info";
+import Table from "@/components/custom/Table";
+import Buton from "@/components/custom/Buton";
 const ExamPeriodsPage = () => {
   const alertService = useAlertService();
   const viewModel = useMemo(() => new ExamPeriodsViewModel(alertService), []);
@@ -15,128 +20,93 @@ const ExamPeriodsPage = () => {
     viewModel.fetchActiveExamPeriods();
   }, [viewModel]);
   return (
-    <div className="aktuelniRokovi">
-      <h2 className="mb-4">Rokovi</h2>
+    <Container>
+      <Title>Rokovi</Title>
       {viewModelState.examPeriods.length === 0 &&
       viewModelState.isLoadingExamPeriods === true ? (
-        <div className="bg-info w-50 text-center ">
-          <h5> {"učitava se..."}</h5>
-        </div>
+        <Info>učitava se...</Info>
       ) : (
-        <div className="tableWrapper">
-          <table>
-            <thead>
-              <tr>
-                <th rowSpan={2}>Rok</th>
-                <th colSpan={2}>Prijava</th>
-                <th colSpan={2}>Trajanje</th>
-                <th rowSpan={2} colSpan={user?.isAdmin ? 1 : 2}>
-                  Ispiti
-                </th>
-              </tr>
-              <tr>
-                <th>početak</th>
-                <th>kraj</th>
-                <th>početak</th>
-                <th>kraj</th>
-              </tr>
-            </thead>
-            <tbody>
-              {viewModelState.examPeriods.map((rok, key) => (
-                <tr key={key}>
-                  <td>{rok.name}</td>
-                  <td>{rok.dateRegistrationStartFormatted}</td>
-                  <td>{rok.dateRegistrationEndFormatted}</td>
-                  <td>{rok.dateStartFormatted}</td>
-                  <td>{rok.dateEndFormatted}</td>
-                  {!user?.isAdmin && (
-                    <td>
-                      <button
-                        onClick={() => viewModel.showRemainingCourseExams(rok)}
-                        className="tableButton"
-                      >
-                        moji
-                      </button>
-                    </td>
-                  )}
-                  <td>
-                    <button
-                      onClick={() => viewModel.showAllCourseExams(rok)}
-                      className="tableButton"
-                    >
-                      svi
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          width="70vw"
+          className="mb-5"
+          headers={[
+            {
+              title: "Rok",
+              value: "name",
+            },
+            {
+              title: "Prijava od",
+              value: "dateRegistrationStartFormatted",
+            },
+            {
+              title: "Prijava do",
+              value: "dateRegistrationEndFormatted",
+            },
+            {
+              title: "Datum početka",
+              value: "dateStartFormatted",
+            },
+            {
+              title: "Datum završetka",
+              value: "dateEndFormatted",
+            },
+            {
+              title: "Ispiti",
+              value: "actions",
+            },
+          ]}
+          items={viewModelState.examPeriods}
+          templates={{
+            actions: (rok) => (
+              <div className="d-flex flex-row gap-2">
+                {!user?.isAdmin && (
+                  <Buton
+                    onClick={() => viewModel.showRemainingCourseExams(rok)}
+                  >
+                    moji
+                  </Buton>
+                )}
+                <Buton onClick={() => viewModel.showAllCourseExams(rok)}>
+                  svi
+                </Buton>
+              </div>
+            ),
+          }}
+        />
       )}
-      {!viewModelState.isAllCourseExamsVisible ? (
-        <></>
-      ) : (
-        <div className="tableWrapper">
-          <h5 className="mb-3 mt-4">
-            Svi Ispiti za {viewModelState.selectedExamName}
-          </h5>
-          <table>
-            <thead>
-              <tr>
-                <th>Predmet</th>
-                <th>Semestar</th>
-                <th>Espb</th>
-                <th>Vreme Polaganja</th>
-                <th>Sala</th>
-              </tr>
-            </thead>
-            <tbody>
-              {viewModelState.allCourseExams.map((courseExam, key) => (
-                <tr key={key}>
-                  <td>{courseExam.courseName}</td>
-                  <td>{courseExam.courseSemester}</td>
-                  <td>{courseExam.courseEspb}</td>
-                  <td>{courseExam.examDateTimeFormatted}</td>
-                  <td>{courseExam.hall}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {viewModelState.isAllCourseExamsVisible && (
+        <>
+          <Title>Svi Ispiti za {viewModelState.selectedExamName}</Title>
+          <Table
+            width="50vw"
+            headers={[
+              { title: "Predmet", value: "courseName" },
+              { title: "Semestar", value: "courseSemester" },
+              { title: "Espb", value: "courseEspb" },
+              { title: "Vreme Polaganja", value: "examDateTimeFormatted" },
+              { title: "Sala", value: "hall" },
+            ]}
+            items={viewModelState.allCourseExams}
+          />
+        </>
       )}
-      {!viewModelState.isRemainingCourseExamsVisible ? (
-        <></>
-      ) : (
-        <div className="tableWrapper">
-          <h5 className="mb-3 mt-4">
-            Moji Ispiti za {viewModelState.selectedExamName}
-          </h5>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Predmet</th>
-                <th>Semestar</th>
-                <th>Espb</th>
-                <th>Vreme Polaganja</th>
-                <th>Sala</th>
-              </tr>
-            </thead>
-            <tbody>
-              {viewModelState.remainingCourseExams.map((courseExam, key) => (
-                <tr key={key}>
-                  <td>{courseExam.courseName}</td>
-                  <td>{courseExam.courseSemester}</td>
-                  <td>{courseExam.courseEspb}</td>
-                  <td>{courseExam.examDateTimeFormatted}</td>
-                  <td>{courseExam.hall}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {viewModelState.isRemainingCourseExamsVisible && (
+        <>
+          <Title>Moji Ispiti za {viewModelState.selectedExamName}</Title>
+          <Table
+            width="50vw"
+            headers={[
+              { title: "Predmet", value: "courseName" },
+              { title: "Semestar", value: "courseSemester" },
+              { title: "Espb", value: "courseEspb" },
+              { title: "Vreme Polaganja", value: "examDateTimeFormatted" },
+              { title: "Sala", value: "hall" },
+            ]}
+            items={viewModelState.remainingCourseExams}
+          />
+        </>
       )}
-    </div>
+    </Container>
   );
 };
 

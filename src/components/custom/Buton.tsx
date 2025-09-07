@@ -30,7 +30,7 @@ const Buton: React.FC<ButonProps> = ({
     "custom-button text-white",
     isIconOnly ? "icon-only" : "",
     margin,
-    isIconOnly ? "bg-primary-lighten-1" : "bg-primary " + padding,
+    isIconOnly ? "bg-primary" : "bg-primary " + padding,
     className,
   ]
     .filter(Boolean)

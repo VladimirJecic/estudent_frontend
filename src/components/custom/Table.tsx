@@ -13,6 +13,8 @@ interface TableProps<T> {
   templates?: Partial<
     Record<Extract<TableHeader["value"], string>, (item: T) => React.ReactNode>
   >;
+  className?: string;
+  footer?: string;
 }
 
 // Helper to inject dynamic CSS for table width
@@ -72,6 +74,8 @@ function Table<T>({
   width = "100%",
   colWidths,
   templates = {},
+  className = "",
+  footer,
 }: TableProps<T>) {
   // Generate a unique suffix for this table instance
   const uniqueSuffix = Math.random().toString(36).substring(2, 8);
@@ -114,7 +118,7 @@ function Table<T>({
   }
   injectUniqueWrapperWidth(width);
   return (
-    <div className={wrapperClass}>
+    <div className={`${wrapperClass} ${className}`.trim()}>
       <table className="custom-table">
         <thead>
           <tr>
@@ -140,6 +144,15 @@ function Table<T>({
             </tr>
           ))}
         </tbody>
+        {footer && (
+          <tfoot>
+            <tr>
+              <td className="font-weight-bold w-100" colSpan={headers.length}>
+                {footer}
+              </td>
+            </tr>
+          </tfoot>
+        )}
       </table>
     </div>
   );

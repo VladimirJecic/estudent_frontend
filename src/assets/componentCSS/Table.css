@@ -4,13 +4,32 @@ table td {
   text-align: start;
   border-left: none;
   border-right: none;
-  padding-right: 1rem;
+  padding: 0.8rem;
   font-size: 1.1rem;
-  padding-left: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
 }
+table tr {
+  border: none;
+}
+tr,
+td,
+th {
+  border: 1px solid var(--secondary-darken-1);
+}
+
+table th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  height: 100%;
+}
+
+table td {
+  vertical-align: middle !important;
+}
+
 table {
   position: relative; /* So z-index works */
   z-index: 1; /* Sit above the background */
@@ -22,4 +41,23 @@ table {
   background-color: var(--primary-lighten-3);
   font-family: "Segoe UI", sans-serif;
   font-size: 0.95rem;
+  table-layout: fixed;
+  width: 100%;
+}
+
+th {
+  align-items: center;
+}
+td {
+  justify-content: center;
+}
+
+/* Custom classes for table headers */
+
+.border-bottom-0 {
+  border-bottom: none !important;
+}
+
+.border-top-0 {
+  border-top: none !important;
 }

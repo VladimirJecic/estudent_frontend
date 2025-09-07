@@ -51,11 +51,6 @@ body {
   height: 100vh;
 }
 
-tr,
-td,
-th {
-  border: 1px solid var(--secondary-darken-1);
-}
 /*#region Colors*/
 :root {
   --primary: #4e66c4; /* main blue */

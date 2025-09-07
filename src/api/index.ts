@@ -66,7 +66,6 @@ export async function POST<T>(
         : {}),
     };
     const finalURL = `${BASE_URL}${path}`;
-    console.log(`POST request to: ${finalURL}`, finalHeaders);
 
     const response = await fetch(finalURL, {
       method: "POST",
