@@ -34,7 +34,7 @@ export const AppLayout = () => {
             <ListItem
               prependIcon="far fa-calendar-check"
               title="Aktuelni rokovi"
-              onClick={() => navigate("/exam-periods")}
+              onClick={() => navigate("/")}
             />
             {isStudent && (
               <>

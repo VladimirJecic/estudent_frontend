@@ -49,11 +49,11 @@ const LoginPage = () => {
       <Container className="bg-white h-50 p-5 col-4">
         {/* <img src={logo} className="col-7" alt="User Icon" /> */}
         <img src={logoFonSlova} className="col-5 mt-2" alt="User Icon" />
-        <h3 className="mb-5 d-flex justify-content-center col-12 primary-darken-1">
+        <h3 className="mb-4 d-flex justify-content-center col-12 primary-darken-1">
           E-Student
         </h3>
         <form
-          className="col-12 align-self-center"
+          className="col-12 mb-2 align-self-center"
           onSubmit={handleLogin}
           onKeyUp={handleKeyUp}
         >
@@ -83,9 +83,12 @@ const LoginPage = () => {
                 : undefined
             }
           />
-          <Buton type="submit" className="m-2" onClick={handleLogin}>
-            Uloguj se
-          </Buton>
+          <Buton
+            type="submit"
+            className="m-2"
+            onClick={handleLogin}
+            title="Uloguj se"
+          />
         </form>
       </Container>
     </div>

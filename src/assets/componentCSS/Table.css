@@ -1,0 +1,25 @@
+table th,
+table td {
+  overflow: hidden;
+  text-align: start;
+  border-left: none;
+  border-right: none;
+  padding-right: 1rem;
+  font-size: 1.1rem;
+  padding-left: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+table {
+  position: relative; /* So z-index works */
+  z-index: 1; /* Sit above the background */
+  border-spacing: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--primary-lighten-3);
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+}

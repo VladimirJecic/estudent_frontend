@@ -32,7 +32,7 @@ const TextInput: React.FC<TextInputProps> = ({
     <div
       className={`custom-text-input${hasText ? " input-has-value" : ""}${
         isFocused ? " input-focused" : ""
-      }`}
+      } ${className}`}
     >
       {prependIcon && (
         <span className="prepend-icon">

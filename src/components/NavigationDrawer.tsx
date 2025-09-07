@@ -1,5 +1,4 @@
 import React, { useState, ReactNode, createContext, useContext } from "react";
-import "../assets/componentCSS/NavigationDrawer.css";
 
 interface NavigationDrawerProps {
   expandOnHover?: boolean;

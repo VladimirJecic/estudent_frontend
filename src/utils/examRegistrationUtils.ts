@@ -17,6 +17,7 @@ export function toExamRegistrationPresentation(
       reg.courseExam.examDateTime,
       DateFormat.DATE_TIME
     ),
+    isRegistrationInProgress: reg.courseExam.examPeriod.dateRegisterEnd > new Date(),
   };
 }
 

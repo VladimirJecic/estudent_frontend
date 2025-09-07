@@ -1,11 +1,15 @@
 import React from "react";
-
 interface ButonProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  title?: string;
   onClick?: (e: React.FormEvent) => void;
   type?: "button" | "submit" | "reset";
   className?: string;
   disabled?: boolean;
+  tooltip?: string;
+  margin?: string;
+  padding?: string;
+  icon?: string;
 }
 
 const Buton: React.FC<ButonProps> = ({
@@ -14,17 +18,35 @@ const Buton: React.FC<ButonProps> = ({
   type = "button",
   className = "",
   disabled = false,
-}) => (
-  <div className="custom-buton">
+  tooltip,
+  margin = "",
+  padding = "p-2",
+  title,
+  icon,
+}) => {
+  // If only icon and no children/title, use icon-only style
+  const isIconOnly = !!icon && !children && !title;
+  const btnClass = [
+    "custom-button text-white",
+    isIconOnly ? "icon-only" : "",
+    margin,
+    isIconOnly ? "bg-primary-lighten-1" : "bg-primary " + padding,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  return (
     <button
       type={type}
-      className={className}
+      className={btnClass}
       onClick={onClick}
       disabled={disabled}
+      title={tooltip}
     >
-      {children}
+      {icon && <span className={`${icon} buton-icon`}></span>}
+      {!isIconOnly && (title ? title : children)}
     </button>
-  </div>
-);
+  );
+};
 
 export default Buton;

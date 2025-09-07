@@ -11,6 +11,7 @@ export function toCourseExamPresentation(
     courseSemester: exam.course.semester,
     courseEspb: exam.course.espb,
     examDateTimeFormatted: format(exam.examDateTime, DateFormat.DATE_TIME),
+    isRegistrationInProgress: exam.examPeriod.dateRegisterEnd > new Date(),
   };
 }
 

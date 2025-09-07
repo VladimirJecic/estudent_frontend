@@ -1,13 +1,18 @@
 import ReactPaginate from "react-paginate";
 
-const Pagination: React.FC<{
+interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-}> = ({ currentPage, totalPages, onPageChange }) => {
+}
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}) => {
   return (
     <ReactPaginate
-      containerClassName="pagination mt-3 d-flex justify-content-center gap-2"
+      containerClassName="visible pagination mt-3 d-flex justify-content-center gap-2"
       breakLabel="..."
       nextLabel=">"
       previousLabel="<"

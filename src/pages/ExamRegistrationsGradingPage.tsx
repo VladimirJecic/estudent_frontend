@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect } from "react";
-import ExamRegistrationGradingViewModel from "@/viewModel/ExamRegistrationGradingViewModel";
+import ExamRegistrationsGradingViewModel from "@/viewModel/ExamRegistrationsGradingViewModel";
 import { ExamRegistrationPresentation } from "@/types/items";
 import { useAlertService } from "@/context/AlertServiceContext";
 
-const ExamRegistrationGrading = () => {
+const ExamRegistrationsGradingPage = () => {
   const alertService = useAlertService();
   const viewModel = useMemo(
-    () => new ExamRegistrationGradingViewModel(alertService),
+    () => new ExamRegistrationsGradingViewModel(alertService),
     []
   );
   const [viewModelState, setViewModelState] = useState(viewModel.project());
@@ -134,4 +134,4 @@ const ExamRegistrationGrading = () => {
   );
 };
 
-export default ExamRegistrationGrading;
+export default ExamRegistrationsGradingPage;

@@ -1,14 +1,19 @@
 import React from "react";
-import classNames from "classnames";
-
 interface ContainerProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
 }
 
-const Container: React.FC<ContainerProps> = ({ children, className = "" }) => (
-  <div className={classNames("custom-container", className)}>{children}</div>
+const Container: React.FC<ContainerProps> = ({
+  children,
+  className = "w-100",
+}) => (
+  <div
+    className={`d-flex flex-column justify-content-center align-items-center ${className}`}
+  >
+    {children}
+  </div>
 );
 
 export default Container;

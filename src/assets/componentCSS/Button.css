@@ -1,29 +1,78 @@
+/* .buton background removed, use .bg-* classes from base.css */
+.buton {
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.buton-icon {
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  min-width: 2.2rem;
+  min-height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
 /* Button.css - styled to match the old Log In input button */
-.custom-buton button {
+.custom-button {
   width: 100%;
   background-color: var(--primary);
   border: none;
   color: #fff;
-  padding: 1rem 2rem;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4); /* keep as is, not a theme color */
   border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
+/* Circular icon-only button style */
+.custom-button.icon-only {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.25em;
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
 
-.custom-buton button:hover {
+.custom-button.icon-only:hover:not(:disabled) {
+  background-color: var(--primary) !important;
+}
+.buton-icon {
+  font-size: 1.3em;
+  color: var(--primary-darken-1);
+}
+
+.custom-button:hover {
   background-color: var(--primary-lighten-1);
 }
 
-.custom-buton button:active {
+.custom-button:active {
   transform: scale(0.95);
 }
 
-.custom-buton button:disabled {
-  background-color: var(--primary-lighten-2);
+.custom-button:disabled {
+  background-color: var(--secondary) !important;
   cursor: not-allowed;
 }

@@ -1,16 +1,16 @@
 @import "./componentCSS/AlertBar.css";
 @import "./componentCSS/DatePicker.css";
 @import "./componentCSS/ExamPeriods.css";
-@import "./componentCSS/ExamRegistrationGrading.css";
-@import "./componentCSS/ExamRegistrationsAdd.css";
+@import "./componentCSS/ExamRegistrationsGrading.css";
 @import "./componentCSS/ExamRegistrationsPassed.css";
+@import "./componentCSS/NavigationDrawer.css";
 @import "./componentCSS/Header.css";
 @import "./componentCSS/Pagination.css";
 @import "./componentCSS/TextInput.css";
 @import "./componentCSS/Button.css";
 @import "./componentCSS/Card.css";
-@import "./componentCSS/Container.css";
 @import "./componentCSS/AppLayout.css";
+@import "./componentCSS/Table.css";
 
 /* Global text styling */
 .h4,
@@ -24,9 +24,19 @@ h4 {
 div,
 form,
 body,
+table,
+thead,
+tbody,
+td,
 html {
   display: flex !important;
   flex-direction: column;
+}
+
+th,
+tr {
+  display: flex !important;
+  flex-direction: row;
 }
 
 html,
@@ -39,22 +49,6 @@ body {
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-}
-
-table {
-  position: relative; /* So z-index works */
-  z-index: 1; /* Sit above the background */
-  width: 80vw;
-  border-collapse: separate;
-  border-spacing: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid black;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: var(--primary-lighten-3);
-  font-family: "Segoe UI", sans-serif;
-  font-size: 0.95rem;
-  text-align: center;
 }
 
 tr,
@@ -157,3 +151,10 @@ th {
   background-color: var(--info) !important;
 }
 /*#endregion Colors*/
+
+.visible {
+  display: flex !important;
+}
+.hidden {
+  display: none !important;
+}

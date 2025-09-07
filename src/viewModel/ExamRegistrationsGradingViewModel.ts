@@ -7,7 +7,7 @@ import {
 import { ExamRegistrationAPIService } from "@/api/examRegistrations";
 import { toExamRegistrationPresentations } from "@/utils/examRegistrationUtils";
 
-export default class ExamRegistrationGradingViewModel {
+export default class ExamRegistrationsGradingViewModel {
   #examRegistrationsToGrade: ExamRegistrationPresentation[];
   #isExamRegistrationsLoading: boolean;
   #alertService: AlertServiceContextType;

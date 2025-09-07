@@ -31,6 +31,7 @@ export interface ExamRegistrationPresentation extends ExamRegistration {
   updatedAtFormatted: string;
   examDateTimeFormatted: string;
   signedByName: string;
+  isRegistrationInProgress: boolean;
 }
 export type CourseExam = {
   id: number;
@@ -44,6 +45,7 @@ export interface CourseExamPresentation extends CourseExam {
   courseSemester: string;
   courseEspb: number;
   examDateTimeFormatted: string;
+  isRegistrationInProgress: boolean;
 }
 export type ExamPeriod = {
   id?: number;

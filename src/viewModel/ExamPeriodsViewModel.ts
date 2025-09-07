@@ -52,6 +52,7 @@ export default class ExamPeriodsViewModel {
     this.updateView?.();
   };
   showRemainingCourseExams = async (examPeriod: ExamPeriodPresentation) => {
+    this.#selectedExamPeriod = examPeriod;
     await this.fetchRemainingCourseExams(examPeriod);
     this.#isRemainingCourseExamsVisible = true;
     this.#isAllCourseExamsVisible = false;
@@ -86,6 +87,7 @@ export default class ExamPeriodsViewModel {
       this.updateView?.();
     } catch (error) {
       this.#alertService.error("Došlo je do greške prilikom obrade zahteva.");
+      console.error(error);
     }
   };
 }

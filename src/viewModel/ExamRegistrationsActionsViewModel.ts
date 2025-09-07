@@ -8,10 +8,9 @@ import {
 } from "@/types/items";
 import { ExamRegistrationAPIService } from "@/api/examRegistrations";
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
-import { useAlertService } from "@/context/AlertServiceContext";
 import { toExamRegistrationPresentations } from "@/utils/examRegistrationUtils";
 
-export default class ExamRegistrationsAddViewModel {
+export default class ExamRegistrationsActionsViewModel {
   #courseExamRegistrationCandidates: CourseExamPresentation[];
   #examRegistrationsExisting: ExamRegistrationPresentation[];
   #isLoadingExamRegistrationCandidates: boolean;
@@ -36,19 +35,21 @@ export default class ExamRegistrationsAddViewModel {
         this.#isLoadingExamRegistrationCandidates,
       isLoadingExamRegistrationsExisting:
         this.#isLoadingExamRegistrationsExisting,
+      canSubmitAnyExamRegistration: this.canSubmitAnyExamRegistration(),
     };
   };
 
   setupView = async () => {
     await Promise.allSettled([
-      this.fetchExamRegistrationsExisting(),
       this.fetchCourseExamRegistrationCandidates(),
+      this.fetchExamRegistrationsExisting(),
     ]);
+    await this.fetchCourseExamRegistrationCandidates();
+    await this.fetchExamRegistrationsExisting();
     this.updateView?.();
   };
 
   fetchCourseExamRegistrationCandidates = async () => {
-    const alertService = useAlertService();
     this.#isLoadingExamRegistrationCandidates = true;
     this.#courseExamRegistrationCandidates = [];
     try {
@@ -57,8 +58,8 @@ export default class ExamRegistrationsAddViewModel {
       this.#courseExamRegistrationCandidates =
         toCourseExamPresentations(courseExams);
     } catch (error) {
-      alertService.error(
-        "Došlo je do greške prilikom učitavanja kandidata za prijavu ispita."
+      this.#alertService.error(
+        "Došlo je do greške prilikom učitavanja ispita koji se mogu prijaviti."
       );
       console.error(error);
     } finally {
@@ -69,14 +70,14 @@ export default class ExamRegistrationsAddViewModel {
   fetchExamRegistrationsExisting = async () => {
     this.#isLoadingExamRegistrationsExisting = true;
     this.#examRegistrationsExisting = [];
-    const alertService = useAlertService();
+
     try {
       const examRegistrations: ExamRegistration[] =
         await ExamRegistrationAPIService.fetchExamRegistrationsExisting();
       this.#examRegistrationsExisting =
         toExamRegistrationPresentations(examRegistrations);
     } catch (error) {
-      alertService.error(
+      this.#alertService.error(
         "Došlo je do greške prilikom učitavanja prijavljenih ispita."
       );
       console.error(error);
@@ -108,5 +109,12 @@ export default class ExamRegistrationsAddViewModel {
       this.#alertService?.error("Neuspešna odjava ispita.");
       console.error(error);
     }
+  }
+
+  canSubmitAnyExamRegistration(): boolean {
+    return (
+      !this.#isLoadingExamRegistrationCandidates &&
+      this.#courseExamRegistrationCandidates.length > 0
+    );
   }
 }
