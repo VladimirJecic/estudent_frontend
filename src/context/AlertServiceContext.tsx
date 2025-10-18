@@ -3,6 +3,7 @@ import AlertBar from "@/components/AlertBar";
 import { AlertServiceContextType, AlertState } from "@/types/items";
 import HTMLResponseError from "@/error/HTMLResponseError";
 import ServerError from "@/error/ServerError";
+import log from "loglevel";
 
 const AlertServiceContext = createContext<AlertServiceContextType | undefined>(
   undefined
@@ -36,11 +37,11 @@ export const AlertServiceProvider: React.FC<{ children: ReactNode }> = ({
       autoHide();
     }
     if (error instanceof HTMLResponseError) {
-      console.warn("HTML response received");
+      log.warn("HTML response received");
     } else if (error instanceof ServerError) {
-      console.debug(error);
+      log.debug(error);
     } else {
-      console.error("Unknown error occurred");
+      log.error("Unknown error occurred");
     }
   };
 

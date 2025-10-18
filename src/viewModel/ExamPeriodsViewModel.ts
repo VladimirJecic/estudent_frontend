@@ -69,7 +69,7 @@ export default class ExamPeriodsViewModel {
         this.#alertService.error(
           "Došlo je do greške prilikom učitavanja aktuelnih rokova."
         );
-        console.error(error);
+        log.error(error);
       }
     } finally {
       this.#isLoadingExamPeriods = false;
@@ -86,7 +86,7 @@ export default class ExamPeriodsViewModel {
       this.updateView?.();
     } catch (error) {
       this.#alertService.error("Došlo je do greške prilikom obrade zahteva.");
-      console.error(error);
+      log.error(error);
     }
   };
 }

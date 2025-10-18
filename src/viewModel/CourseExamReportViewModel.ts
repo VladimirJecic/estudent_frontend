@@ -5,6 +5,7 @@ import type {
   AlertServiceContextType,
 } from "@/types/items";
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
+import log from "loglevel";
 export default class CourseExamReportViewModel {
   #courseExams: CourseExamPresentation[];
   #pageSize: number;
@@ -43,7 +44,7 @@ export default class CourseExamReportViewModel {
       this.#alertService.error(
         "Došlo je do greške prilikom pretrage polaganja."
       );
-      console.error(error);
+      log.error(error);
     } finally {
       this.#isLoadingCourseExams = false;
       this.updateView?.();
@@ -69,7 +70,7 @@ export default class CourseExamReportViewModel {
       this.#alertService.error(
         "Došlo je do greške prilikom skidanja izveštaja."
       );
-      console.error(error);
+      log.error(error);
     }
   };
 }

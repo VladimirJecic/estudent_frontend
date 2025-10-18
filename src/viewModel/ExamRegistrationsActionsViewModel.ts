@@ -61,7 +61,7 @@ export default class ExamRegistrationsActionsViewModel {
       this.#alertService.error(
         "Došlo je do greške prilikom učitavanja ispita koji se mogu prijaviti."
       );
-      console.error(error);
+      log.error(error);
     } finally {
       this.#isLoadingExamRegistrationCandidates = false;
     }
@@ -72,15 +72,16 @@ export default class ExamRegistrationsActionsViewModel {
     this.#examRegistrationsExisting = [];
 
     try {
-      const examRegistrations: ExamRegistration[] =
+      const pageResponse =
         await ExamRegistrationAPIService.fetchExamRegistrationsExisting();
-      this.#examRegistrationsExisting =
-        toExamRegistrationPresentations(examRegistrations);
+      this.#examRegistrationsExisting = toExamRegistrationPresentations(
+        pageResponse.content
+      );
     } catch (error) {
       this.#alertService.error(
         "Došlo je do greške prilikom učitavanja prijavljenih ispita."
       );
-      console.error(error);
+      log.error(error);
     } finally {
       this.#isLoadingExamRegistrationsExisting = false;
     }
@@ -89,12 +90,12 @@ export default class ExamRegistrationsActionsViewModel {
   async saveExamRegistration(courseExam: CourseExam) {
     try {
       const dto: SubmitExamRegistration = { courseExamId: courseExam.id };
-      await ExamRegistrationAPIService.saveExamRegistration(dto);
+      await ExamRegistrationAPIService.createExamRegistration(dto);
       this.#alertService?.alert("Ispit je uspešno prijavljen.");
       await this.setupView();
     } catch (error) {
       this.#alertService?.error("Neuspešna prijava ispita.");
-      console.error(error);
+      log.error(error);
     }
   }
 
@@ -107,7 +108,7 @@ export default class ExamRegistrationsActionsViewModel {
       await this.setupView();
     } catch (error) {
       this.#alertService?.error("Neuspešna odjava ispita.");
-      console.error(error);
+      log.error(error);
     }
   }
 

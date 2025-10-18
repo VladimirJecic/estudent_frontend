@@ -8,6 +8,7 @@ import {
 } from "@/types/items";
 import { ExamRegistrationAPIService } from "@/api/examRegistrations";
 import { toExamRegistrationPresentations } from "@/utils/examRegistrationUtils";
+import log from "loglevel";
 
 export default class ExamRegistrationsGradingViewModel {
   #examRegistrationsToGrade: ExamRegistrationPresentation[];
@@ -59,7 +60,7 @@ export default class ExamRegistrationsGradingViewModel {
       this.#alertService?.error(
         "Došlo je do greške prilikom učitavanja neocenjenih polaganja."
       );
-      console.error(error);
+      log.error(error);
     } finally {
       this.#isExamRegistrationsLoading = false;
       this.updateView?.();
@@ -87,7 +88,7 @@ export default class ExamRegistrationsGradingViewModel {
       await this.fetchExamRegistrationsToGrade(pageCriteria);
     } catch (error) {
       this.#alertService?.error("Neuspešno čuvanje izmena.");
-      console.error(error);
+      log.error(error);
     }
   }
 

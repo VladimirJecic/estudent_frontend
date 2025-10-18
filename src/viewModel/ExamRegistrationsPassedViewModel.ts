@@ -48,7 +48,7 @@ export default class ExamRegistrationsPassedViewModel {
       this.#alertService.error(
         "Došlo je do greške prilikom učitavanja položenih ispita."
       );
-      console.error(error);
+      log.error(error);
     } finally {
       this.#isLoadingExamRegistrationsPassed = false;
     }

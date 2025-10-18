@@ -18,7 +18,7 @@ export class ExamRegistrationAPIService {
       queryParams.push(
         `page-size=${encodeURIComponent(pageCriteria.pageSize)}`
       );
-    if (pageCriteria.searchText.length > 0)
+    if (pageCriteria.searchText && pageCriteria.searchText.length > 0)
       queryParams.push(
         `searchText=${encodeURIComponent(pageCriteria.searchText)}`
       );
@@ -29,7 +29,16 @@ export class ExamRegistrationAPIService {
       queryParams.push(`includeNotGraded=true`);
     return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
   }
-
+  static createQueryStringForCreateExamRegistration(
+    pageCriteria: SubmitExamRegistration
+  ): string {
+    const queryParams: string[] = [];
+    if (pageCriteria.courseExamId !== undefined)
+      queryParams.push(`course-exam-id=${pageCriteria.courseExamId}`);
+    if (pageCriteria.studentId !== undefined)
+      queryParams.push(`student-id=${pageCriteria.studentId}`);
+    return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
+  }
   static async getPassedExamRegistrations() {
     const response = await apiService.GET<PageResponse<ExamRegistration>>(
       "/exam-registrations?page=1&page-size=200&include-passed=true"
@@ -44,8 +53,8 @@ export class ExamRegistrationAPIService {
     return response;
   }
 
-  static async fetchExamRegistrationsExisting(): Promise<ExamRegistration[]> {
-    const response = await apiService.GET<ExamRegistration[]>(
+  static async fetchExamRegistrationsExisting() {
+    const response = await apiService.GET<PageResponse<ExamRegistration>>(
       "/exam-registrations?page=1&page-size=200&include-not-graded=true"
     );
     return response;
@@ -69,10 +78,11 @@ export class ExamRegistrationAPIService {
     await apiService.PUT(`/exam-registrations/${examRegistrationId}`, dto);
   }
 
-  static async saveExamRegistration(
+  static async createExamRegistration(
     dto: SubmitExamRegistration
   ): Promise<void> {
-    await apiService.POST("/exam-registrations", dto);
+    const queryParams = this.createQueryStringForCreateExamRegistration(dto);
+    await apiService.POST(`/exam-registrations${queryParams}`, dto);
   }
 
   static async deleteExamRegistration(

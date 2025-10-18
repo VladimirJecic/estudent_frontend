@@ -139,6 +139,13 @@ async function handleResponse(response: Response) {
   if (contentType && contentType.includes("text/html")) {
     throw new HTMLResponseError(await response.text(), response.status);
   }
+  if (response.status === 204) {
+    const serverResponse: ServerResponse = {
+      success: true,
+      statusCode: 204,
+    };
+    return serverResponse;
+  }
   const serverResponse: ServerResponse =
     (await response.json()) as ServerResponse;
   serverResponse.statusCode = response.status;

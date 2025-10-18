@@ -5,8 +5,8 @@ export type UpdateExamRegistration = {
 };
 export type ServerResponse = {
   success: boolean;
-  data: any;
-  message: string;
+  data?: any;
+  message?: string;
   statusCode: number;
 };
 export type SubmitExamRegistration = {
