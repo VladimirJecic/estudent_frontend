@@ -1,11 +1,38 @@
 import apiService from "@/api/index";
-import { ExamRegistration, CourseExam } from "@/types/items";
+import {
+  ExamRegistration,
+  CourseExam,
+  PageResponse,
+  ExamRegistrationPageCriteria,
+} from "@/types/items";
 import { SubmitExamRegistration } from "@/types/items";
 
 export class ExamRegistrationAPIService {
-  static async getPassedExamRegistrations(): Promise<ExamRegistration[]> {
-    const response = await apiService.GET<ExamRegistration[]>(
-      "/exam-registrations/?excludeFailed=true"
+  static createQueryStringForFetchExamRegistrationsToGrade(
+    pageCriteria: ExamRegistrationPageCriteria
+  ): string {
+    const queryParams: string[] = [];
+    if (pageCriteria.page !== 0)
+      queryParams.push(`page=${encodeURIComponent(pageCriteria.page)}`);
+    if (pageCriteria.pageSize !== 0)
+      queryParams.push(
+        `page-size=${encodeURIComponent(pageCriteria.pageSize)}`
+      );
+    if (pageCriteria.searchText.length > 0)
+      queryParams.push(
+        `searchText=${encodeURIComponent(pageCriteria.searchText)}`
+      );
+    if (pageCriteria.includePassed) queryParams.push(`includePassed=true`);
+
+    if (pageCriteria.includeFailed) queryParams.push(`includeFailed=true`);
+    if (pageCriteria.includeNotGraded)
+      queryParams.push(`includeNotGraded=true`);
+    return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
+  }
+
+  static async getPassedExamRegistrations() {
+    const response = await apiService.GET<PageResponse<ExamRegistration>>(
+      "/exam-registrations?page=1&page-size=200&include-passed=true"
     );
     return response;
   }
@@ -19,14 +46,18 @@ export class ExamRegistrationAPIService {
 
   static async fetchExamRegistrationsExisting(): Promise<ExamRegistration[]> {
     const response = await apiService.GET<ExamRegistration[]>(
-      "/exam-registrations/not-graded"
+      "/exam-registrations?page=1&page-size=200&include-not-graded=true"
     );
     return response;
   }
 
-  static async fetchExamRegistrationsToGrade(): Promise<ExamRegistration[]> {
-    const response = await apiService.GET<ExamRegistration[]>(
-      "/exam-registrations/not-graded/all"
+  static async fetchExamRegistrationsToGrade(
+    pageCriteria: ExamRegistrationPageCriteria
+  ) {
+    const queryParams =
+      this.createQueryStringForFetchExamRegistrationsToGrade(pageCriteria);
+    const response = await apiService.GET<PageResponse<ExamRegistration>>(
+      `/exam-registrations${queryParams}`
     );
     return response;
   }

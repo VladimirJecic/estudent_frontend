@@ -36,10 +36,11 @@ export default class ExamRegistrationsPassedViewModel {
     this.#isLoadingExamRegistrationsPassed = true;
     this.#examRegistrationsPassed = [];
     try {
-      const registrations: ExamRegistration[] =
+      const pageResponse =
         await ExamRegistrationAPIService.getPassedExamRegistrations();
-      this.#examRegistrationsPassed =
-        toExamRegistrationPresentations(registrations);
+      this.#examRegistrationsPassed = toExamRegistrationPresentations(
+        pageResponse.content
+      );
       this.#averageMark = this.getAverageMark();
       this.#totalESPB = this.getTotalESPB();
       this.updateView?.();

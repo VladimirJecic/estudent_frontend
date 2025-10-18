@@ -9,7 +9,6 @@ import { toCourseExamPresentations } from "@/utils/courseExamUtils";
 import { toExamPeriodPresentations } from "@/utils/examPeriodUtils";
 import { AlertServiceContextType } from "@/types/items";
 import HTMLResponseError from "@/error/HTMLResponseError";
-import ServerError from "@/error/ServerError";
 
 export default class ExamPeriodsViewModel {
   #examPeriods: ExamPeriodPresentation[];

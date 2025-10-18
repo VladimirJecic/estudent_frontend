@@ -72,7 +72,7 @@ function Table<T>({
   headers,
   items,
   width = "100%",
-  colWidths,
+  colWidths = [],
   templates = {},
   className = "",
   footer,

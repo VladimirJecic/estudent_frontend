@@ -11,12 +11,8 @@ import { format } from "date-fns/format";
 export class CourseExamAPIService {
   static createQueryString(pageCriteria: CourseExamPageCriteria): string {
     const queryParams: string[] = [];
-    if (pageCriteria.page !== 0)
-      queryParams.push(`page=${encodeURIComponent(pageCriteria.page)}`);
-    if (pageCriteria.pageSize !== 0)
-      queryParams.push(
-        `page-size=${encodeURIComponent(pageCriteria.pageSize)}`
-      );
+    queryParams.push(`page=${encodeURIComponent(pageCriteria.page)}`);
+    queryParams.push(`page-size=${encodeURIComponent(pageCriteria.pageSize)}`);
     if (pageCriteria.courseName.length > 0)
       queryParams.push(
         `course-name=${encodeURIComponent(pageCriteria.courseName)}`

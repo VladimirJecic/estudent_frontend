@@ -7,6 +7,11 @@ import DatePicker from "react-datepicker";
 import debounce from "lodash/debounce";
 import { CourseExamPageCriteria } from "@/types/items";
 import { useAlertService } from "@/context/AlertServiceContext";
+import Container from "@/components/custom/Container";
+import Title from "@/components/custom/Title";
+import Info from "@/components/custom/Info";
+import Table from "@/components/custom/Table";
+import Buton from "@/components/custom/Buton";
 
 const CourseExamReportPage = () => {
   const alertService = useAlertService();
@@ -23,7 +28,6 @@ const CourseExamReportPage = () => {
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
   const [page, setPage] = useState(1);
-  const pageSize = 10;
 
   const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
@@ -33,10 +37,10 @@ const CourseExamReportPage = () => {
   );
 
   const handlePageChange = (newPage: number) => {
-    setPage(page);
+    setPage(newPage);
     const pageCriteria: CourseExamPageCriteria = {
       page: newPage,
-      pageSize: pageSize,
+      pageSize: viewModelState.pageSize,
       courseName: searchedCourseName,
       dateFrom: dateFrom,
       dateTo: dateTo,
@@ -46,27 +50,19 @@ const CourseExamReportPage = () => {
 
   //#region OnMount
   useEffect(() => {
-    const pageCriteria: CourseExamPageCriteria = {
-      page: 1,
-      pageSize: pageSize,
-      courseName: searchedCourseName,
-      dateFrom: dateFrom,
-      dateTo: dateTo,
-    };
-    viewModel.searchCourseExams(pageCriteria);
+    handlePageChange(page);
   }, [searchedCourseName, dateFrom, dateTo]);
   //#endregion OnMount
+
   return (
-    <div className="d-flex flex-column align-items-center text-center">
-      <h2 className="mb-4">Izveštaj polaganja</h2>
+    <Container>
+      <Title>Izveštaj polaganja</Title>
       {viewModelState.courseExams.length === 0 &&
       viewModelState.isLoadingCourseExams === true ? (
-        <div className="bg-info w-50 text-center ">
-          <h5> {"učitava se..."}</h5>
-        </div>
+        <Info>učitava se...</Info>
       ) : (
-        <div className="mx-auto mt-3">
-          <div className="d-flex w-100 mr-auto  mb-4">
+        <>
+          <Container className="mb-4">
             <TextInput
               onChange={(value: string) => {
                 debounced_handleChangeCourseName(value);
@@ -92,52 +88,35 @@ const CourseExamReportPage = () => {
               }}
               isClearable={true}
             />
-          </div>
-          <div className="tableWrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th rowSpan={2}>Naziv ispita</th>
-                  <th rowSpan={2}>Ispitni rok</th>
-                  <th rowSpan={2}>Datum polaganja</th>
-                  <th rowSpan={1}>Izveštaj</th>
-                </tr>
-              </thead>
-              <tbody>
-                {viewModelState.courseExams.map((ce, key) => (
-                  <tr key={key}>
-                    <td>
-                      <p>{ce.course.name}</p>
-                    </td>
-                    <td>
-                      <p>{ce.examPeriod.name}</p>
-                    </td>
-                    <td>
-                      <p>{ce.examDateTimeFormatted}</p>
-                    </td>
-                    <td>
-                      <button
-                        title="Preuzmi izveštaj"
-                        type="button"
-                        className="btn btn-primary"
-                        onClick={() => viewModel.downloadCourseExamReport(ce)}
-                      >
-                        <i className="fa fa-file-download"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          </Container>
+          <Table
+            width="70vw"
+            headers={[
+              { title: "Naziv ispita", value: "course.name" },
+              { title: "Ispitni rok", value: "examPeriod.name" },
+              { title: "Datum polaganja", value: "examDateTimeFormatted" },
+              { title: "Izveštaj", value: "actions" },
+            ]}
+            items={viewModelState.courseExams}
+            templates={{
+              actions: (ce) => (
+                <Buton
+                  tooltip="Preuzmi izveštaj"
+                  icon="fa fa-file-download"
+                  onClick={() => viewModel.downloadCourseExamReport(ce)}
+                />
+              ),
+            }}
+          />
           <Pagination
             currentPage={page}
             totalPages={viewModelState.totalPages}
             onPageChange={(page: number) => handlePageChange(page)}
-          ></Pagination>
-        </div>
+          />
+        </>
       )}
-    </div>
+    </Container>
   );
 };
+
 export default CourseExamReportPage;

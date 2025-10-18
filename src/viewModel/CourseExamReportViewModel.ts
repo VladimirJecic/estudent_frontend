@@ -7,6 +7,7 @@ import type {
 import { toCourseExamPresentations } from "@/utils/courseExamUtils";
 export default class CourseExamReportViewModel {
   #courseExams: CourseExamPresentation[];
+  #pageSize: number;
   #totalPages: number;
   #isLoadingCourseExams: boolean;
   #alertService: AlertServiceContextType;
@@ -14,6 +15,7 @@ export default class CourseExamReportViewModel {
 
   constructor(alertService: AlertServiceContextType) {
     this.#courseExams = [];
+    this.#pageSize = 10;
     this.#totalPages = 0;
     this.#isLoadingCourseExams = true;
     this.#alertService = alertService;
@@ -23,6 +25,7 @@ export default class CourseExamReportViewModel {
   project = () => {
     return {
       courseExams: this.#courseExams,
+      pageSize: this.#pageSize,
       totalPages: this.#totalPages,
       isLoadingCourseExams: this.#isLoadingCourseExams,
     };

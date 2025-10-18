@@ -90,8 +90,16 @@ export type CourseExamPageCriteria = {
   dateFrom: Date | null;
   dateTo: Date | null;
 };
+export type ExamRegistrationPageCriteria = {
+  page: number;
+  pageSize: number;
+  searchText?: string;
+  includePassed?: boolean;
+  includeFailed?: boolean;
+  includeNotGraded?: boolean;
+};
 export type EStudentApiError = {
-  statusCode: int;
+  statusCode: number;
   errorMessage: string;
 };
 export type DocumentBlob = {

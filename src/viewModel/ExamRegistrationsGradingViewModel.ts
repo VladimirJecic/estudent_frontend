@@ -1,7 +1,9 @@
 import {
   AlertServiceContextType,
   ExamRegistration,
+  ExamRegistrationPageCriteria,
   ExamRegistrationPresentation,
+  PageResponse,
   UpdateExamRegistration,
 } from "@/types/items";
 import { ExamRegistrationAPIService } from "@/api/examRegistrations";
@@ -11,34 +13,48 @@ export default class ExamRegistrationsGradingViewModel {
   #examRegistrationsToGrade: ExamRegistrationPresentation[];
   #isExamRegistrationsLoading: boolean;
   #alertService: AlertServiceContextType;
+  #pageSize: number;
+  #totalPages: number;
   updateView: (() => void) | undefined;
 
   constructor(alertService: AlertServiceContextType) {
     this.#examRegistrationsToGrade = [];
     this.#isExamRegistrationsLoading = true;
     this.#alertService = alertService;
+    this.#pageSize = 10;
+    this.#totalPages = 0;
     this.updateView = undefined;
   }
 
   project = () => {
     return {
       examRegistrationsToGrade: this.#examRegistrationsToGrade,
-      isExamRegistrationsLoaded: !this.#isExamRegistrationsLoading,
+      isExamRegistrationsLoading: this.#isExamRegistrationsLoading,
+      pageSize: this.#pageSize,
+      totalPages: this.#totalPages,
     };
   };
 
-  setupView = async () => {
-    await this.fetchExamRegistrationsToGrade();
+  setupView = async (pageCriteria: ExamRegistrationPageCriteria) => {
+    await this.fetchExamRegistrationsToGrade(pageCriteria);
   };
 
-  fetchExamRegistrationsToGrade = async () => {
+  fetchExamRegistrationsToGrade = async (
+    pageCriteria: ExamRegistrationPageCriteria
+  ) => {
     this.#isExamRegistrationsLoading = true;
     this.#examRegistrationsToGrade = [];
     try {
-      const examRegistrations: ExamRegistration[] =
-        await ExamRegistrationAPIService.fetchExamRegistrationsToGrade();
-      this.#examRegistrationsToGrade =
-        toExamRegistrationPresentations(examRegistrations);
+      const pageResponse: PageResponse<ExamRegistration> =
+        await ExamRegistrationAPIService.fetchExamRegistrationsToGrade(
+          pageCriteria
+        );
+      this.#examRegistrationsToGrade = toExamRegistrationPresentations(
+        pageResponse.content
+      );
+      this.#totalPages = pageResponse.totalPages;
+
+      this.updateView?.();
     } catch (error) {
       this.#alertService?.error(
         "Došlo je do greške prilikom učitavanja neocenjenih polaganja."
@@ -64,10 +80,30 @@ export default class ExamRegistrationsGradingViewModel {
         dto
       );
       this.#alertService?.alert("Izmene su sačuvane.");
-      await this.fetchExamRegistrationsToGrade();
+      const pageCriteria: ExamRegistrationPageCriteria = {
+        page: 1,
+        pageSize: this.#pageSize,
+      };
+      await this.fetchExamRegistrationsToGrade(pageCriteria);
     } catch (error) {
       this.#alertService?.error("Neuspešno čuvanje izmena.");
       console.error(error);
     }
   }
+
+  editExamRegistration = (examRegistration: ExamRegistrationPresentation) => {
+    // TODO: Implementirati edit funkcionalnost
+    console.log("Edit exam registration:", examRegistration);
+    this.#alertService?.alert(
+      "Funkcionalnost izmene će biti implementirana uskoro."
+    );
+  };
+
+  deleteExamRegistration = (examRegistration: ExamRegistrationPresentation) => {
+    // TODO: Implementirati delete funkcionalnost
+    console.log("Delete exam registration:", examRegistration);
+    this.#alertService?.alert(
+      "Funkcionalnost brisanja će biti implementirana uskoro."
+    );
+  };
 }

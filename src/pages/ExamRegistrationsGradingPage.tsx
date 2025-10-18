@@ -1,8 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import ExamRegistrationsGradingViewModel from "@/viewModel/ExamRegistrationsGradingViewModel";
-import { ExamRegistrationPresentation } from "@/types/items";
+import { ExamRegistrationPageCriteria } from "@/types/items";
 import { useAlertService } from "@/context/AlertServiceContext";
+import Container from "@/components/custom/Container";
+import Title from "@/components/custom/Title";
+import Info from "@/components/custom/Info";
+import Table from "@/components/custom/Table";
+import Buton from "@/components/custom/Buton";
+import TextInput from "@/components/custom/TextInput";
+import CheckBox from "@/components/custom/CheckBox";
+import Pagination from "@/components/custom/Pagination";
+import debounce from "lodash/debounce";
 
 const ExamRegistrationsGradingPage = () => {
   const alertService = useAlertService();
@@ -11,126 +20,140 @@ const ExamRegistrationsGradingPage = () => {
     []
   );
   const [viewModelState, setViewModelState] = useState(viewModel.project());
-  const [examRegistrationsToGradeCopy, setExamRegistrationsToGradeCopy] =
-    useState<ExamRegistrationPresentation[]>([]);
+  const [searchText, setSearchText] = useState("");
+  const [includeNotGraded, setIncludeNotGraded] = useState(true);
+  const [includePassed, setIncludePassed] = useState(false);
+  const [includeFailed, setIncludeFailed] = useState(false);
+  const [page, setPage] = useState(1);
 
   viewModel.updateView = () => {
     setViewModelState(viewModel.project());
   };
 
-  useEffect(() => {
-    viewModel.setupView();
-  }, [viewModel]);
+  const debounced_handleChangeSearchText = useCallback(
+    debounce((value: string) => {
+      setSearchText(value);
+      setPage(1); // Reset to first page on search
+    }, 500),
+    []
+  );
 
-  useEffect(() => {
-    setExamRegistrationsToGradeCopy([
-      ...viewModelState.examRegistrationsToGrade,
-    ]);
-  }, [viewModelState.examRegistrationsToGrade]);
-
-  const handleFieldChange = (updated: ExamRegistrationPresentation) => {
-    const newState = examRegistrationsToGradeCopy.map((reg) =>
-      reg.id === updated.id ? updated : reg
-    );
-    setExamRegistrationsToGradeCopy(newState);
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    const pageCriteria: ExamRegistrationPageCriteria = {
+      page: newPage,
+      pageSize: viewModelState.pageSize,
+      searchText: searchText,
+      includePassed: includePassed,
+      includeFailed: includeFailed,
+      includeNotGraded: includeNotGraded,
+    };
+    viewModel.setupView(pageCriteria);
   };
 
+  //#region OnMount
+  useEffect(() => {
+    handlePageChange(page);
+  }, [searchText]);
+  //#endregion OnMount
   return (
-    <div className="neocenjenaPolaganja">
-      {/* AlertBar removed; now handled globally */}
-      <h2 className="mb-4">Neocenjena polaganja</h2>
-      {!viewModelState.isExamRegistrationsLoaded ? (
-        <div className="bg-info w-50 text-center ">
-          <h5>Učitava se...</h5>
-        </div>
-      ) : examRegistrationsToGradeCopy.length === 0 ? (
-        <div className="bg-info w-50 text-center ">
-          <h5>Nema neocenjenih polaganja</h5>
-        </div>
+    <Container>
+      <Title>Polaganja</Title>
+      {viewModelState.examRegistrationsToGrade.length === 0 &&
+      !viewModelState.isExamRegistrationsLoading ? (
+        <Info>Učitava se...</Info>
       ) : (
-        <div className="tableWrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>R.Br</th>
-                <th>Broj indexa</th>
-                <th>Naziv Ispita</th>
-                <th>Ime</th>
-                <th>Ocena</th>
-                <th>Prisustvovao</th>
-                <th>Poslednji datum izmene</th>
-                <th>Dodatne informacije</th>
-                <th>Akcija</th>
-              </tr>
-            </thead>
-            <tbody>
-              {examRegistrationsToGradeCopy.map((registration, key) => (
-                <tr key={key}>
-                  <td>{key + 1}</td>
-                  <td>{registration.studentIndexNum}</td>
-                  <td>{registration.courseName}</td>
-                  <td>{registration.studentName}</td>
-                  <td>
-                    <input
-                      aria-label="Ocena"
-                      className="form-control text-center"
-                      type="number"
-                      name="mark"
-                      value={registration.mark ?? ""}
-                      onChange={(e) =>
-                        handleFieldChange({
-                          ...registration,
-                          mark: Number(e.target.value),
-                        })
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      aria-label="Prisustvovao"
-                      type="checkbox"
-                      name="hasAttended"
-                      checked={registration.hasAttended ?? true}
-                      onChange={(e) =>
-                        handleFieldChange({
-                          ...registration,
-                          hasAttended: e.target.checked,
-                        })
-                      }
-                    />
-                  </td>
-                  <td>{registration.updatedAtFormatted}</td>
-                  <td className="w-25">
-                    <textarea
-                      aria-label="Komentar"
-                      className="form-control"
-                      name="comment"
-                      value={registration.comment ?? ""}
-                      onChange={(e) =>
-                        handleFieldChange({
-                          ...registration,
-                          comment: e.target.value,
-                        })
-                      }
-                    />
-                  </td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        viewModel.saveExamRegistrationUpdate(registration)
-                      }
-                      className="tableButton"
-                    >
-                      Sačuvaj izmene
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <>
+          <Container className="mb-4">
+            <TextInput
+              onChange={(value: string) => {
+                debounced_handleChangeSearchText(value);
+              }}
+              placeholder="Pretraga Polaganja"
+              isClearable
+            />
+            <CheckBox
+              checked={includeNotGraded}
+              onChange={(checked) => {
+                setIncludeNotGraded(checked);
+                setPage(1);
+              }}
+              label="Prikaži neocenjena polaganja"
+              className="ms-3"
+            />
+            <CheckBox
+              checked={includePassed}
+              onChange={(checked) => {
+                setIncludePassed(checked);
+                setPage(1);
+              }}
+              label="Prikaži uspešna polaganja"
+              className="ms-3"
+            />
+            <CheckBox
+              checked={includeFailed}
+              onChange={(checked) => {
+                setIncludeFailed(checked);
+                setPage(1);
+              }}
+              label="Prikaži neuspešna polaganja"
+              className="ms-3"
+            />
+          </Container>
+          {viewModelState.examRegistrationsToGrade.length === 0 ? (
+            <Info>Nema polaganja za prikaz</Info>
+          ) : (
+            <>
+              <Table
+                width="90vw"
+                headers={[
+                  { title: "Broj indexa", value: "studentIndexNum" },
+                  { title: "Ime", value: "studentName" },
+                  { title: "Naziv Ispita", value: "courseName" },
+                  { title: "Prisustvovao", value: "hasAttended" },
+                  { title: "Ocena", value: "mark" },
+
+                  { title: "Akcije", value: "actions" },
+                ]}
+                items={viewModelState.examRegistrationsToGrade}
+                templates={{
+                  mark: (registration) => (
+                    <span>{registration.mark ?? "/"}</span>
+                  ),
+                  hasAttended: (registration) => (
+                    <span>{registration.hasAttended ? "Da" : "Ne"}</span>
+                  ),
+                  actions: (registration) => (
+                    <div className="d-flex flex-row gap-2">
+                      <Buton
+                        tooltip="Izmeni polaganje"
+                        icon="fa fa-edit"
+                        onClick={() =>
+                          viewModel.editExamRegistration(registration)
+                        }
+                      />
+                      <Buton
+                        tooltip="Obriši polaganje"
+                        icon="fa fa-trash"
+                        onClick={() =>
+                          viewModel.deleteExamRegistration(registration)
+                        }
+                        className="bg-danger"
+                      />
+                    </div>
+                  ),
+                }}
+              />
+              <Pagination
+                currentPage={page}
+                totalPages={viewModelState.totalPages}
+                onPageChange={(page) => handlePageChange(page)}
+              />
+            </>
+          )}
+        </>
       )}
-    </div>
+    </Container>
   );
 };
 

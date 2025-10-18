@@ -61,12 +61,16 @@ const ExamPeriodsPage = () => {
               <div className="d-flex flex-row gap-2">
                 {!user?.isAdmin && (
                   <Buton
+                    className="fs-6"
                     onClick={() => viewModel.showRemainingCourseExams(rok)}
                   >
                     moji
                   </Buton>
                 )}
-                <Buton onClick={() => viewModel.showAllCourseExams(rok)}>
+                <Buton
+                  className="fs-6"
+                  onClick={() => viewModel.showAllCourseExams(rok)}
+                >
                   svi
                 </Buton>
               </div>
@@ -78,7 +82,8 @@ const ExamPeriodsPage = () => {
         <>
           <Title>Svi Ispiti za {viewModelState.selectedExamName}</Title>
           <Table
-            width="50vw"
+            width="70vw"
+            colWidths={[3, 2, 1, 2, 1]}
             headers={[
               { title: "Predmet", value: "courseName" },
               { title: "Semestar", value: "courseSemester" },
@@ -94,7 +99,8 @@ const ExamPeriodsPage = () => {
         <>
           <Title>Moji Ispiti za {viewModelState.selectedExamName}</Title>
           <Table
-            width="50vw"
+            width="70vw"
+            colWidths={[3, 2, 1, 2, 1]}
             headers={[
               { title: "Predmet", value: "courseName" },
               { title: "Semestar", value: "courseSemester" },
