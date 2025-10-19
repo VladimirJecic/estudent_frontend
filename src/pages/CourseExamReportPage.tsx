@@ -11,7 +11,8 @@ import Container from "@/components/custom/Container";
 import Title from "@/components/custom/Title";
 import Info from "@/components/custom/Info";
 import Table from "@/components/custom/Table";
-import Buton from "@/components/custom/Buton";
+import Button from "@/components/custom/Button";
+import { clear } from "console";
 
 const CourseExamReportPage = () => {
   const alertService = useAlertService();
@@ -48,6 +49,12 @@ const CourseExamReportPage = () => {
     viewModel.searchCourseExams(pageCriteria);
   };
 
+  const clearFilters = (): void => {
+    setPage(1);
+    setSearchedCourseName("");
+    setDateFrom(null);
+    setDateTo(null);
+  };
   //#region OnMount
   useEffect(() => {
     handlePageChange(page);
@@ -62,7 +69,7 @@ const CourseExamReportPage = () => {
         <Info>učitava se...</Info>
       ) : (
         <>
-          <Container className="mb-4">
+          <Container width="70vw" className="flex-row mb-4">
             <TextInput
               onChange={(value: string) => {
                 debounced_handleChangeCourseName(value);
@@ -88,6 +95,10 @@ const CourseExamReportPage = () => {
               }}
               isClearable={true}
             />
+            <Button
+              icon="fa fa-solid fa-filter-circle-xmark"
+              onClick={() => clearFilters()}
+            />
           </Container>
           <Table
             width="70vw"
@@ -100,7 +111,7 @@ const CourseExamReportPage = () => {
             items={viewModelState.courseExams}
             templates={{
               actions: (ce) => (
-                <Buton
+                <Button
                   tooltip="Preuzmi izveštaj"
                   icon="fa fa-file-download"
                   onClick={() => viewModel.downloadCourseExamReport(ce)}

@@ -7,7 +7,7 @@ import type { LoginRequest } from "@/types/auth";
 import { User } from "@/types/items";
 
 import TextInput from "@/components/custom/TextInput";
-import Buton from "@/components/custom/Buton";
+import Button from "@/components/custom/Button";
 import Container from "@/components/custom/Container";
 import { useAlertService } from "@/context/AlertServiceContext";
 
@@ -83,7 +83,7 @@ const LoginPage = () => {
                 : undefined
             }
           />
-          <Buton
+          <Button
             type="submit"
             className="m-2"
             onClick={handleLogin}

@@ -1,6 +1,28 @@
 .react-datepicker__close-icon {
-  right: 20px !important; /* default is 0px */
+  position: relative;
+  z-index: 6;
+  right: 15px !important; /* default is 0px */
+  height: 2rem;
+  width: 2rem;
+}
+.react-datepicker__close-icon::after {
+  height: 24px !important;
+  width: 24px !important;
+  font-size: 20px !important;
 }
 .custom-datepicker {
-  min-width: 17vw;
+  padding-left: 5px;
+  min-width: 15vw;
+  min-height: 6.1vh;
+  position: relative; /* So z-index works */
+  z-index: 5; /* Sit above the background */
+}
+.react-datepicker-popper {
+  z-index: 9999 !important;
+  min-width: 15vw;
+}
+
+.react-datepicker__day-names,
+.react-datepicker__week {
+  flex-direction: row !important;
 }

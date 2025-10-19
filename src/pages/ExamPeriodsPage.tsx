@@ -7,7 +7,7 @@ import Container from "@/components/custom/Container";
 import Title from "@/components/custom/Title";
 import Info from "@/components/custom/Info";
 import Table from "@/components/custom/Table";
-import Buton from "@/components/custom/Buton";
+import Button from "@/components/custom/Button";
 const ExamPeriodsPage = () => {
   const alertService = useAlertService();
   const viewModel = useMemo(() => new ExamPeriodsViewModel(alertService), []);
@@ -60,19 +60,19 @@ const ExamPeriodsPage = () => {
             actions: (rok) => (
               <div className="d-flex flex-row gap-2">
                 {!user?.isAdmin && (
-                  <Buton
+                  <Button
                     className="fs-6"
                     onClick={() => viewModel.showRemainingCourseExams(rok)}
                   >
                     moji
-                  </Buton>
+                  </Button>
                 )}
-                <Buton
+                <Button
                   className="fs-6"
                   onClick={() => viewModel.showAllCourseExams(rok)}
                 >
                   svi
-                </Buton>
+                </Button>
               </div>
             ),
           }}

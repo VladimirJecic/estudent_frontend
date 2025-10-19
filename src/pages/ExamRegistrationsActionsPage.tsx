@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect } from "react";
 import ExamRegistrationsActionsViewModel from "@/viewModel/ExamRegistrationsActionsViewModel";
-import Buton from "@/components/custom/Buton";
+import Button from "@/components/custom/Button";
 import Table from "@/components/custom/Table";
 import Info from "@/components/custom/Info";
 import Title from "@/components/custom/Title";
@@ -45,7 +45,7 @@ const ExamRegistrationsActionsPage = () => {
           items={viewModelState.courseExamRegistrationCandidates}
           templates={{
             actions: (courseExamRegistrationCandidate) => (
-              <Buton
+              <Button
                 onClick={() =>
                   viewModel.saveExamRegistration(
                     courseExamRegistrationCandidate
@@ -88,7 +88,7 @@ const ExamRegistrationsActionsPage = () => {
           colWidths={[2, 1, 2, 1]}
           templates={{
             deleteExamRegistration: (examRegistration) => (
-              <Buton
+              <Button
                 onClick={() =>
                   viewModel.deleteExamRegistration(examRegistration)
                 }

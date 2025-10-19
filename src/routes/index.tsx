@@ -5,6 +5,7 @@ import ExamRegistrationsPassedPage from "@/pages/ExamRegistrationsPassedPage";
 import ExamRegistrationsActionsPage from "@/pages/ExamRegistrationsActionsPage";
 import CourseExamReportPage from "@/pages/CourseExamReportPage";
 import ExamRegistrationsGradingPage from "@/pages/ExamRegistrationsGradingPage";
+import path from "path";
 
 export const routes = [
   { path: "/", element: <ExamPeriodsPage /> },
@@ -12,5 +13,6 @@ export const routes = [
   { path: "/passed-exams", element: <ExamRegistrationsPassedPage /> },
   { path: "/exam-registration", element: <ExamRegistrationsActionsPage /> },
   { path: "/exam-report", element: <CourseExamReportPage /> },
+  { path: "/course-report", element: <CourseExamReportPage /> },
   { path: "/grade-entry", element: <ExamRegistrationsGradingPage /> },
 ];

@@ -7,7 +7,7 @@ import Container from "@/components/custom/Container";
 import Title from "@/components/custom/Title";
 import Info from "@/components/custom/Info";
 import Table from "@/components/custom/Table";
-import Buton from "@/components/custom/Buton";
+import Button from "@/components/custom/Button";
 import TextInput from "@/components/custom/TextInput";
 import CheckBox from "@/components/custom/CheckBox";
 import Pagination from "@/components/custom/Pagination";
@@ -125,14 +125,14 @@ const ExamRegistrationsGradingPage = () => {
                   ),
                   actions: (registration) => (
                     <div className="d-flex flex-row gap-2">
-                      <Buton
+                      <Button
                         tooltip="Izmeni polaganje"
                         icon="fa fa-edit"
                         onClick={() =>
                           viewModel.editExamRegistration(registration)
                         }
                       />
-                      <Buton
+                      <Button
                         tooltip="Obriši polaganje"
                         icon="fa fa-trash"
                         onClick={() =>

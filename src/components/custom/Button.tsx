@@ -1,5 +1,5 @@
 import React from "react";
-interface ButonProps {
+interface ButtonProps {
   children?: React.ReactNode;
   title?: string;
   onClick?: (e: React.FormEvent) => void;
@@ -12,7 +12,7 @@ interface ButonProps {
   icon?: string;
 }
 
-const Buton: React.FC<ButonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   type = "button",
@@ -49,4 +49,4 @@ const Buton: React.FC<ButonProps> = ({
   );
 };
 
-export default Buton;
+export default Button;
