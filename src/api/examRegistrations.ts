@@ -66,7 +66,7 @@ export class ExamRegistrationAPIService {
     const queryParams =
       this.createQueryStringForFetchExamRegistrationsToGrade(pageCriteria);
     const response = await apiService.GET<PageResponse<ExamRegistration>>(
-      `/exam-registrations${queryParams}`
+      `/admin/exam-registrations${queryParams}`
     );
     return response;
   }

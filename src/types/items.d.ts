@@ -3,12 +3,14 @@ export type UpdateExamRegistration = {
   hasAttended: boolean;
   comment: string;
 };
-export type ServerResponse = {
+interface ServerResponse {
   success: boolean;
   data?: any;
   message?: string;
   statusCode: number;
-};
+}
+export interface EStudentAPIError extends ServerResponse {}
+
 export type SubmitExamRegistration = {
   courseExamId: number;
   studentId?: number;
@@ -122,7 +124,11 @@ export interface AlertState {
 
 export interface AlertServiceContextType {
   alert: (message: string, isPermanent?: boolean) => void;
-  error: (message: string, isPermanent?: boolean, error?: Error) => void;
+  error: (
+    message: string,
+    isPermanent?: boolean = false,
+    error?: Error
+  ) => void;
   hide: () => void;
   alertState: AlertState;
   setAlertState: React.Dispatch<React.SetStateAction<AlertState>>;

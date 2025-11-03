@@ -31,10 +31,12 @@ export class CourseExamAPIService {
     return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
   }
 
-  static async getCourseExamsByCriteria(pageCriteria: CourseExamPageCriteria) {
+  static async getCourseExamsByCriteriaAsAdmin(
+    pageCriteria: CourseExamPageCriteria
+  ) {
     const queryParams = this.createQueryString(pageCriteria);
     const response = await apiService.GET<PageResponse<CourseExam>>(
-      `/course-exams${queryParams}`
+      `/admin/course-exams${queryParams}`
     );
     return response;
   }

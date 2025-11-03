@@ -46,9 +46,9 @@ const LoginPage = () => {
 
   return (
     <div className=" d-flex align-items-center justify-content-center bg-primary h-100 w-100">
-      <Container className="bg-white h-50 p-5 col-4">
+      <Container className="bg-white p-5 col-4" width="45vw" height="60vh">
         {/* <img src={logo} className="col-7" alt="User Icon" /> */}
-        <img src={logoFonSlova} className="col-5 mt-2" alt="User Icon" />
+        <img src={logoFonSlova} className="col-4 mt-2" alt="User Icon" />
         <h3 className="mb-4 d-flex justify-content-center col-12 primary-darken-1">
           E-Student
         </h3>

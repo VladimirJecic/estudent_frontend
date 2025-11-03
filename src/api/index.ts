@@ -1,7 +1,6 @@
 /* eslint-disable no-extend-native */
-import HTMLResponseError from "@/error/HTMLResponseError";
-import ServerError from "@/error/ServerError";
-import { ServerResponse } from "@/types/items";
+import { HttpError } from "@/types/errors";
+import { EStudentAPIError, ServerResponse } from "@/types/items";
 import { format } from "date-fns";
 
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
@@ -36,12 +35,8 @@ async function GET<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    if (error instanceof HTMLResponseError || error instanceof ServerError)
-      throw error;
-    else
-      throw new Error(`GET request failed: ${(error as Error).message}`, {
-        cause: error,
-      });
+    if (error instanceof HttpError) throw error;
+    else throw new Error(`GET request failed: ${(error as Error).message}`);
   }
 }
 
@@ -75,7 +70,8 @@ export async function POST<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    throw new Error(`${(error as Error).message}`);
+    if (error instanceof HttpError) throw error;
+    else throw new Error(`Post request failed: ${(error as Error).message}`);
   }
 }
 
@@ -108,7 +104,8 @@ export async function PUT<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    throw new Error(`PUT request failed: ${(error as Error).message}`);
+    if (error instanceof HttpError) throw error;
+    else throw new Error(`PUT request failed: ${(error as Error).message}`);
   }
 }
 export async function DELETE<T>(
@@ -130,15 +127,25 @@ export async function DELETE<T>(
     });
     return await handleResponse(response);
   } catch (error) {
-    throw new Error(`DELETE request failed: ${(error as Error).message}`);
+    if (error instanceof HttpError) throw error;
+    else throw new Error(`DELETE request failed: ${(error as Error).message}`);
   }
 }
 
 async function handleResponse(response: Response) {
-  const contentType = response.headers.get("Content-Type");
-  if (contentType && contentType.includes("text/html")) {
-    throw new HTMLResponseError(await response.text(), response.status);
+  if (!response.ok) {
+    let errorMessage = "";
+    try {
+      const errorBody: EStudentAPIError = await response.json();
+      errorMessage = errorBody.message ?? "Unknown error occurred on server";
+    } catch (error) {
+      console.error(error);
+      errorMessage = await response.text();
+    } finally {
+      throw new HttpError(errorMessage, response.status);
+    }
   }
+
   if (response.status === 204) {
     const serverResponse: ServerResponse = {
       success: true,
@@ -149,11 +156,7 @@ async function handleResponse(response: Response) {
   const serverResponse: ServerResponse =
     (await response.json()) as ServerResponse;
   serverResponse.statusCode = response.status;
-  if (serverResponse.success) {
-    return parseDates(serverResponse.data);
-  } else {
-    throw new ServerError(serverResponse);
-  }
+  return parseDates(serverResponse.data);
 }
 function parseLocalDateTime(str: string): Date | null {
   // Match ISO string like "2025-06-20T10:00" or "2025-06-20T10:00:00.123"

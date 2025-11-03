@@ -58,7 +58,7 @@ const ExamRegistrationsGradingPage = () => {
   //#endregion OnMount
   return (
     <Container>
-      <Title>Polaganja</Title>
+      <Title>Upis ocena</Title>
       {viewModelState.examRegistrationsToGrade.length === 0 &&
       !viewModelState.isExamRegistrationsLoading ? (
         <Info>Učitava se...</Info>

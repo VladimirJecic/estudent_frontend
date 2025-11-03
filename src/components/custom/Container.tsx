@@ -4,19 +4,21 @@ interface ContainerProps {
   children: React.ReactNode;
   className?: string;
   width?: string; // Dinamička širina, npr. "70vw"
+  height?: string; // Dinamička visina, npr. "20vh"
 }
 
 function Container({
   children,
   className = "",
   width = "100%",
+  height,
 }: ContainerProps) {
   const uniqueSuffix = React.useMemo(
     () => Math.random().toString(36).substring(2, 8),
     []
   );
 
-  const wrapperClass = `container-style-${uniqueSuffix}`;
+  const wrapperClass = `container-${uniqueSuffix}`;
 
   React.useEffect(() => {
     const styleId = `container-style-${uniqueSuffix}`;
@@ -26,12 +28,17 @@ function Container({
       styleTag.id = styleId;
       document.head.appendChild(styleTag);
     }
-    styleTag.innerHTML = `.${wrapperClass} { width: ${width} !important; }`;
-  }, [width, uniqueSuffix, wrapperClass]);
+    let style = `.${wrapperClass} { width: ${width} !important;`;
+    if (height) {
+      style += ` height: ${height} !important;`;
+    }
+    style += " }";
+    styleTag.innerHTML = style;
+  }, [width, height, uniqueSuffix, wrapperClass]);
 
   return (
     <div
-      className={`d-flex justify-content-center align-items-center ${className} ${wrapperClass}`.trim()}
+      className={`${wrapperClass} d-flex justify-content-center align-items-center ${className}`.trim()}
     >
       {children}
     </div>

@@ -16,7 +16,7 @@ export default class CourseExamReportViewModel {
 
   constructor(alertService: AlertServiceContextType) {
     this.#courseExams = [];
-    this.#pageSize = 10;
+    this.#pageSize = 4;
     this.#totalPages = 0;
     this.#isLoadingCourseExams = true;
     this.#alertService = alertService;
@@ -35,9 +35,10 @@ export default class CourseExamReportViewModel {
   searchCourseExams = async (pageCriteria: CourseExamPageCriteria) => {
     this.#isLoadingCourseExams = true;
     try {
-      const pageResponse = await CourseExamAPIService.getCourseExamsByCriteria(
-        pageCriteria
-      );
+      const pageResponse =
+        await CourseExamAPIService.getCourseExamsByCriteriaAsAdmin(
+          pageCriteria
+        );
       this.#courseExams = toCourseExamPresentations(pageResponse.content);
       this.#totalPages = pageResponse.totalPages;
     } catch (error) {
