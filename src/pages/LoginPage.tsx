@@ -60,7 +60,7 @@ const LoginPage = () => {
           <TextInput
             className="m-2"
             prependIcon="fa-user"
-            value={indexNum}
+            defaultValue={indexNum}
             onChange={setIndexNum}
             placeholder="Broj indexa u formatu 20xx/xxxx"
             isClearable
@@ -73,7 +73,7 @@ const LoginPage = () => {
           <TextInput
             type="password"
             className="m-2"
-            value={password}
+            defaultValue={password}
             prependIcon="fa-lock"
             onChange={setPassword}
             placeholder="Lozinka"

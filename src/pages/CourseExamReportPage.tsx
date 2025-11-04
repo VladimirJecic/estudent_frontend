@@ -34,7 +34,7 @@ const CourseExamReportPage = () => {
 
   const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
-      if (value.length > 2) setSearchedCourseName(value);
+      if (value.length >= 2) setSearchedCourseName(value);
     }, 500),
     []
   );
@@ -58,8 +58,8 @@ const CourseExamReportPage = () => {
     setDateTo(null);
   };
 
-  // Computed variable to manage clear filters button visibility
-  const isRemoveFiltersVisible =
+  // Computed function to manage clear filters button visibility (reactive)
+  const isRemoveFiltersVisible = () =>
     dateFrom !== null ||
     dateTo !== null ||
     searchedCourseName.trim().length > 0;
@@ -85,12 +85,8 @@ const CourseExamReportPage = () => {
             <div className="col-5">
               <TextInput
                 ref={searchInputRef}
-                onChange={(value: string) => {
-                  debounced_handleChangeCourseName(value);
-                }}
-                onClear={() => {
-                  setSearchedCourseName("");
-                }}
+                onChange={debounced_handleChangeCourseName}
+                onClear={setSearchedCourseName}
                 placeholder="Naziv ispita"
                 isClearable
               />
@@ -124,7 +120,7 @@ const CourseExamReportPage = () => {
                 iconSize="1.4rem"
                 tooltip="Očisti filtere"
                 onClick={() => clearFilters()}
-                visible={isRemoveFiltersVisible}
+                visible={isRemoveFiltersVisible()}
               />
             </div>
           </Container>

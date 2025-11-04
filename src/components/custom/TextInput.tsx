@@ -5,7 +5,6 @@ interface TextInputProps {
   type?: string;
   className?: string;
   inputClassName?: string;
-  value?: string;
   onChange: (value: string) => void;
   onClear?: (value: string) => void;
   placeholder?: string;
@@ -13,6 +12,7 @@ interface TextInputProps {
   errorMessage?: string;
   hideDetails?: boolean | "auto";
   prependIcon?: string;
+  defaultValue?: string;
 }
 
 export interface TextInputHandle {
@@ -25,7 +25,6 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
       type = "text",
       className = "",
       inputClassName = "",
-      value = undefined,
       onChange,
       onClear,
       placeholder = "",
@@ -33,25 +32,28 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
       errorMessage,
       hideDetails = "auto",
       prependIcon,
+      defaultValue = "",
     },
     ref
   ) => {
+    const [inputValue, setInputValue] = useState(defaultValue);
     const [hasText, setHasText] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const shouldShowDetails =
       hideDetails === false || (hideDetails === "auto" && !!errorMessage);
 
+    // Single clear function
+    const clear = () => {
+      setInputValue("");
+      setHasText(false);
+      if (onClear) {
+        onClear("");
+      } else {
+        onChange("");
+      }
+    };
     // Expose clear method via ref
-    useImperativeHandle(ref, () => ({
-      clear: () => {
-        if (onClear) {
-          onClear("");
-        } else {
-          onChange("");
-        }
-        setHasText(false);
-      },
-    }));
+    useImperativeHandle(ref, () => ({ clear }));
     return (
       <div
         className={`custom-text-input${hasText ? " input-has-value" : ""}${
@@ -75,15 +77,17 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
         )}
         <input
           name="textInput"
-          value={value}
+          value={inputValue}
           className={inputClassName}
           type={type}
           aria-label={placeholder || "Text input"}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onChange={(e) => {
-            setHasText(e.target.value.length > 0);
-            onChange(e.target.value);
+            const newValue = e.target.value;
+            setInputValue(newValue);
+            setHasText(newValue.length > 0);
+            onChange(newValue);
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -91,20 +95,16 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
             }
           }}
         />
-        {isClearable && (
-          <button
-            name="clearButton"
-            type="button"
-            className={`clear-btn ${hasText ? "hasText" : "hasNoText"}`}
-            onClick={() => {
-              clear();
-            }}
-            title="Clear"
-            tabIndex={hasText ? 0 : -1}
-          >
-            <span className="pt-1">×</span>
-          </button>
-        )}
+        <button
+          name="clearButton"
+          type="button"
+          className={`clear-btn ${hasText ? "hasText" : "hasNoText"}`}
+          onClick={clear}
+          title="Clear"
+          tabIndex={hasText ? 0 : -1}
+        >
+          <span className="pt-1">×</span>
+        </button>
         <div
           className={shouldShowDetails ? "details" : "details details--hidden"}
         >
