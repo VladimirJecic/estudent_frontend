@@ -26,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   title,
   icon,
   iconSize = "1.2rem",
-  buttonSize = "2em",
+  buttonSize = "100%",
 }) => {
   // If only icon and no children/title, use icon-only style
   const isIconOnly = !!icon && !children && !title;

@@ -85,7 +85,7 @@ const LoginPage = () => {
           />
           <Button
             type="submit"
-            className="m-2"
+            className="m-2 w-100"
             onClick={handleLogin}
             title="Uloguj se"
           />
