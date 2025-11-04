@@ -8,6 +8,7 @@ export function toCourseExamPresentation(
   return {
     ...exam,
     courseName: exam.course.name,
+    examPeriodName: exam.examPeriod.name,
     courseSemester: exam.course.semester,
     courseEspb: exam.course.espb,
     examDateTimeFormatted: format(exam.examDateTime, DateFormat.DATE_TIME),

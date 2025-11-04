@@ -28,8 +28,8 @@
   background-color: transparent;
 }
 .page-link:hover {
-  background-color: transparent;
   border: none;
+  background-color: transparent;
   color: var(--primary-darken-2);
 }
 
@@ -49,4 +49,8 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+li.page:hover {
+  background-color: var(--primary-lighten-2);
 }

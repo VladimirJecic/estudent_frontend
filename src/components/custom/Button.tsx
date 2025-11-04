@@ -10,6 +10,8 @@ interface ButtonProps {
   margin?: string;
   padding?: string;
   icon?: string;
+  iconSize?: string; // npr. "1.2rem"
+  buttonSize?: string; // npr. "2em"
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -23,6 +25,8 @@ const Button: React.FC<ButtonProps> = ({
   padding = "p-2",
   title,
   icon,
+  iconSize = "1.2rem",
+  buttonSize = "2em",
 }) => {
   // If only icon and no children/title, use icon-only style
   const isIconOnly = !!icon && !children && !title;
@@ -42,8 +46,11 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       title={tooltip}
+      style={{ width: buttonSize, height: buttonSize }}
     >
-      {icon && <span className={`${icon} buton-icon`}></span>}
+      {icon && (
+        <span className={`${icon}`} style={{ fontSize: iconSize }}></span>
+      )}
       {!isIconOnly && (title ? title : children)}
     </button>
   );

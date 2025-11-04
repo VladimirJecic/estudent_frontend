@@ -3,6 +3,7 @@ import React, { useState } from "react";
 interface TextInputProps {
   type?: string;
   className?: string;
+  inputClassName?: string;
   value?: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -15,6 +16,7 @@ interface TextInputProps {
 const TextInput: React.FC<TextInputProps> = ({
   type = "text",
   className = "",
+  inputClassName = "",
   value = undefined,
   onChange,
   placeholder = "",
@@ -52,7 +54,7 @@ const TextInput: React.FC<TextInputProps> = ({
       <input
         name="textInput"
         value={value}
-        className={className}
+        className={inputClassName}
         type={type}
         aria-label={placeholder || "Text input"}
         onFocus={() => setIsFocused(true)}

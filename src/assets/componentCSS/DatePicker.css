@@ -12,8 +12,8 @@
 }
 .custom-datepicker {
   padding-left: 5px;
-  min-width: 15vw;
-  min-height: 6.1vh;
+  width: 100%;
+  min-height: 7.7vh;
   position: relative; /* So z-index works */
   z-index: 5; /* Sit above the background */
 }

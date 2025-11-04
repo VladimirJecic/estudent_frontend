@@ -69,51 +69,63 @@ const CourseExamReportPage = () => {
         <Info>učitava se...</Info>
       ) : (
         <>
-          <Container width="70vw" className="flex-row mb-4">
+          <Container width="75vw" className="flex-row mb-4 gap-3">
             <TextInput
+              className="col"
               onChange={(value: string) => {
                 debounced_handleChangeCourseName(value);
               }}
               placeholder="Naziv ispita"
               isClearable
             />
-            <DatePicker
-              className="custom-datepicker mx-3"
-              placeholderText="Datum od"
-              selected={dateFrom}
-              dateFormat="dd/MM/yyyy"
-              onChange={(date: Date | null) => setDateFrom(date)}
-              isClearable={true}
-            />
-            <DatePicker
-              className="custom-datepicker mx-3"
-              placeholderText="Datum do"
-              selected={dateTo}
-              dateFormat="dd/MM/yyyy"
-              onChange={(date: Date | null) => {
-                setDateTo(date);
-              }}
-              isClearable={true}
-            />
-            <Button
-              icon="fa fa-solid fa-filter-circle-xmark"
-              onClick={() => clearFilters()}
-            />
+            <div className="col">
+              <DatePicker
+                className="custom-datepicker w-100"
+                placeholderText="Datum od"
+                selected={dateFrom}
+                dateFormat="dd/MM/yyyy"
+                onChange={(date: Date | null) => setDateFrom(date)}
+                isClearable={true}
+              />
+            </div>
+            <div className="col">
+              <DatePicker
+                className="custom-datepicker w-100"
+                placeholderText="Datum do"
+                selected={dateTo}
+                dateFormat="dd/MM/yyyy"
+                onChange={(date: Date | null) => {
+                  setDateTo(date);
+                }}
+                isClearable={true}
+              />
+            </div>
+            <div className="col-auto">
+              <Button
+                icon="fa-solid fa-filter-circle-xmark"
+                buttonSize="3rem"
+                iconSize="1.4rem"
+                tooltip="Očisti filtere"
+                onClick={() => clearFilters()}
+              />
+            </div>
           </Container>
           <Table
-            width="70vw"
+            width="75vw"
             headers={[
-              { title: "Naziv ispita", value: "course.name" },
-              { title: "Ispitni rok", value: "examPeriod.name" },
+              { title: "Naziv ispita", value: "courseName" },
+              { title: "Ispitni rok", value: "examPeriodName" },
               { title: "Datum polaganja", value: "examDateTimeFormatted" },
               { title: "Izveštaj", value: "actions" },
             ]}
+            colWidths={[3, 3, 2, 1]}
             items={viewModelState.courseExams}
             templates={{
               actions: (ce) => (
                 <Button
                   tooltip="Preuzmi izveštaj"
                   icon="fa fa-file-download"
+                  iconSize="1.3em"
                   onClick={() => viewModel.downloadCourseExamReport(ce)}
                 />
               ),

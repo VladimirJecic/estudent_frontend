@@ -44,6 +44,7 @@ export type CourseExam = {
 };
 export interface CourseExamPresentation extends CourseExam {
   courseName: string;
+  examPeriodName: string;
   courseSemester: string;
   courseEspb: number;
   examDateTimeFormatted: string;

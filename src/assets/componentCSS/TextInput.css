@@ -1,3 +1,9 @@
+/* Force autofill background to white */
+input:-webkit-autofill {
+  background-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  color: inherit !important;
+}
 .custom-text-input {
   position: relative;
 }
@@ -10,7 +16,7 @@
   color: var(--secondary);
   font-size: 1rem;
   font-weight: 500;
-  background-color: var(--primary-lighten-3);
+  background-color: white;
   padding: 0 0.25rem;
   pointer-events: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -21,7 +27,7 @@
   top: 0.4rem;
   left: 1.1rem;
   font-size: 0.85rem;
-  background: var(--primary-lighten-3);
+  background-color: white;
   padding: 0 0.25rem;
 }
 .custom-text-input input {
@@ -66,14 +72,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 
 .custom-text-input input {
   width: 100%;
-  background-color: var(--primary-lighten-3);
   border: none;
-  color: #0d0d0d;
   padding: 1rem 2rem;
   text-align: left;
   text-decoration: none;
