@@ -19,6 +19,10 @@ function Container({
   );
 
   const wrapperClass = `container-${uniqueSuffix}`;
+  const hasJustifyContent = className.includes("justify-content");
+  const defaultJustifyContentCenter = hasJustifyContent
+    ? ""
+    : "justify-content-center";
 
   React.useEffect(() => {
     const styleId = `container-style-${uniqueSuffix}`;
@@ -38,7 +42,8 @@ function Container({
 
   return (
     <div
-      className={`${wrapperClass} d-flex justify-content-center align-items-center ${className}`.trim()}
+      className={`${wrapperClass} d-flex ${defaultJustifyContentCenter} align-items-center ${className}`.trim()}
+      style={{ width: width }}
     >
       {children}
     </div>

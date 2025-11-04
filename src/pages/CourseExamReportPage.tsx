@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useMemo, useState, useEffect, useCallback } from "react";
+import { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import CourseExamReportViewModel from "@/viewModel/CourseExamReportViewModel";
 import TextInput from "@/components/custom/TextInput";
+import type { TextInputHandle } from "@/components/custom/TextInput";
 import Pagination from "@/components/custom/Pagination";
 import DatePicker from "react-datepicker";
 import debounce from "lodash/debounce";
@@ -29,6 +30,7 @@ const CourseExamReportPage = () => {
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
   const [page, setPage] = useState(1);
+  const searchInputRef = useRef<TextInputHandle>(null);
 
   const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
@@ -51,10 +53,17 @@ const CourseExamReportPage = () => {
 
   const clearFilters = (): void => {
     setPage(1);
-    setSearchedCourseName("");
+    searchInputRef.current?.clear();
     setDateFrom(null);
     setDateTo(null);
   };
+
+  // Computed variable to manage clear filters button visibility
+  const isRemoveFiltersVisible =
+    dateFrom !== null ||
+    dateTo !== null ||
+    searchedCourseName.trim().length > 0;
+
   //#region OnMount
   useEffect(() => {
     handlePageChange(page);
@@ -69,16 +78,24 @@ const CourseExamReportPage = () => {
         <Info>učitava se...</Info>
       ) : (
         <>
-          <Container width="75vw" className="flex-row mb-4 gap-3">
-            <TextInput
-              className="col"
-              onChange={(value: string) => {
-                debounced_handleChangeCourseName(value);
-              }}
-              placeholder="Naziv ispita"
-              isClearable
-            />
-            <div className="col">
+          <Container
+            width="75vw"
+            className="flex-row mb-4 gap-3 justify-content-start"
+          >
+            <div className="col-5">
+              <TextInput
+                ref={searchInputRef}
+                onChange={(value: string) => {
+                  debounced_handleChangeCourseName(value);
+                }}
+                onClear={() => {
+                  setSearchedCourseName("");
+                }}
+                placeholder="Naziv ispita"
+                isClearable
+              />
+            </div>
+            <div className="col-2">
               <DatePicker
                 className="custom-datepicker w-100"
                 placeholderText="Datum od"
@@ -88,7 +105,7 @@ const CourseExamReportPage = () => {
                 isClearable={true}
               />
             </div>
-            <div className="col">
+            <div className="col-2">
               <DatePicker
                 className="custom-datepicker w-100"
                 placeholderText="Datum do"
@@ -100,13 +117,14 @@ const CourseExamReportPage = () => {
                 isClearable={true}
               />
             </div>
-            <div className="col-auto">
+            <div className="col-2 d-flex align-items-end">
               <Button
                 icon="fa-solid fa-filter-circle-xmark"
                 buttonSize="3rem"
                 iconSize="1.4rem"
                 tooltip="Očisti filtere"
                 onClick={() => clearFilters()}
+                visible={isRemoveFiltersVisible}
               />
             </div>
           </Container>
@@ -125,7 +143,7 @@ const CourseExamReportPage = () => {
                 <Button
                   tooltip="Preuzmi izveštaj"
                   icon="fa fa-file-download"
-                  iconSize="1.3em"
+                  iconSize="1.2rem"
                   onClick={() => viewModel.downloadCourseExamReport(ce)}
                 />
               ),

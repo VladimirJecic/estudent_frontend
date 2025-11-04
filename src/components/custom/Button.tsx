@@ -12,6 +12,7 @@ interface ButtonProps {
   icon?: string;
   iconSize?: string; // npr. "1.2rem"
   buttonSize?: string; // npr. "2em"
+  visible?: boolean; // manages visibility
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -27,7 +28,11 @@ const Button: React.FC<ButtonProps> = ({
   icon,
   iconSize = "1.2rem",
   buttonSize = "100%",
+  visible = true,
 }) => {
+  // If not visible, don't render anything
+  if (!visible) return null;
+
   // If only icon and no children/title, use icon-only style
   const isIconOnly = !!icon && !children && !title;
   const btnClass = [
@@ -39,6 +44,8 @@ const Button: React.FC<ButtonProps> = ({
   ]
     .filter(Boolean)
     .join(" ");
+
+  buttonSize = isIconOnly && buttonSize === "100%" ? "2.2rem" : buttonSize;
   return (
     <button
       type={type}
