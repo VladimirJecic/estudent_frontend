@@ -7,7 +7,8 @@ const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const isoDateTimeLocalRegex =
   /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):\d{2}\.\d+Z$/;
 
-const BASE_URL = import.meta.env.VITE_ESTUDENT_API_BASE_URL;
+const BASE_URL =
+  import.meta.env.VITE_ESTUDENT_API_BASE_URL?.replace(/\/+$/, "") || "";
 
 function getAuthToken(path: string): string | undefined {
   return sessionStorage?.user

@@ -14,6 +14,7 @@ import Info from "@/components/custom/Info";
 import Table from "@/components/custom/Table";
 import Button from "@/components/custom/Button";
 import { clear } from "console";
+import { set } from "lodash";
 
 const CourseExamReportPage = () => {
   const alertService = useAlertService();
@@ -34,7 +35,10 @@ const CourseExamReportPage = () => {
 
   const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
-      if (value.length >= 2) setSearchedCourseName(value);
+      if (value.length >= 2) {
+        setSearchedCourseName(value);
+        setPage(1);
+      }
     }, 500),
     []
   );
