@@ -25,7 +25,6 @@
   border-bottom: 1px solid #eee;
   background: #fff;
   align-items: center;
-  justify-content: space-between;
   padding: 1rem;
   border: unset !important;
 }

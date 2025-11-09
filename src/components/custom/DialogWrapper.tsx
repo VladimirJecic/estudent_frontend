@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ReactDOM from "react-dom";
 import "@/assets/componentCSS/DialogWrapper.css";
 import Button from "./Button";
 
@@ -29,7 +30,7 @@ function DialogWrapper({
     };
   }, [isVisible]);
 
-  return (
+  const modalContent = (
     <div className="modal d-flex">
       <div className="modal-backdrop show"></div>
       <div
@@ -42,7 +43,7 @@ function DialogWrapper({
         }}
       >
         <div className="modal-content w-100">
-          <div className="modal-header flex-row">
+          <div className="modal-header flex-row pe-4">
             <h5 className="modal-title">{title}</h5>
             <Button
               icon="fa fa-times"
@@ -56,6 +57,8 @@ function DialogWrapper({
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.body);
 }
 
 export default DialogWrapper;
