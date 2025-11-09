@@ -16,7 +16,7 @@ export const AppLayout = () => {
 
   return (
     <>
-      <div className="wrapper align-items-stretch w-100">
+      <div className="wrapper align-items-stretch w-100 h-100">
         {/* Sidebar */}
         <NavigationDrawer
           expandOnHover
@@ -73,7 +73,7 @@ export const AppLayout = () => {
         </NavigationDrawer>
         <div
           id="content"
-          className={`content p-4 p-md-5 ${sideBarExpanded ? "expanded" : ""}`}
+          className={`content p-4 p-md-4 ${sideBarExpanded ? "expanded" : ""}`}
         >
           <div className="d-flex flex-row justify-content-center align-items-center mb-5 header-row">
             <div className="headerDiv flex-grow-1 text-center">
