@@ -1,4 +1,5 @@
-export type UpdateExamRegistration = {
+export type UpdateExamRegistrationSubmitRequest = {
+  examRegistrationId: number;
   mark: number;
   hasAttended: boolean;
   comment: string;

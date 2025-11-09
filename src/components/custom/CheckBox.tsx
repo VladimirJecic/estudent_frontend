@@ -20,7 +20,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
   disabled = false,
 }) => {
   return (
-    <div className={`d-flex align-items-center ${className}`}>
+    <div className={`d-flex  flex-row align-items-center ${className}`}>
       <input
         type="checkbox"
         name={name}
@@ -28,7 +28,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
         onChange={(e) => onChange(e.target.checked)}
         aria-label={ariaLabel || label}
         disabled={disabled}
-        className="form-check-input"
+        className="form-check-input checkbox-lg"
       />
       {label && <label className="ms-2 mb-0 form-check-label">{label}</label>}
     </div>

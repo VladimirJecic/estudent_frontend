@@ -6,7 +6,7 @@ import {
   NavigationDrawer,
   List,
   ListItem,
-} from "@/components/NavigationDrawer";
+} from "@/components/custom/NavigationDrawer";
 import { useUser } from "@/context/UserContext";
 
 export const AppLayout = () => {
@@ -16,14 +16,14 @@ export const AppLayout = () => {
 
   return (
     <>
-      <div className="wrapper d-flex align-items-stretch w-100">
+      <div className="wrapper align-items-stretch w-100">
         {/* Sidebar */}
         <NavigationDrawer
           expandOnHover
           expanded={sideBarExpanded}
           onExpandedChange={setSideBarExpanded}
         >
-          <div className="d-flex flex-column mt-3 mb-2 align-items-center">
+          <div className="d-flex column mt-3 mb-2 align-items-center">
             <img
               src={logoFon}
               alt="Logo"

@@ -11,11 +11,16 @@
   font-size: 20px !important;
 }
 .custom-datepicker {
-  padding-left: 5px;
+  padding: 1rem 2rem;
   width: 100%;
-  min-height: 7.7vh;
+
   position: relative; /* So z-index works */
   z-index: 5; /* Sit above the background */
+  border: 2px solid var(--primary-lighten-2);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  box-sizing: border-box;
+  margin: 5px 0;
 }
 .react-datepicker-popper {
   z-index: 9999 !important;

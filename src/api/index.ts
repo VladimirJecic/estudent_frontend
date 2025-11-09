@@ -1,5 +1,5 @@
 /* eslint-disable no-extend-native */
-import { HttpError } from "@/types/errors";
+import { EStudentError } from "@/types/errors";
 import { EStudentAPIError, ServerResponse } from "@/types/items";
 import { format } from "date-fns";
 
@@ -33,10 +33,10 @@ async function GET<T>(
       method: "GET",
       headers: finalHeaders,
     });
-
-    return await handleResponse(response);
+    if (headers["responseType"] === "blob") return response as T;
+    else return await handleResponse(response);
   } catch (error) {
-    if (error instanceof HttpError) throw error;
+    if (error instanceof EStudentError) throw error;
     else throw new Error(`GET request failed: ${(error as Error).message}`);
   }
 }
@@ -71,7 +71,7 @@ export async function POST<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    if (error instanceof HttpError) throw error;
+    if (error instanceof EStudentError) throw error;
     else throw new Error(`Post request failed: ${(error as Error).message}`);
   }
 }
@@ -105,7 +105,7 @@ export async function PUT<T>(
 
     return await handleResponse(response);
   } catch (error) {
-    if (error instanceof HttpError) throw error;
+    if (error instanceof EStudentError) throw error;
     else throw new Error(`PUT request failed: ${(error as Error).message}`);
   }
 }
@@ -128,7 +128,7 @@ export async function DELETE<T>(
     });
     return await handleResponse(response);
   } catch (error) {
-    if (error instanceof HttpError) throw error;
+    if (error instanceof EStudentError) throw error;
     else throw new Error(`DELETE request failed: ${(error as Error).message}`);
   }
 }
@@ -143,7 +143,7 @@ async function handleResponse(response: Response) {
       console.error(error);
       errorMessage = await response.text();
     } finally {
-      throw new HttpError(errorMessage, response.status);
+      throw new EStudentError(errorMessage, response.status);
     }
   }
 

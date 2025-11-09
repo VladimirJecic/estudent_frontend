@@ -13,8 +13,6 @@ import Title from "@/components/custom/Title";
 import Info from "@/components/custom/Info";
 import Table from "@/components/custom/Table";
 import Button from "@/components/custom/Button";
-import { clear } from "console";
-import { set } from "lodash";
 
 const CourseExamReportPage = () => {
   const alertService = useAlertService();
@@ -75,59 +73,60 @@ const CourseExamReportPage = () => {
   //#endregion OnMount
 
   return (
-    <Container>
+    <Container width="75vw" className="align-self-center">
       <Title>Izveštaj polaganja</Title>
-      {viewModelState.courseExams.length === 0 &&
-      viewModelState.isLoadingCourseExams === true ? (
+      <Container
+        width="75vw"
+        className="flex-row mb-4 gap-3 justify-content-start"
+      >
+        <div className="col-5">
+          <TextInput
+            ref={searchInputRef}
+            onChange={debounced_handleChangeCourseName}
+            onClear={setSearchedCourseName}
+            placeholder="Naziv ispita"
+            isClearable
+          />
+        </div>
+        <div className="col-2">
+          <DatePicker
+            className="custom-datepicker w-100"
+            placeholderText="Datum od"
+            selected={dateFrom}
+            dateFormat="dd/MM/yyyy"
+            onChange={(date: Date | null) => setDateFrom(date)}
+            isClearable={true}
+          />
+        </div>
+        <div className="col-2">
+          <DatePicker
+            className="custom-datepicker w-100"
+            placeholderText="Datum do"
+            selected={dateTo}
+            dateFormat="dd/MM/yyyy"
+            onChange={(date: Date | null) => {
+              setDateTo(date);
+            }}
+            isClearable={true}
+          />
+        </div>
+        <div className="col-2 d-flex align-items-end">
+          <Button
+            icon="fa-solid fa-filter-circle-xmark"
+            buttonSize="3rem"
+            iconSize="1.4rem"
+            tooltip="Očisti filtere"
+            onClick={() => clearFilters()}
+            visible={isRemoveFiltersVisible()}
+          />
+        </div>
+      </Container>
+      {viewModelState.isLoadingCourseExams ? (
         <Info>učitava se...</Info>
+      ) : viewModelState.courseExams.length === 0 ? (
+        <Info>Nema polaganja za prikaz</Info>
       ) : (
         <>
-          <Container
-            width="75vw"
-            className="flex-row mb-4 gap-3 justify-content-start"
-          >
-            <div className="col-5">
-              <TextInput
-                ref={searchInputRef}
-                onChange={debounced_handleChangeCourseName}
-                onClear={setSearchedCourseName}
-                placeholder="Naziv ispita"
-                isClearable
-              />
-            </div>
-            <div className="col-2">
-              <DatePicker
-                className="custom-datepicker w-100"
-                placeholderText="Datum od"
-                selected={dateFrom}
-                dateFormat="dd/MM/yyyy"
-                onChange={(date: Date | null) => setDateFrom(date)}
-                isClearable={true}
-              />
-            </div>
-            <div className="col-2">
-              <DatePicker
-                className="custom-datepicker w-100"
-                placeholderText="Datum do"
-                selected={dateTo}
-                dateFormat="dd/MM/yyyy"
-                onChange={(date: Date | null) => {
-                  setDateTo(date);
-                }}
-                isClearable={true}
-              />
-            </div>
-            <div className="col-2 d-flex align-items-end">
-              <Button
-                icon="fa-solid fa-filter-circle-xmark"
-                buttonSize="3rem"
-                iconSize="1.4rem"
-                tooltip="Očisti filtere"
-                onClick={() => clearFilters()}
-                visible={isRemoveFiltersVisible()}
-              />
-            </div>
-          </Container>
           <Table
             width="75vw"
             headers={[
@@ -144,6 +143,7 @@ const CourseExamReportPage = () => {
                   tooltip="Preuzmi izveštaj"
                   icon="fa fa-file-download"
                   iconSize="1.2rem"
+                  buttonSize="2.3rem"
                   onClick={() => viewModel.downloadCourseExamReport(ce)}
                 />
               ),

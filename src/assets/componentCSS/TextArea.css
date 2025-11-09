@@ -1,0 +1,39 @@
+/* TextArea styles based on TextInput.css, only input-specific selectors changed to textarea */
+
+.custom-text-input textarea {
+  width: 100%;
+  border: none;
+  padding: 1rem 2rem 1rem 1rem;
+  text-align: left;
+  text-decoration: none;
+  margin: 5px 0;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  border: 2px solid var(--primary-lighten-2);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  box-sizing: border-box;
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.custom-text-input textarea.padding-left-for-icon {
+  padding-left: 2.6rem !important;
+}
+
+.custom-text-input textarea:focus {
+  background-color: white;
+  border-bottom: 2px solid var(--primary);
+}
+
+.custom-text-input textarea::placeholder {
+  color: var(--secondary);
+}
+
+.custom-text-input textarea.bg-light.secondary {
+  background-color: var(--primary-lighten-3) !important;
+  color: var(--secondary) !important;
+}

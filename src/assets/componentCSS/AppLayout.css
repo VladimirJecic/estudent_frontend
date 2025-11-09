@@ -1,6 +1,6 @@
 /* AppLayout specific styles */
 
-div.wrapper.d-flex.align-items-stretch {
+div.wrapper {
   overflow-y: hidden;
   height: 100vh;
 }

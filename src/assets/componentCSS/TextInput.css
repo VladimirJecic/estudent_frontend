@@ -1,11 +1,9 @@
+/* Removed custom readonly-input color, now using .secondary class */
 /* Force autofill background to white */
 input:-webkit-autofill {
   background-color: white !important;
   -webkit-box-shadow: 0 0 0px 1000px white inset !important;
   color: inherit !important;
-}
-.custom-text-input {
-  position: relative;
 }
 
 .custom-text-input .floating-label {
@@ -29,9 +27,6 @@ input:-webkit-autofill {
   font-size: 0.85rem;
   background-color: white;
   padding: 0 0.25rem;
-}
-.custom-text-input input {
-  padding-top: 1.5rem;
 }
 .clear-btn.hasText span {
   display: flex;
@@ -67,7 +62,7 @@ input:-webkit-autofill {
   border: none;
   padding: 0;
 }
-/* Make the input container flex column, so input and details stack vertically */
+
 .custom-text-input {
   position: relative;
   display: flex;
@@ -77,35 +72,35 @@ input:-webkit-autofill {
 .custom-text-input input {
   width: 100%;
   border: none;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 1rem 1rem;
+
   text-align: left;
   text-decoration: none;
   margin: 5px 0;
-  border: 2px solid var(--primary-lighten-2);
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
+  border: 2px solid var(--primary-lighten-2);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   box-sizing: border-box;
 }
-
+.custom-text-input input.padding-left-for-icon {
+  padding-left: 2.6rem !important;
+}
 .custom-text-input input:focus {
-  background-color: #fff;
+  background-color: white;
   border-bottom: 2px solid var(--primary);
 }
 .custom-text-input .floating-label:focus {
-  background-color: #fff;
+  background-color: white;
 }
 .custom-text-input input::placeholder {
   color: var(--primary-lighten-1);
 }
 
-.custom-text-input .details {
-  min-height: 1.5rem;
-}
 .custom-text-input .details.details--hidden {
   min-height: 0;
   height: 0;
@@ -130,7 +125,7 @@ input:-webkit-autofill {
 }
 
 .custom-text-input input::placeholder {
-  color: #cccccc;
+  color: var(--secondary);
 }
 
 .custom-text-input .clear-btn.hasText:hover {
@@ -146,10 +141,4 @@ input:-webkit-autofill {
   font-size: 1.2rem;
   z-index: 2;
   pointer-events: none;
-}
-.custom-text-input {
-  position: relative;
-}
-.custom-text-input input {
-  padding-left: 2.6rem;
 }

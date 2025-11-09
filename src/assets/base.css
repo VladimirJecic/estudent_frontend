@@ -11,6 +11,7 @@
 @import "./componentCSS/Card.css";
 @import "./componentCSS/AppLayout.css";
 @import "./componentCSS/Table.css";
+@import "./componentCSS/CheckBox.css";
 
 /* Global text styling */
 .h4,
@@ -152,4 +153,12 @@ body {
 }
 .hidden {
   display: none !important;
+}
+.row {
+  display: flex !important;
+  flex-direction: row !important;
+}
+.column {
+  display: flex !important;
+  flex-direction: column !important;
 }

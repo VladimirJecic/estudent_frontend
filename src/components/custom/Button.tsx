@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   title,
   icon,
   iconSize = "1.2rem",
-  buttonSize = "100%",
+  buttonSize,
   visible = true,
 }) => {
   // If not visible, don't render anything
@@ -45,7 +45,6 @@ const Button: React.FC<ButtonProps> = ({
     .filter(Boolean)
     .join(" ");
 
-  buttonSize = isIconOnly && buttonSize === "100%" ? "2.2rem" : buttonSize;
   return (
     <button
       type={type}
@@ -53,7 +52,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       title={tooltip}
-      style={{ width: buttonSize, height: buttonSize }}
+      style={buttonSize ? { width: buttonSize, height: buttonSize } : undefined}
     >
       {icon && (
         <span className={`${icon}`} style={{ fontSize: iconSize }}></span>

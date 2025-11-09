@@ -1,41 +1,29 @@
-import { clear } from "console";
 import React, { useState, forwardRef, useImperativeHandle } from "react";
+import "@/assets/componentCSS/TextArea.css";
 
-interface TextInputProps {
-  type?: string;
+interface TextAreaProps {
   className?: string;
   inputClassName?: string;
   onChange?: (value: string) => void;
   onClear?: (value: string) => void;
   placeholder?: string;
-  isClearable?: boolean;
-  errorMessage?: string;
-  hideDetails?: boolean | "auto";
-  prependIcon?: string;
   initialValue?: string;
-  defaultValue?: string;
   readonly?: boolean;
 }
 
-export interface TextInputHandle {
+export interface TextAreaHandle {
   clear: () => void;
 }
 
-const TextInput = forwardRef<TextInputHandle, TextInputProps>(
+const TextArea = forwardRef<TextAreaHandle, TextAreaProps>(
   (
     {
-      type = "text",
       className = "",
       inputClassName = "",
       onChange = () => {},
       onClear,
       placeholder = "",
-      isClearable = false,
-      errorMessage,
-      hideDetails = "auto",
-      prependIcon,
       initialValue = "",
-      defaultValue = "",
       readonly = false,
     },
     ref
@@ -43,17 +31,15 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
     const [inputValue, setInputValue] = useState(initialValue);
     const [hasText, setHasText] = useState(initialValue.length > 0);
     const [isFocused, setIsFocused] = useState(false);
-    const shouldShowDetails =
-      hideDetails === false || (hideDetails === "auto" && !!errorMessage);
 
     // Single clear function
     const clear = () => {
-      setInputValue(defaultValue);
-      setHasText(defaultValue.length > 0);
+      setInputValue("");
+      setHasText(false);
       if (onClear) {
-        onClear(defaultValue);
+        onClear("");
       } else {
-        onChange(defaultValue);
+        onChange("");
       }
     };
     // Expose clear method via ref
@@ -64,12 +50,6 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
           isFocused ? " input-focused" : ""
         } ${className}`}
       >
-        {prependIcon && (
-          <span className="prepend-icon">
-            <i className={`fa ${prependIcon}`}></i>
-          </span>
-        )}
-        {/* Floating label always present, animates up on focus or text */}
         {placeholder && (
           <label
             className={`floating-label${
@@ -79,14 +59,13 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
             {placeholder}
           </label>
         )}
-        <input
-          name="textInput"
+        <textarea
+          name="textArea"
           value={inputValue}
           className={`${inputClassName}${
-            prependIcon ? " padding-left-for-icon" : ""
-          }${readonly ? " bg-light secondary" : ""}`}
-          type={type}
-          aria-label={placeholder || "Text input"}
+            readonly ? " bg-light secondary" : ""
+          }`}
+          aria-label={placeholder || "Text area"}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           onChange={(e) => {
@@ -95,11 +74,6 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
             setInputValue(newValue);
             setHasText(newValue.length > 0);
             onChange(newValue);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-            }
           }}
           readOnly={readonly}
         />
@@ -115,19 +89,10 @@ const TextInput = forwardRef<TextInputHandle, TextInputProps>(
             <span className="pt-1">×</span>
           </button>
         )}
-        <div
-          className={shouldShowDetails ? "details" : "details details--hidden"}
-        >
-          {shouldShowDetails && errorMessage && (
-            <div className="warning" role="alert">
-              <p className="errLine">{errorMessage}</p>
-            </div>
-          )}
-        </div>
       </div>
     );
   }
 );
 
-TextInput.displayName = "TextInput";
-export default TextInput;
+TextArea.displayName = "TextArea";
+export default TextArea;

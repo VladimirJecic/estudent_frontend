@@ -54,19 +54,17 @@ export class CourseExamAPIService {
     return response;
   }
   static async downloadCourseExamReport(
-    courseId: number,
-    examPeriodId: number
+    courseExamId: number
   ): Promise<DocumentBlob> {
     const response = await apiService.GET<BlobResponse>(
-      `/course-exam-reports/${courseId}/${examPeriodId}`,
+      `/admin/course-exam-reports/${courseExamId}`,
       {
         responseType: "blob",
       }
     );
     const contentDisposition = response.headers.get("Content-Disposition");
     const match = contentDisposition?.match(/filename="?([^"]+)"?/);
-    const filename =
-      match?.[1] ?? `izvestaj-za-polaganje-${courseId}-${examPeriodId}.xslx`;
+    const filename = match?.[1] ?? `izvestaj-za-polaganje-${courseExamId}.xslx`;
     const blob = await response.blob();
     return { blob: blob, name: filename };
   }

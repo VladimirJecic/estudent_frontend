@@ -55,10 +55,7 @@ export default class CourseExamReportViewModel {
   downloadCourseExamReport = async (courseExam: CourseExamPresentation) => {
     try {
       const documentResponse: DocumentBlob =
-        await CourseExamAPIService.downloadCourseExamReport(
-          courseExam.course.id!,
-          courseExam.examPeriod.id!
-        );
+        await CourseExamAPIService.downloadCourseExamReport(courseExam.id);
 
       const url = URL.createObjectURL(documentResponse.blob);
       const a = document.createElement("a");

@@ -4,6 +4,7 @@ import {
   CourseExam,
   PageResponse,
   ExamRegistrationPageCriteria,
+  UpdateExamRegistrationSubmitRequest,
 } from "@/types/items";
 import { SubmitExamRegistration } from "@/types/items";
 
@@ -20,13 +21,13 @@ export class ExamRegistrationAPIService {
       );
     if (pageCriteria.searchText && pageCriteria.searchText.length > 0)
       queryParams.push(
-        `searchText=${encodeURIComponent(pageCriteria.searchText)}`
+        `search-text=${encodeURIComponent(pageCriteria.searchText)}`
       );
-    if (pageCriteria.includePassed) queryParams.push(`includePassed=true`);
+    if (pageCriteria.includePassed) queryParams.push(`include-passed=true`);
 
-    if (pageCriteria.includeFailed) queryParams.push(`includeFailed=true`);
+    if (pageCriteria.includeFailed) queryParams.push(`include-failed=true`);
     if (pageCriteria.includeNotGraded)
-      queryParams.push(`includeNotGraded=true`);
+      queryParams.push(`include-not-graded=true`);
     return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
   }
   static createQueryStringForCreateExamRegistration(
@@ -72,10 +73,12 @@ export class ExamRegistrationAPIService {
   }
 
   static async updateExamRegistration(
-    examRegistrationId: number,
-    dto: import("@/types/items").UpdateExamRegistration
+    updateRequest: UpdateExamRegistrationSubmitRequest
   ): Promise<void> {
-    await apiService.PUT(`/exam-registrations/${examRegistrationId}`, dto);
+    await apiService.PUT(
+      `/exam-registrations/${updateRequest.examRegistrationId}`,
+      updateRequest
+    );
   }
 
   static async createExamRegistration(

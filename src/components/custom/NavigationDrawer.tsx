@@ -50,7 +50,7 @@ interface ListProps {
 }
 
 export const List: React.FC<ListProps> = ({ children, className = "" }) => (
-  <ul className={`nav flex-column ${className}`}>{children}</ul>
+  <ul className={`nav column ${className}`}>{children}</ul>
 );
 
 interface ListItemProps {
