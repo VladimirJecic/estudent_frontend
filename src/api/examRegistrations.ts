@@ -76,7 +76,7 @@ export class ExamRegistrationAPIService {
     updateRequest: UpdateExamRegistrationSubmitRequest
   ): Promise<void> {
     await apiService.PUT(
-      `/exam-registrations/${updateRequest.examRegistrationId}`,
+      `/admin/exam-registrations/${updateRequest.examRegistrationId}`,
       updateRequest
     );
   }

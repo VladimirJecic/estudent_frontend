@@ -13,9 +13,9 @@ export class CourseExamAPIService {
     const queryParams: string[] = [];
     queryParams.push(`page=${encodeURIComponent(pageCriteria.page)}`);
     queryParams.push(`page-size=${encodeURIComponent(pageCriteria.pageSize)}`);
-    if (pageCriteria.courseName.length > 0)
+    if (pageCriteria.searchText.length > 0)
       queryParams.push(
-        `course-name=${encodeURIComponent(pageCriteria.courseName)}`
+        `search-text=${encodeURIComponent(pageCriteria.searchText)}`
       );
     if (pageCriteria.dateFrom)
       queryParams.push(

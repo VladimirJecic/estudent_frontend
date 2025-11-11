@@ -96,7 +96,7 @@ const ExamRegistrationEdit: React.FC<ExamRegistrationEditProps> = ({
         <div className="column col-4">
           <TextInput
             initialValue={registration.updatedAtFormatted}
-            placeholder="Poslednji put izmenio/la"
+            placeholder="Poslednji put izmenjeno"
             readonly
           />
         </div>

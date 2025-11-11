@@ -91,7 +91,7 @@ export type PageResponse<T> = {
 export type CourseExamPageCriteria = {
   page: number;
   pageSize: number;
-  courseName: string;
+  searchText: string;
   dateFrom: Date | null;
   dateTo: Date | null;
 };

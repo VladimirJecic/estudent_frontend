@@ -23,14 +23,14 @@ import log from "loglevel";
 const CourseExamReportPage = () => {
   //#region Consts and imports
   const alertService = useAlertService();
-  const PAGE_SIZE = 4;
+  const PAGE_SIZE = 10;
   //#endregion Consts
 
   //#region useState
   const [courseExams, setCourseExams] = useState<CourseExamPresentation[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoadingCourseExams, setIsLoadingCourseExams] = useState(true);
-  const [searchedCourseName, setSearchedCourseName] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
   const [page, setPage] = useState(1);
@@ -76,7 +76,7 @@ const CourseExamReportPage = () => {
   const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
       if (value.length >= 2) {
-        setSearchedCourseName(value);
+        setSearchText(value);
         setPage(1);
       }
     }, 500),
@@ -88,7 +88,7 @@ const CourseExamReportPage = () => {
     const pageCriteria: CourseExamPageCriteria = {
       page: newPage,
       pageSize: PAGE_SIZE,
-      courseName: searchedCourseName,
+      searchText: searchText,
       dateFrom: dateFrom,
       dateTo: dateTo,
     };
@@ -103,15 +103,13 @@ const CourseExamReportPage = () => {
   };
 
   const isRemoveFiltersVisible = () =>
-    dateFrom !== null ||
-    dateTo !== null ||
-    searchedCourseName.trim().length > 0;
+    dateFrom !== null || dateTo !== null || searchText.trim().length > 0;
   //#endregion Other Handlers
 
   //#region OnMount
   useEffect(() => {
     handlePageChange(page);
-  }, [searchedCourseName, dateFrom, dateTo]);
+  }, [searchText, dateFrom, dateTo]);
   //#endregion OnMount
 
   return (
@@ -125,8 +123,8 @@ const CourseExamReportPage = () => {
           <TextInput
             ref={searchInputRef}
             onChange={debounced_handleChangeCourseName}
-            onClear={setSearchedCourseName}
-            placeholder="Naziv ispita"
+            onClear={setSearchText}
+            placeholder="Naziv ispita ili roka"
             isClearable
           />
         </div>

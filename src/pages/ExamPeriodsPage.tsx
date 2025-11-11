@@ -102,6 +102,7 @@ const ExamPeriodsPage = () => {
         <Table
           width="70vw"
           className="mb-5"
+          colWidths={[2, 1, 1, 1, 1, 1]}
           headers={[
             { title: "Rok", value: "name" },
             { title: "Prijava od", value: "dateRegistrationStartFormatted" },
