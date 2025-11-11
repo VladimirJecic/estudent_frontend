@@ -1,36 +1,78 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMemo, useState, useEffect, useCallback, useRef } from "react";
-import CourseExamReportViewModel from "@/viewModel/CourseExamReportViewModel";
+import {
+  CourseExamPageCriteria,
+  DocumentBlob,
+  CourseExamPresentation,
+} from "@/types/items";
+import { useAlertService } from "@/context/AlertServiceContext";
+import { CourseExamAPIService } from "@/api/courseExams";
+import { toCourseExamPresentations } from "@/utils/courseExamUtils";
 import TextInput from "@/components/custom/TextInput";
 import type { TextInputHandle } from "@/components/custom/TextInput";
 import Pagination from "@/components/custom/Pagination";
 import DatePicker from "react-datepicker";
 import debounce from "lodash/debounce";
-import { CourseExamPageCriteria } from "@/types/items";
-import { useAlertService } from "@/context/AlertServiceContext";
 import Container from "@/components/custom/Container";
 import Title from "@/components/custom/Title";
 import Info from "@/components/custom/Info";
 import Table from "@/components/custom/Table";
 import Button from "@/components/custom/Button";
+import log from "loglevel";
 
 const CourseExamReportPage = () => {
+  //#region Consts and imports
   const alertService = useAlertService();
-  const viewModel = useMemo(
-    () => new CourseExamReportViewModel(alertService),
-    []
-  );
-  const [viewModelState, setViewModelState] = useState(viewModel.project());
-  viewModel.updateView = () => {
-    setViewModelState(viewModel.project());
-  };
+  const PAGE_SIZE = 4;
+  //#endregion Consts
 
+  //#region useState
+  const [courseExams, setCourseExams] = useState<CourseExamPresentation[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoadingCourseExams, setIsLoadingCourseExams] = useState(true);
   const [searchedCourseName, setSearchedCourseName] = useState("");
   const [dateFrom, setDateFrom] = useState<Date | null>(null);
   const [dateTo, setDateTo] = useState<Date | null>(null);
   const [page, setPage] = useState(1);
   const searchInputRef = useRef<TextInputHandle>(null);
+  //#endregion useState
 
+  //#region API Functions
+  const searchCourseExams = async (pageCriteria: CourseExamPageCriteria) => {
+    setIsLoadingCourseExams(true);
+    try {
+      const pageResponse =
+        await CourseExamAPIService.getCourseExamsByCriteriaAsAdmin(
+          pageCriteria
+        );
+      setCourseExams(toCourseExamPresentations(pageResponse.content));
+      setTotalPages(pageResponse.totalPages);
+    } catch (error) {
+      alertService.error("Došlo je do greške prilikom pretrage polaganja.");
+      log.error(error);
+    } finally {
+      setIsLoadingCourseExams(false);
+    }
+  };
+
+  const downloadCourseExamReport = async (courseExamId: number) => {
+    try {
+      const documentResponse: DocumentBlob =
+        await CourseExamAPIService.downloadCourseExamReport(courseExamId);
+      const url = URL.createObjectURL(documentResponse.blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = documentResponse.name;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      alertService.error("Došlo je do greške prilikom skidanja izveštaja.");
+      log.error(error);
+    }
+  };
+  //#endregion API Functions
+
+  //#region Other Handlers
   const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
       if (value.length >= 2) {
@@ -45,12 +87,12 @@ const CourseExamReportPage = () => {
     setPage(newPage);
     const pageCriteria: CourseExamPageCriteria = {
       page: newPage,
-      pageSize: viewModelState.pageSize,
+      pageSize: PAGE_SIZE,
       courseName: searchedCourseName,
       dateFrom: dateFrom,
       dateTo: dateTo,
     };
-    viewModel.searchCourseExams(pageCriteria);
+    searchCourseExams(pageCriteria);
   };
 
   const clearFilters = (): void => {
@@ -60,11 +102,11 @@ const CourseExamReportPage = () => {
     setDateTo(null);
   };
 
-  // Computed function to manage clear filters button visibility (reactive)
   const isRemoveFiltersVisible = () =>
     dateFrom !== null ||
     dateTo !== null ||
     searchedCourseName.trim().length > 0;
+  //#endregion Other Handlers
 
   //#region OnMount
   useEffect(() => {
@@ -121,9 +163,9 @@ const CourseExamReportPage = () => {
           />
         </div>
       </Container>
-      {viewModelState.isLoadingCourseExams ? (
+      {isLoadingCourseExams ? (
         <Info>učitava se...</Info>
-      ) : viewModelState.courseExams.length === 0 ? (
+      ) : courseExams.length === 0 ? (
         <Info>Nema polaganja za prikaz</Info>
       ) : (
         <>
@@ -136,7 +178,7 @@ const CourseExamReportPage = () => {
               { title: "Izveštaj", value: "actions" },
             ]}
             colWidths={[3, 3, 2, 1]}
-            items={viewModelState.courseExams}
+            items={courseExams}
             templates={{
               actions: (ce) => (
                 <Button
@@ -144,14 +186,14 @@ const CourseExamReportPage = () => {
                   icon="fa fa-file-download"
                   iconSize="1.2rem"
                   buttonSize="2.3rem"
-                  onClick={() => viewModel.downloadCourseExamReport(ce)}
+                  onClick={() => downloadCourseExamReport(ce.id)}
                 />
               ),
             }}
           />
           <Pagination
             currentPage={page}
-            totalPages={viewModelState.totalPages}
+            totalPages={totalPages}
             onPageChange={(page: number) => handlePageChange(page)}
           />
         </>

@@ -62,8 +62,8 @@ const ExamRegistrationEdit: React.FC<ExamRegistrationEditProps> = ({
         </div>
         <div className="column col-4">
           <TextInput
-            initialValue={registration.courseName}
-            placeholder="Naziv ispita"
+            initialValue={registration.signedByName}
+            placeholder="Polaganje ocenio"
             readonly
           />
         </div>
@@ -78,15 +78,15 @@ const ExamRegistrationEdit: React.FC<ExamRegistrationEditProps> = ({
         </div>
         <div className="column col-4">
           <TextInput
-            initialValue={registration.courseEspb.toString()}
-            placeholder="ESPB"
+            initialValue={registration.courseName}
+            placeholder="Naziv ispita"
             readonly
           />
         </div>
         <div className="column col-4">
           <TextInput
-            initialValue={registration.signedByName}
-            placeholder="Ocenio prijavu"
+            initialValue={registration.examPeriodName}
+            placeholder="Rok"
             readonly
           />
         </div>

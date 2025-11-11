@@ -29,6 +29,7 @@ export type ExamRegistration = {
 export interface ExamRegistrationPresentation extends ExamRegistration {
   studentIndexNum: string;
   studentName: string;
+  examPeriodName: string;
   courseName: string;
   courseEspb: number;
   updatedAtFormatted: string;

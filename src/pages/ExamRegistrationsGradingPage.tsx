@@ -129,6 +129,7 @@ const ExamRegistrationsGradingPage = () => {
     setIsExamRegistrationEditOpen(true);
   };
   //#endregion Other Handlers
+
   //#region OnMount
   useEffect(() => {
     handlePageChange(page);
@@ -194,6 +195,7 @@ const ExamRegistrationsGradingPage = () => {
               { title: "Broj indexa", value: "studentIndexNum" },
               { title: "Ime", value: "studentName" },
               { title: "Naziv Ispita", value: "courseName" },
+              { title: "Rok", value: "examPeriodName" },
               { title: "Prisustvovao", value: "hasAttended" },
               { title: "Ocena", value: "mark" },
               { title: "Akcije", value: "actions" },
