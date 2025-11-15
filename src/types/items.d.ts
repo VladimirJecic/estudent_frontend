@@ -75,6 +75,23 @@ export type Course = {
   espb: number;
   participants: User[];
 };
+export type Semester = {
+  id: number;
+  title: string;
+  year: string;
+};
+export type CourseInstance = {
+  id: number;
+  name: string;
+  semester: string;
+  espb: number;
+};
+export type CourseInstancePageCriteria = {
+  page: number;
+  pageSize: number;
+  searchText?: string;
+  semesterId?: number;
+};
 export type User = {
   name: string;
   indexNum: string;

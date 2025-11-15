@@ -60,7 +60,7 @@ export const AppLayout = () => {
                 <ListItem
                   prependIcon="fa-solid fa-file-lines"
                   title="Izveštaj polaganja ispita"
-                  onClick={() => navigate("/exam-report")}
+                  onClick={() => navigate("/course-exam-report")}
                 />
                 <ListItem
                   prependIcon="fa-solid fa-pen-to-square"
