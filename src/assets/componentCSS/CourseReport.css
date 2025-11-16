@@ -1,0 +1,66 @@
+.course-report-preview {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.course-report-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.course-report-summary-card {
+  flex: 1 1 12rem;
+  padding: 1rem;
+  border: 1px solid var(--primary-lighten-2);
+  border-radius: 8px;
+  background-color: var(--primary-lighten-3);
+}
+
+.course-report-summary-value {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.course-report-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.course-report-chart {
+  border: 1px solid var(--primary-lighten-2);
+  border-radius: 8px;
+  padding: 1rem;
+  min-height: 16rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.course-report-chart h6 {
+  margin-bottom: 0;
+}
+
+.course-report-chart-body {
+  flex: 1;
+  position: relative;
+  min-height: 12rem;
+}
+
+.course-report-chart-body canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.course-report-actions {
+  margin-top: 2rem;
+}
+
+.course-report-actions .custom-button {
+  width: 100%;
+}
