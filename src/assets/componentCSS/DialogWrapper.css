@@ -40,15 +40,26 @@
   padding: 1rem;
 }
 
+/* Ensure content respects max-height and scrolls if needed */
+.modal-content {
+  max-height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+.modal-body {
+  overflow: auto;
+}
+
 /* Close button styling */
 .btn-close-dialog {
   border: none;
-  background: transparent;
-  color: #666;
+  background: transparent !important;
+  color: #666 !important;
   transition: color 0.2s;
+  box-shadow: none !important;
 }
 
 .btn-close-dialog:hover {
-  color: #333;
+  color: #333 !important;
   background: transparent !important;
 }

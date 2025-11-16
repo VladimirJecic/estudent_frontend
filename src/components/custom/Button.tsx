@@ -35,12 +35,15 @@ const Button: React.FC<ButtonProps> = ({
 
   // If only icon and no children/title, use icon-only style
   const isIconOnly = !!icon && !children && !title;
+  const colorClass =
+    className && className.trim().length > 0 ? className : "bg-primary";
+
   const btnClass = [
-    "custom-button text-white",
+    "custom-button",
     isIconOnly ? "icon-only" : "",
     margin,
-    isIconOnly ? "bg-primary" : "bg-primary " + padding,
-    className,
+    !isIconOnly ? padding : "",
+    colorClass,
   ]
     .filter(Boolean)
     .join(" ");

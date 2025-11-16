@@ -12,6 +12,7 @@
 @import "./componentCSS/AppLayout.css";
 @import "./componentCSS/Table.css";
 @import "./componentCSS/CheckBox.css";
+@import "./componentCSS/CourseReport.css";
 @import "./componentCSS/Select.css";
 
 /* Global text styling */

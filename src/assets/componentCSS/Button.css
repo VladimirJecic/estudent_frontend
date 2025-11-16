@@ -10,6 +10,10 @@
   border-radius: 5px 5px 5px 5px;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 /* Circular icon-only button style */
 .custom-button.icon-only {

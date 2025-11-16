@@ -38,6 +38,23 @@ const chartOptions: ChartOptions<"bar"> = {
   },
 };
 
+const buildChartData = (
+  series: ChartSeries,
+  color: string
+): ChartData<"bar"> => {
+  return {
+    labels: series.categories,
+    datasets: [
+      {
+        label: series.label,
+        data: series.data,
+        backgroundColor: color,
+        borderRadius: 8,
+        maxBarThickness: 48,
+      },
+    ],
+  };
+};
 type CourseReportPreviewProps = {
   report: CourseReportPresentation;
   onDownload: () => void;
@@ -55,32 +72,39 @@ const CourseReportPreview = forwardRef<
   ];
 
   return (
-    <div ref={ref} className="course-report-preview w-100">
-      <div className="course-report-summary">
-        <div className="course-report-summary-card">
-          <h5>Upisani studenti</h5>
-          <p className="course-report-summary-value">{report.enrolledCount}</p>
-        </div>
-        <div className="course-report-summary-card">
-          <h5>Položili</h5>
-          <p className="course-report-summary-value">
-            {`${report.passedCount}/${report.enrolledCount} (${report.passedPercentage}%)`}
-          </p>
-        </div>
-      </div>
-
-      <div className="course-report-charts">
-        {chartSeries.map(({ series, color }, index) => (
-          <div className="course-report-chart" key={`${series.label}-${index}`}>
-            <h6>{series.label}</h6>
-            <div className="course-report-chart-body">
-              <Bar
-                data={buildChartData(series, color)}
-                options={chartOptions}
-              />
-            </div>
+    <div className="course-report-preview w-100">
+      <div ref={ref} className="course-report-content">
+        <div className="course-report-summary">
+          <div className="course-report-summary-card">
+            <h5>Upisani studenti</h5>
+            <p className="course-report-summary-value">
+              {report.enrolledCount}
+            </p>
           </div>
-        ))}
+          <div className="course-report-summary-card">
+            <h5>Položili</h5>
+            <p className="course-report-summary-value">
+              {`${report.passedCount}/${report.enrolledCount} (${report.passedPercentage}%)`}
+            </p>
+          </div>
+        </div>
+
+        <div className="course-report-charts">
+          {chartSeries.map(({ series, color }, index) => (
+            <div
+              className="course-report-chart"
+              key={`${series.label}-${index}`}
+            >
+              <h6>{series.label}</h6>
+              <div className="course-report-chart-body">
+                <Bar
+                  data={buildChartData(series, color)}
+                  options={chartOptions}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="row g-3 justify-content-end course-report-actions">
@@ -108,20 +132,5 @@ const CourseReportPreview = forwardRef<
     </div>
   );
 });
-
-function buildChartData(series: ChartSeries, color: string): ChartData<"bar"> {
-  return {
-    labels: series.categories,
-    datasets: [
-      {
-        label: series.label,
-        data: series.data,
-        backgroundColor: color,
-        borderRadius: 8,
-        maxBarThickness: 48,
-      },
-    ],
-  };
-}
 
 export default memo(CourseReportPreview);

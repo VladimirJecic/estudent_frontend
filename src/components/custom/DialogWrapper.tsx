@@ -8,6 +8,7 @@ interface DialogWrapperProps {
   title: string;
   width?: number; // in vw
   minHeight?: number; // in vh
+  maxHeight?: number; // in vh
   onCloseDialog: () => void;
   children: React.ReactNode;
 }
@@ -17,6 +18,7 @@ function DialogWrapper({
   title,
   width = 50,
   minHeight,
+  maxHeight,
   onCloseDialog,
   children,
 }: DialogWrapperProps) {
@@ -38,6 +40,7 @@ function DialogWrapper({
         style={{
           width: `${width}vw`,
           minHeight: minHeight !== undefined ? `${minHeight}vh` : "auto",
+          maxHeight: maxHeight !== undefined ? `${maxHeight}vh` : "none",
           zIndex: 1060,
           margin: "auto",
         }}

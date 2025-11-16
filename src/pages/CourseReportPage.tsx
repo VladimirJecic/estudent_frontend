@@ -51,6 +51,13 @@ const CourseReportPage = () => {
     useState<CourseInstance | null>(null);
   const reportPreviewRef = useRef<HTMLDivElement | null>(null);
   //#endregion useState
+  const fallbackReportTitle = selectedCourseInstance
+    ? `Izveštaj za predmet ${selectedCourseInstance.name} u školskoj ${
+        selectedCourseInstance.semester?.year ||
+        selectedCourseInstance.semester?.title ||
+        ""
+      }.`
+    : "Izveštaj kursa";
 
   //#region API Functions
   const fetchSemesters = async () => {
@@ -86,6 +93,9 @@ const CourseReportPage = () => {
     }
   };
 
+  //#endregion API Functions
+
+  //#region Other Handlers
   const openCourseReportPreview = async (courseInstance: CourseInstance) => {
     setIsReportDialogVisible(true);
     setIsLoadingReport(true);
@@ -107,7 +117,6 @@ const CourseReportPage = () => {
       setIsLoadingReport(false);
     }
   };
-  //#endregion API Functions
 
   const handleCloseReportDialog = () => {
     setIsReportDialogVisible(false);
@@ -123,8 +132,6 @@ const CourseReportPage = () => {
       title: reportPresentation?.title || fallbackReportTitle,
     });
   };
-
-  //#region Other Handlers
   const debounced_handleChangeCourseName = useCallback(
     debounce((value: string) => {
       if (value.length >= 2) {
@@ -172,14 +179,6 @@ const CourseReportPage = () => {
     }
   }, [searchText, selectedSemester, isLoadingSemesters]);
   //#endregion OnMount
-
-  const fallbackReportTitle = selectedCourseInstance
-    ? `Izveštaj za predmet ${selectedCourseInstance.name} u školskoj ${
-        selectedCourseInstance.semester?.year ||
-        selectedCourseInstance.semester?.title ||
-        ""
-      }.`
-    : "Izveštaj kursa";
 
   return (
     <Container width="75vw" className="align-self-center">

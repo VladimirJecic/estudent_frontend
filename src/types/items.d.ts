@@ -44,10 +44,16 @@ export type CourseExam = {
   examDateTime: Date;
   hall: string;
 };
+export type Semester = {
+  id: number;
+  title: string;
+  year: string;
+  season: string;
+};
 export interface CourseExamPresentation extends CourseExam {
   courseName: string;
   examPeriodName: string;
-  courseSemester: string;
+  semester: Semester;
   courseEspb: number;
   examDateTimeFormatted: string;
   isRegistrationInProgress: boolean;
@@ -75,15 +81,10 @@ export type Course = {
   espb: number;
   participants: User[];
 };
-export type Semester = {
-  id: number;
-  title: string;
-  year: string;
-};
 export type CourseInstance = {
   id: number;
   name: string;
-  semester: string;
+  semester: Semester;
   espb: number;
 };
 export type CourseInstancePageCriteria = {

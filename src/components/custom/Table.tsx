@@ -1,3 +1,4 @@
+import { get } from "lodash";
 import React from "react";
 
 type TableHeader = {
@@ -133,11 +134,14 @@ function Table<T>({
           {items.map((item, idx) => (
             <tr key={idx}>
               {headers.map((header, colIdx) => {
-                const cellValue = (item as any)[header.value];
                 const template = templates[header.value];
+                const cellValue = template
+                  ? template(item)
+                  : get(item, header.value, "");
+
                 return (
                   <td key={colIdx} className={colWidthClasses[colIdx]}>
-                    {template ? template(item) : cellValue}
+                    {cellValue as React.ReactNode}
                   </td>
                 );
               })}
