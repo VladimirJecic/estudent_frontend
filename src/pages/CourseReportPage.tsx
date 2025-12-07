@@ -262,7 +262,7 @@ const CourseReportPage = () => {
         onCloseDialog={handleCloseReportDialog}
       >
         {isLoadingReport ? (
-          <Info>Priprema izveštaja...</Info>
+          <Info>Izveštaj se priprema...</Info>
         ) : reportPresentation ? (
           <CourseReportPreview
             report={reportPresentation}
