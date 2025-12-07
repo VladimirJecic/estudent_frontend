@@ -128,7 +128,9 @@ const CourseReportPage = () => {
     if (!selectedCourseInstance) return;
     await downloadCourseReportPdf({
       element: reportPreviewRef.current,
-      filename: `izvestaj-za-predmet-${selectedCourseInstance.id}.pdf`,
+      filename: `izvestaj-za-predmet-${
+        selectedCourseInstance.name
+      }-skolska-godina-${selectedCourseInstance.semester!.title}.pdf`,
       title: reportPresentation?.title || fallbackReportTitle,
     });
   };
