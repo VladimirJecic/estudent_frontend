@@ -62,7 +62,7 @@ const ExamRegistrationEdit: React.FC<ExamRegistrationEditProps> = ({
         </div>
         <div className="column col-4">
           <TextInput
-            initialValue={registration.signedByName}
+            initialValue={registration.signedByName || ""}
             placeholder="Polaganje ocenio"
             readonly
           />

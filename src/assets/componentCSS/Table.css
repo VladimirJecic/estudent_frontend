@@ -26,6 +26,13 @@ table th {
   height: 100%;
 }
 
+table thead {
+  position: sticky;
+  top: 0;
+  background-color: var(--primary-lighten-3);
+  z-index: 11;
+}
+
 table td {
   vertical-align: middle !important;
 }
@@ -37,7 +44,7 @@ table {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: 1px solid black;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   background-color: var(--primary-lighten-3);
   font-family: "Segoe UI", sans-serif;
   font-size: 0.95rem;
@@ -50,6 +57,14 @@ th {
 }
 td {
   justify-content: center;
+}
+
+/* Sticky footer */
+table tfoot {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--primary-lighten-3);
+  z-index: 10;
 }
 
 /* Custom classes for table headers */

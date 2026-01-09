@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   ExamRegistration,
   ExamRegistrationPageCriteria,
   ExamRegistrationPresentation,
   PageResponse,
   UpdateExamRegistrationSubmitRequest,
+  ExamPeriodPresentation,
+  CourseExamPresentation,
 } from "@/types/items";
 import { useAlertService } from "@/context/AlertServiceContext";
 import Container from "@/components/custom/Container";
@@ -14,12 +16,16 @@ import Info from "@/components/custom/Info";
 import Table from "@/components/custom/Table";
 import Button from "@/components/custom/Button";
 import TextInput from "@/components/custom/TextInput";
+import type { TextInputHandle } from "@/components/custom/TextInput";
 import CheckBox from "@/components/custom/CheckBox";
 import Pagination from "@/components/custom/Pagination";
 import DialogWrapper from "@/components/custom/DialogWrapper";
 import ExamRegistrationEdit from "@/components/ExamRegistrationEdit";
 import { ExamRegistrationAPIService } from "@/api/examRegistrations";
+import { ExamPeriodAPIService } from "@/api/examPeriods";
 import { toExamRegistrationPresentations } from "@/utils/examRegistrationUtils";
+import { toExamPeriodPresentations } from "@/utils/examPeriodUtils";
+import Select from "@/components/custom/Select";
 import debounce from "lodash/debounce";
 import log from "loglevel";
 
@@ -44,7 +50,21 @@ const ExamRegistrationsGradingPage = () => {
     useState(false);
   const [selectedRegistration, setSelectedRegistration] =
     useState<ExamRegistrationPresentation | null>(null);
-  //#endregion useState
+  const [isMoreFiltersVisible, setIsMoreFiltersVisible] = useState(false);
+  const [examPeriods, setExamPeriods] = useState<ExamPeriodPresentation[]>([]);
+  const [selectedExamPeriod, setSelectedExamPeriod] =
+    useState<ExamPeriodPresentation | null>(null);
+  const [courses, setCourses] = useState<CourseExamPresentation[]>([]);
+  const [selectedCourse, setSelectedCourse] =
+    useState<CourseExamPresentation | null>(null);
+  const searchInputRef = useRef<TextInputHandle>(null);
+  //#endregion
+  //#region computed values
+  const isRemoveFiltersVisible = () =>
+    selectedExamPeriod !== null ||
+    searchText.trim().length > 0 ||
+    selectedCourse !== null;
+  //#endregion computed values
 
   //#region API Functions
   const fetchExamRegistrationsToGrade = async (
@@ -77,9 +97,10 @@ const ExamRegistrationsGradingPage = () => {
       if (!updateRequest.hasAttended) {
         updateRequest.mark = 5;
       }
+      setIsExamRegistrationEditOpen(false);
       await ExamRegistrationAPIService.updateExamRegistration(updateRequest);
       alertService.alert("Polaganje je uspešno ažurirano");
-      handlePageChange(page);
+      handlePageOrOtherChange(page);
     } catch (error) {
       log.error(error);
       alertService.error("Greška prilikom ažuriranja polaganja");
@@ -94,10 +115,26 @@ const ExamRegistrationsGradingPage = () => {
         examRegistration.id
       );
       alertService.alert("Polaganje je uspešno obrisano");
-      handlePageChange(page);
+      handlePageOrOtherChange(page);
     } catch (error) {
       log.error(error);
       alertService.error("Greška prilikom brisanja polaganja");
+    }
+  };
+
+  const fetchExamPeriods = async () => {
+    try {
+      const examPeriodList = await ExamPeriodAPIService.getAllExamPeriods();
+      setExamPeriods(
+        toExamPeriodPresentations(examPeriodList).sort((a, b) =>
+          a.dateStart > b.dateStart ? -1 : 1
+        )
+      );
+    } catch (error) {
+      alertService.error(
+        "Došlo je do greške prilikom učitavanja ispitnih rokova."
+      );
+      log.error(error);
     }
   };
 
@@ -110,7 +147,7 @@ const ExamRegistrationsGradingPage = () => {
     }, 500),
     []
   );
-  const handlePageChange = (newPage: number) => {
+  const handlePageOrOtherChange = (newPage: number) => {
     setPage(newPage);
     const pageCriteria: ExamRegistrationPageCriteria = {
       page: newPage,
@@ -119,8 +156,28 @@ const ExamRegistrationsGradingPage = () => {
       includePassed: includePassed,
       includeFailed: includeFailed,
       includeNotGraded: includeNotGraded,
+      examPeriodId: selectedExamPeriod?.id,
+      courseExamId: selectedCourse?.id,
     };
     fetchExamRegistrationsToGrade(pageCriteria);
+  };
+
+  const handleExamPeriodChange = (
+    examPeriod: ExamPeriodPresentation | null
+  ) => {
+    setSelectedExamPeriod(examPeriod);
+    setSelectedCourse(null);
+    if (examPeriod) {
+      setCourses(examPeriod.courseExamPresentations || []);
+    } else {
+      setCourses([]);
+    }
+    setPage(1);
+  };
+
+  const handleCourseChange = (course: CourseExamPresentation | null) => {
+    setSelectedCourse(course);
+    setPage(1);
   };
   const openEditExamRegistration = (
     registration: ExamRegistrationPresentation
@@ -128,57 +185,94 @@ const ExamRegistrationsGradingPage = () => {
     setSelectedRegistration(registration);
     setIsExamRegistrationEditOpen(true);
   };
+
+  const clearFilters = () => {
+    searchInputRef.current?.clear();
+    setSelectedExamPeriod(null);
+    setSelectedCourse(null);
+    setIncludeNotGraded(true);
+    setIncludePassed(true);
+    setIncludeFailed(true);
+    setPage(1);
+  };
   //#endregion Other Handlers
 
   //#region OnMount
   useEffect(() => {
-    handlePageChange(page);
-  }, [searchText, includeNotGraded, includePassed, includeFailed]);
+    fetchExamPeriods();
+  }, []);
+
+  useEffect(() => {
+    handlePageOrOtherChange(page);
+  }, [
+    searchText,
+    includeNotGraded,
+    includePassed,
+    includeFailed,
+    selectedExamPeriod,
+    selectedCourse,
+  ]);
   //#endregion OnMount
   return (
     <Container width="95%" className="align-self-center align-items-start">
       <Title className="align-self-center">Upis ocena</Title>
       <Container className="flex-row mb-4 gap-3 justify-content-start">
-        <div className="col-5">
+        <div className="col-3">
           <TextInput
+            ref={searchInputRef}
             onChange={(value: string) => {
               debounced_handleChangeSearchText(value);
             }}
-            placeholder="Pretraga Polaganja"
+            onClear={setSearchText}
+            placeholder="Pretraga Studenta"
             isClearable
           />
         </div>
-        <div className="col-2">
-          <CheckBox
-            checked={includeNotGraded}
-            onChange={(checked) => {
-              setIncludeNotGraded(checked);
-              setPage(1);
-            }}
-            label="neocenjena polaganja"
-            className="ms-3"
+        <div className="col-3">
+          <Select<ExamPeriodPresentation>
+            items={examPeriods}
+            itemTitle="name"
+            itemValue="id"
+            value={selectedExamPeriod}
+            onChange={handleExamPeriodChange}
+            placeholder="Izaberi rok"
+            returnObject={true}
+            isClearable={true}
           />
         </div>
-        <div className="col-2">
-          <CheckBox
-            checked={includePassed}
-            onChange={(checked) => {
-              setIncludePassed(checked);
-              setPage(1);
-            }}
-            label="uspešna polaganja"
-            className="ms-3"
+        <div className="col-3">
+          <Select<CourseExamPresentation>
+            items={courses}
+            itemTitle="courseName"
+            itemValue="id"
+            value={selectedCourse}
+            onChange={handleCourseChange}
+            placeholder="Izaberi ispit"
+            returnObject={true}
+            isClearable={true}
+            className={!selectedExamPeriod ? "disabled" : ""}
           />
         </div>
-        <div className="col-2">
-          <CheckBox
-            checked={includeFailed}
-            onChange={(checked) => {
-              setIncludeFailed(checked);
-              setPage(1);
-            }}
-            label="neuspešna polaganja"
-            className="ms-3"
+        <div className="col-2 d-flex">
+          <Button
+            className="w-100"
+            title="Više filtera"
+            icon="fa-solid fa-filter"
+            buttonSize="3rem"
+            iconSize="1.4rem"
+            tooltip="Prikaži još filtera"
+            onClick={() => setIsMoreFiltersVisible(true)}
+          />
+        </div>
+        <div className="col-1 d-flex">
+          <Button
+            className="bg-secondary"
+            icon="fa-solid fa-filter-circle-xmark"
+            buttonSize="3rem"
+            iconSize="1.4rem"
+            tooltip="Očisti filtere"
+            onClick={() => clearFilters()}
+            visible={isRemoveFiltersVisible()}
           />
         </div>
       </Container>
@@ -200,6 +294,7 @@ const ExamRegistrationsGradingPage = () => {
               { title: "Ocena", value: "mark" },
               { title: "Akcije", value: "actions" },
             ]}
+            colWidths={[1, 2, 2, 3, 1, 1, 2]}
             items={examRegistrationPresentations}
             templates={{
               mark: (registration: ExamRegistrationPresentation) => (
@@ -230,7 +325,7 @@ const ExamRegistrationsGradingPage = () => {
           <Pagination
             currentPage={page}
             totalPages={totalPages}
-            onPageChange={(page) => handlePageChange(page)}
+            onPageChange={(page) => handlePageOrOtherChange(page)}
           />
         </Container>
       )}
@@ -246,6 +341,39 @@ const ExamRegistrationsGradingPage = () => {
             onSave={updateExamRegistration}
           />
         )}
+      </DialogWrapper>
+      <DialogWrapper
+        isVisible={isMoreFiltersVisible}
+        title="Dodatni filteri"
+        width={15}
+        onCloseDialog={() => setIsMoreFiltersVisible(false)}
+      >
+        <Container className="flex-column gap-3 align-items-start">
+          <CheckBox
+            checked={includeNotGraded}
+            onChange={(checked) => {
+              setIncludeNotGraded(checked);
+              setPage(1);
+            }}
+            label="Neocenjena polaganja"
+          />
+          <CheckBox
+            checked={includePassed}
+            onChange={(checked) => {
+              setIncludePassed(checked);
+              setPage(1);
+            }}
+            label="Uspešna polaganja"
+          />
+          <CheckBox
+            checked={includeFailed}
+            onChange={(checked) => {
+              setIncludeFailed(checked);
+              setPage(1);
+            }}
+            label="Neuspešna polaganja"
+          />
+        </Container>
       </DialogWrapper>
     </Container>
   );

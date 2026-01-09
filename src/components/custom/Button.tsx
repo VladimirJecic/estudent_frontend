@@ -35,15 +35,22 @@ const Button: React.FC<ButtonProps> = ({
 
   // If only icon and no children/title, use icon-only style
   const isIconOnly = !!icon && !children && !title;
-  const colorClass =
-    className && className.trim().length > 0 ? className : "bg-primary";
+  
+  // Extract color classes from className (bg-*, text-*, etc.)
+  const colorClassMatch = className?.match(/\b(bg-\S+|text-\S+)\b/g);
+  const hasColorClass = colorClassMatch && colorClassMatch.length > 0;
+  const defaultColorClass = hasColorClass ? "" : "bg-primary";
+  
+  // Remove color classes from className to avoid duplication
+  const otherClasses = className?.replace(/\b(bg-\S+|text-\S+)\b/g, "").trim();
 
   const btnClass = [
     "custom-button",
     isIconOnly ? "icon-only" : "",
     margin,
     !isIconOnly ? padding : "",
-    colorClass,
+    defaultColorClass,
+    className, // Include all original classes
   ]
     .filter(Boolean)
     .join(" ");

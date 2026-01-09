@@ -5,7 +5,7 @@ interface InfoProps {
   className?: string;
 }
 
-const Info: React.FC<InfoProps> = ({ className = "w-50", children }) => (
+const Info: React.FC<InfoProps> = ({ className = "w-100", children }) => (
   <Container className={`bg-info text-center ${className}`}>
     <h5> {children} </h5>
   </Container>

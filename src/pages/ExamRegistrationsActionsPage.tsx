@@ -29,7 +29,7 @@ const ExamRegistrationsActionsPage = () => {
     courseExamRegistrationCandidates,
     setCourseExamRegistrationCandidates,
   ] = useState<CourseExamPresentation[]>([]);
-  const [examRegistrationsExisting, setExamRegistrationsExisting] = useState<
+  const [currentExamRegistrations, setCurrentExamRegistrations] = useState<
     ExamRegistrationPresentation[]
   >([]);
   const [
@@ -38,7 +38,7 @@ const ExamRegistrationsActionsPage = () => {
   ] = useState(true);
   const [
     isLoadingExamRegistrationsExisting,
-    setIsLoadingExamRegistrationsExisting,
+    setIsLoadingCurrentExamRegistrations,
   ] = useState(true);
   //#endregion useState
 
@@ -62,22 +62,20 @@ const ExamRegistrationsActionsPage = () => {
     }
   };
 
-  const fetchExamRegistrationsExisting = async () => {
-    setIsLoadingExamRegistrationsExisting(true);
-    setExamRegistrationsExisting([]);
+  const fetchCurrentExamRegistrations = async () => {
+    setIsLoadingCurrentExamRegistrations(true);
+    setCurrentExamRegistrations([]);
     try {
-      const pageResponse: PageResponse<ExamRegistration> =
-        await ExamRegistrationAPIService.fetchExamRegistrationsExisting();
-      setExamRegistrationsExisting(
-        toExamRegistrationPresentations(pageResponse.content)
-      );
+      const response: ExamRegistration[] =
+        await ExamRegistrationAPIService.fetchCurrentExamRegistrations();
+      setCurrentExamRegistrations(toExamRegistrationPresentations(response));
     } catch (error) {
       alertService.error(
         "Došlo je do greške prilikom učitavanja prijavljenih ispita."
       );
       log.error(error);
     } finally {
-      setIsLoadingExamRegistrationsExisting(false);
+      setIsLoadingCurrentExamRegistrations(false);
     }
   };
 
@@ -100,7 +98,7 @@ const ExamRegistrationsActionsPage = () => {
       await ExamRegistrationAPIService.deleteExamRegistration(
         examRegistration.id
       );
-      alertService.alert("Ispit je uspešno odjavljeen.");
+      alertService.alert("Ispit je uspešno odjavljen.");
       await setupView();
     } catch (error) {
       alertService.error("Greška prilikom brisanja ispita.");
@@ -113,7 +111,7 @@ const ExamRegistrationsActionsPage = () => {
   const setupView = async () => {
     await Promise.all([
       fetchCourseExamRegistrationCandidates(),
-      fetchExamRegistrationsExisting(),
+      fetchCurrentExamRegistrations(),
     ]);
   };
 
@@ -175,7 +173,7 @@ const ExamRegistrationsActionsPage = () => {
       {/* Second conditional block: existing exam registrations */}
       {isLoadingExamRegistrationsExisting ? (
         <Info className="w-50">učitava se...</Info>
-      ) : examRegistrationsExisting.length === 0 ? (
+      ) : currentExamRegistrations.length === 0 ? (
         <Info className="w-50">Nema prijavljenih ispita</Info>
       ) : (
         <Table
@@ -186,7 +184,7 @@ const ExamRegistrationsActionsPage = () => {
             { title: "Vreme polaganja", value: "examDateTimeFormatted" },
             { title: "Odjavi", value: "deleteExamRegistration" },
           ]}
-          items={examRegistrationsExisting}
+          items={currentExamRegistrations}
           colWidths={[2, 1, 2, 1]}
           templates={{
             deleteExamRegistration: (examRegistration) => (

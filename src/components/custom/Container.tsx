@@ -29,6 +29,8 @@ function Container({
     /align-items-(start|center|end|baseline|stretch)/
   );
   const defaultAlignItemsCenter = hasAlignedItems ? "" : "align-items-center";
+  const hasWidthClass = className.match(/w-\d+/);
+  const shouldApplyWidthProp = !hasWidthClass;
 
   React.useEffect(() => {
     const styleId = `container-style-${uniqueSuffix}`;
@@ -38,18 +40,25 @@ function Container({
       styleTag.id = styleId;
       document.head.appendChild(styleTag);
     }
-    let style = `.${wrapperClass} { width: ${width} !important;`;
-    if (height) {
-      style += ` height: ${height} !important;`;
+    let style = "";
+    if (shouldApplyWidthProp) {
+      style = `.${wrapperClass} { width: ${width} !important;`;
+      if (height) {
+        style += ` height: ${height} !important;`;
+      }
+      style += " }";
+    } else {
+      if (height) {
+        style = `.${wrapperClass} { height: ${height} !important; }`;
+      }
     }
-    style += " }";
     styleTag.innerHTML = style;
-  }, [width, height, uniqueSuffix, wrapperClass]);
+  }, [width, height, uniqueSuffix, wrapperClass, shouldApplyWidthProp]);
 
   return (
     <div
       className={`${wrapperClass} d-flex ${defaultJustifyContentCenter} ${defaultAlignItemsCenter} ${className}`.trim()}
-      style={{ width: width }}
+      style={shouldApplyWidthProp ? { width: width } : undefined}
     >
       {children}
     </div>

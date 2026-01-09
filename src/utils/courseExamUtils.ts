@@ -9,7 +9,7 @@ export function toCourseExamPresentation(
     ...exam,
     courseName: exam.course.name,
     examPeriodName: exam.examPeriod.name,
-    courseSemester: exam.course.semester,
+    courseSemester: exam.course.semester.title,
     courseEspb: exam.course.espb,
     examDateTimeFormatted: format(exam.examDateTime, DateFormat.DATE_TIME),
     isRegistrationInProgress: exam.examPeriod.dateRegisterEnd > new Date(),

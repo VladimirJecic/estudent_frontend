@@ -152,6 +152,7 @@ const CourseExamReportPage = () => {
         </div>
         <div className="col-2 d-flex align-items-end">
           <Button
+            className="bg-secondary"
             icon="fa-solid fa-filter-circle-xmark"
             buttonSize="3rem"
             iconSize="1.4rem"

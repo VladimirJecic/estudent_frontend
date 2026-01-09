@@ -10,6 +10,7 @@ interface TableProps<T> {
   headers: TableHeader[];
   items: T[];
   width?: string; // e.g. "50vw"
+  maxHeight?: string; // e.g. "60vh"
   colWidths?: number[]; // e.g. [2,1,1]
   templates?: Partial<
     Record<Extract<TableHeader["value"], string>, (item: T) => React.ReactNode>
@@ -73,6 +74,7 @@ function Table<T>({
   headers,
   items,
   width = "100%",
+  maxHeight,
   colWidths = [],
   templates = {},
   className = "",
@@ -119,7 +121,10 @@ function Table<T>({
   }
   injectUniqueWrapperWidth(width);
   return (
-    <div className={`${wrapperClass} ${className}`.trim()}>
+    <div
+      className={`${wrapperClass} ${className}`.trim()}
+      style={maxHeight ? { maxHeight, overflow: "auto" } : undefined}
+    >
       <table className="custom-table">
         <thead>
           <tr>

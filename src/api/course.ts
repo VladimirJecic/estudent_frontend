@@ -46,28 +46,4 @@ export class CourseAPIService {
     );
     return response;
   }
-
-  static async getCourseSemesterReportMock(
-    courseInstanceId: number
-  ): Promise<CourseSemesterReport> {
-    // TODO: Replace mock with real API call once backend is ready.
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const mockPeriods = [
-      { examPeriodId: 1, examPeriodName: "Januar", value: 80 },
-      { examPeriodId: 2, examPeriodName: "April", value: 65 },
-      { examPeriodId: 3, examPeriodName: "Jun", value: 90 },
-    ];
-
-    return {
-      title: `Izveštaj za predmet Kurs #${courseInstanceId} u školskoj 2024/2025.`,
-      attendanceSeries: mockPeriods,
-      passageSeries: mockPeriods.map((p) => ({ ...p, value: p.value - 15 })),
-      averageGradesSeries: mockPeriods.map((p) => ({
-        ...p,
-        value: 8 + p.value / 40,
-      })),
-      enrolledCount: 120,
-      passedCount: 86,
-    };
-  }
 }

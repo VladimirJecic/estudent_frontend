@@ -26,10 +26,11 @@ const LoginPage = () => {
       const user: User = await AuthAPIService.login(loginRequest);
       if (user) {
         setUser(user);
-        navigate("/");
+        if (user.role === "admin") navigate("/grade-entry");
+        else navigate("/");
       }
     } catch (error: any) {
-      if (error.response?.status === 400) {
+      if (error.statusCode === 400) {
         setIsCredentialsError(true);
       } else {
         alertService.error("Došlo je do greške pri prijavljivanju");

@@ -46,14 +46,14 @@ export type CourseExam = {
 };
 export type Semester = {
   id: number;
-  title: string;
   year: string;
   season: string;
+  title: string;
 };
 export interface CourseExamPresentation extends CourseExam {
   courseName: string;
+  courseSemester: string;
   examPeriodName: string;
-  semester: Semester;
   courseEspb: number;
   examDateTimeFormatted: string;
   isRegistrationInProgress: boolean;
@@ -77,7 +77,7 @@ export interface ExamPeriodPresentation extends ExamPeriod {
 export type Course = {
   id?: number;
   name: string;
-  semester: string;
+  semester: Semester;
   espb: number;
   participants: User[];
 };
@@ -120,6 +120,8 @@ export type ExamRegistrationPageCriteria = {
   includePassed?: boolean;
   includeFailed?: boolean;
   includeNotGraded?: boolean;
+  examPeriodId?: number;
+  courseExamId?: number;
 };
 export type EStudentApiError = {
   statusCode: number;

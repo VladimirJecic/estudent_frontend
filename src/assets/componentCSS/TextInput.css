@@ -116,8 +116,7 @@ input:-webkit-autofill {
 .custom-text-input .clear-btn {
   position: absolute;
   right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
+  top: calc(5px + 1rem + 2px);
   cursor: pointer;
   font-size: 1.1rem;
   transition: color 0.2s, opacity 0.2s, background 0.2s;
@@ -135,8 +134,7 @@ input:-webkit-autofill {
 .custom-text-input .prepend-icon {
   position: absolute;
   left: 1.2rem;
-  top: 50%;
-  transform: translateY(-50%);
+  top: calc(5px + 1rem + 2px);
   color: var(--secondary);
   font-size: 1.2rem;
   z-index: 2;

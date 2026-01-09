@@ -28,6 +28,14 @@ export class ExamRegistrationAPIService {
     if (pageCriteria.includeFailed) queryParams.push(`include-failed=true`);
     if (pageCriteria.includeNotGraded)
       queryParams.push(`include-not-graded=true`);
+    if (pageCriteria.examPeriodId)
+      queryParams.push(
+        `exam-period-id=${encodeURIComponent(pageCriteria.examPeriodId)}`
+      );
+    if (pageCriteria.courseExamId)
+      queryParams.push(
+        `course-exam-id=${encodeURIComponent(pageCriteria.courseExamId)}`
+      );
     return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
   }
   static createQueryStringForCreateExamRegistration(
@@ -41,22 +49,22 @@ export class ExamRegistrationAPIService {
     return queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
   }
   static async getPassedExamRegistrations() {
-    const response = await apiService.GET<PageResponse<ExamRegistration>>(
-      "/exam-registrations?page=1&page-size=200&include-passed=true"
+    const response = await apiService.GET<ExamRegistration[]>(
+      "/exam-registrations/passed"
     );
     return response;
   }
 
-  static async fetchCourseExamRegistrationCandidates(): Promise<CourseExam[]> {
+  static async fetchCourseExamRegistrationCandidates() {
     const response = await apiService.GET<CourseExam[]>(
       "/course-exams/registerable-course-exams"
     );
     return response;
   }
 
-  static async fetchExamRegistrationsExisting() {
-    const response = await apiService.GET<PageResponse<ExamRegistration>>(
-      "/exam-registrations?page=1&page-size=200&include-not-graded=true"
+  static async fetchCurrentExamRegistrations() {
+    const response = await apiService.GET<ExamRegistration[]>(
+      "/exam-registrations/current"
     );
     return response;
   }

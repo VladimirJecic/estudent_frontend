@@ -40,11 +40,9 @@ const ExamRegistrationsPassedPage = () => {
     setIsLoadingExamRegistrationsPassed(true);
     setExamRegistrationsPassed([]);
     try {
-      const pageResponse: PageResponse<ExamRegistration> =
+      const response: ExamRegistration[] =
         await ExamRegistrationAPIService.getPassedExamRegistrations();
-      const presentations = toExamRegistrationPresentations(
-        pageResponse.content
-      );
+      const presentations = toExamRegistrationPresentations(response);
       setExamRegistrationsPassed(presentations);
       setAverageMark(getAverageMark(presentations));
       setTotalESPB(getTotalESPB(presentations));
@@ -75,6 +73,7 @@ const ExamRegistrationsPassedPage = () => {
         <Info className="w-50">učitava se...</Info>
       ) : (
         <Table
+          maxHeight="70vh"
           width="60vw"
           headers={[
             { title: "R.Br", value: "rowNum" },
