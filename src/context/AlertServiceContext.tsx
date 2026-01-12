@@ -35,11 +35,11 @@ export const AlertServiceProvider: React.FC<{ children: ReactNode }> = ({
     if (!isPermanent) {
       autoHide();
     }
-    if (error instanceof EStudentError) {
-      log.warn("Server error occurred", error);
-    } else {
-      log.error("Unknown error occurred", error);
-    }
+    // if (error instanceof EStudentError) {
+    //   log.warn("Server error occurred", error);
+    // } else {
+    //   log.error("Unknown error occurred", error);
+    // }
   };
 
   const hide = () => {
