@@ -18,8 +18,10 @@ export function toExamRegistrationPresentation(
       reg.courseExam.examDateTime,
       DateFormat.DATE_TIME
     ),
+    examDateFormatted: format(reg.courseExam.examDateTime, DateFormat.DATE),
     isRegistrationInProgress:
       reg.courseExam.examPeriod.dateRegisterEnd > new Date(),
+    hasAttended: reg.hasAttended == "1" ? true : false,
   };
 }
 

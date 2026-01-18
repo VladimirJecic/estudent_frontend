@@ -31,8 +31,8 @@ const ExamRegistrationEdit: React.FC<ExamRegistrationEditProps> = ({
       const updateRequest: UpdateExamRegistrationSubmitRequest = {
         examRegistrationId: registration.id,
         mark: mark,
-        hasAttended,
-        comment,
+        hasAttended: hasAttended,
+        comment: comment,
       };
       await onSave(updateRequest);
     } catch (error) {

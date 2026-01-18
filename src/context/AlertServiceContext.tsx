@@ -20,7 +20,7 @@ export const AlertServiceProvider: React.FC<{ children: ReactNode }> = ({
   const autoHide = () => {
     setTimeout(() => {
       setAlertState((prev) => ({ ...prev, isVisible: false }));
-    }, 12000);
+    }, 9000);
   };
 
   const alert = (message: string, isPermanent?: boolean) => {

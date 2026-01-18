@@ -23,7 +23,7 @@ import log from "loglevel";
 const CourseExamReportPage = () => {
   //#region Consts and imports
   const alertService = useAlertService();
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 8;
   //#endregion Consts
 
   //#region useState

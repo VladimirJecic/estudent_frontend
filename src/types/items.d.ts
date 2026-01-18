@@ -33,6 +33,7 @@ export interface ExamRegistrationPresentation extends ExamRegistration {
   courseName: string;
   courseEspb: number;
   updatedAtFormatted: string;
+  examDateFormatted: string;
   examDateTimeFormatted: string;
   signedByName: string;
   isRegistrationInProgress: boolean;

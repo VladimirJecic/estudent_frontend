@@ -97,7 +97,7 @@ const ExamPeriodsPage = () => {
     <Container>
       <Title>Rokovi</Title>
       {examPeriods.length === 0 && isLoadingExamPeriods ? (
-        <Info>učitava se...</Info>
+        <Info className="w-50">učitava se...</Info>
       ) : (
         <Table
           width="70vw"

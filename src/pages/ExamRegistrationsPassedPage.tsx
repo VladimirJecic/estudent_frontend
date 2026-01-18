@@ -80,7 +80,7 @@ const ExamRegistrationsPassedPage = () => {
             { title: "Naziv Ispita", value: "courseName" },
             { title: "Ocena", value: "mark" },
             { title: "Espb", value: "courseEspb" },
-            { title: "Datum polaganja", value: "updatedAtFormatted" },
+            { title: "Datum polaganja", value: "examDateFormatted" },
             { title: "Potpisao nastavnik", value: "signedByName" },
             { title: "Dodatne informacije", value: "comment" },
           ]}

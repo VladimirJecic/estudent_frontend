@@ -137,6 +137,7 @@ const ExamRegistrationsActionsPage = () => {
       ) : (
         <Table
           width="50vw"
+          maxHeight="33vh"
           headers={[
             { title: "Naziv Ispita", value: "courseName" },
             { title: "Espb", value: "courseEspb" },
@@ -178,6 +179,7 @@ const ExamRegistrationsActionsPage = () => {
       ) : (
         <Table
           width="50vw"
+          maxHeight="33vh"
           headers={[
             { title: "Naziv Ispita", value: "courseName" },
             { title: "Espb", value: "courseEspb" },
