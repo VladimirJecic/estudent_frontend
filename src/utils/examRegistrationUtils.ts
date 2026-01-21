@@ -3,7 +3,7 @@ import { ExamRegistration, ExamRegistrationPresentation } from "@/types/items";
 import { format } from "date-fns";
 
 export function toExamRegistrationPresentation(
-  reg: ExamRegistration
+  reg: ExamRegistration,
 ): ExamRegistrationPresentation {
   return {
     ...reg,
@@ -16,7 +16,7 @@ export function toExamRegistrationPresentation(
     signedByName: reg.signedBy?.name || "",
     examDateTimeFormatted: format(
       reg.courseExam.examDateTime,
-      DateFormat.DATE_TIME
+      DateFormat.DATE_TIME,
     ),
     examDateFormatted: format(reg.courseExam.examDateTime, DateFormat.DATE),
     isRegistrationInProgress:
@@ -26,13 +26,13 @@ export function toExamRegistrationPresentation(
 }
 
 export function toExamRegistrationPresentations(
-  regs: ExamRegistration[]
+  regs: ExamRegistration[],
 ): ExamRegistrationPresentation[] {
   return regs.map(toExamRegistrationPresentation);
 }
 
 export function getAverageMark(
-  registrations: ExamRegistrationPresentation[]
+  registrations: ExamRegistrationPresentation[],
 ): string {
   if (registrations.length === 0) {
     return "Nema položenih ispita";
@@ -43,10 +43,10 @@ export function getAverageMark(
 }
 
 export function getTotalESPB(
-  registrations: ExamRegistrationPresentation[]
+  registrations: ExamRegistrationPresentation[],
 ): number {
   return registrations.reduce(
     (acc, reg) => acc + Number(reg.courseExam.course.espb),
-    0
+    0,
   );
 }
